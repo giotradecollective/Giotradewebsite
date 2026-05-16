@@ -367,6 +367,21 @@
       .news-masthead__meta { text-align:left; }
       .modal-box { padding:40px 24px; }
     }
+    #store-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.92); overflow: hidden;
+    }
+    #store-modal-overlay.active { display: block; }
+    #store-modal-frame { width: 100%; height: 100%; border: none; }
+    #store-modal-close {
+      position: fixed; top: 16px; right: 24px; z-index: 10000;
+      background: rgba(255,255,255,0.10); color: #fff;
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 8px 20px; font-family: 'Barlow','Helvetica Neue',Arial,sans-serif;
+      font-size: 0.70rem; letter-spacing: 0.18em; text-transform: uppercase;
+      cursor: pointer; transition: background .25s;
+    }
+    #store-modal-close:hover { background: rgba(255,255,255,0.22); }
   </style>
 </head>
 <body>
@@ -380,6 +395,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#markets">Markets</a></li>
+      <li><a href="#" onclick="openStoreModal(); return false;">Investment Tools Store</a></li>
       <li><a href="#news">News &amp; Insights</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -777,6 +793,26 @@
       document.getElementById('popia-modal').style.display = 'none';
       document.getElementById('tou-modal').style.display = 'none';
     }
+  });
+</script>
+
+<!-- INVESTMENT TOOLS STORE MODAL -->
+<div id="store-modal-overlay">
+  <button id="store-modal-close" onclick="closeStoreModal()">&#x2715; Close</button>
+  <iframe id="store-modal-frame" src="store.html" title="Investment Tools Store"></iframe>
+</div>
+
+<script>
+  function openStoreModal() {
+    document.getElementById('store-modal-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeStoreModal() {
+    document.getElementById('store-modal-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeStoreModal();
   });
 </script>
 
