@@ -815,61 +815,79 @@
     if (e.key === 'Escape') closeStoreModal();
   });
 </script>
+
+
 <!-- MOBILE FLOATING STORE BUTTON -->
-<a href="#" class="mobile-store-float" onclick="openStoreModal(); return false;">
-  Investment Tools Store
+<a href="#" class="mobile-store-fab" onclick="openStoreModal(); return false;">
+  <svg viewBox="0 0 24 24" fill="none">
+    <path d="M3 4H5L7.2 14.2C7.3 14.7 7.7 15 8.2 15H17.4C17.9 15 18.3 14.7 18.4 14.2L20 7H6" 
+      stroke="currentColor" 
+      stroke-width="1.6" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"/>
+    <circle cx="9" cy="19" r="1.2" fill="currentColor"/>
+    <circle cx="17" cy="19" r="1.2" fill="currentColor"/>
+  </svg>
 </a>
 
 <style>
-.mobile-store-float{
+
+.mobile-store-fab{
   display:none;
 }
 
 @media(max-width:768px){
 
-  .mobile-store-float{
+  .mobile-store-fab{
     position:fixed;
-    bottom:22px;
-    left:50%;
-    transform:translateX(-50%);
+    right:18px;
+    bottom:20px;
     z-index:9998;
+
+    width:58px;
+    height:58px;
+
+    border-radius:50%;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    width:88%;
-    max-width:340px;
+    background:rgba(8,8,8,0.88);
+    backdrop-filter:blur(14px);
 
-    padding:15px 18px;
+    border:1px solid rgba(255,255,255,0.12);
 
-    background:rgba(15,15,15,0.92);
-    backdrop-filter:blur(12px);
-
-    border:1px solid rgba(255,255,255,0.16);
-    border-radius:18px;
-
-    color:#fff;
     text-decoration:none;
 
-    font-family:'Barlow','Helvetica Neue',Arial,sans-serif;
-    font-size:0.72rem;
-    font-weight:500;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
+    box-shadow:
+      0 10px 30px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.05);
 
-    box-shadow:0 10px 35px rgba(0,0,0,0.45);
+    transition:
+      transform .25s ease,
+      background .25s ease,
+      border-color .25s ease;
 
-    transition:all .25s ease;
   }
 
-  .mobile-store-float:hover{
-    background:rgba(255,255,255,0.12);
-    border-color:rgba(255,255,255,0.28);
-    transform:translateX(-50%) translateY(-2px);
+  .mobile-store-fab svg{
+    width:24px;
+    height:24px;
+    color:#ffffff;
+    opacity:0.92;
+  }
+
+  .mobile-store-fab:hover{
+    transform:translateY(-3px) scale(1.05);
+    background:rgba(255,255,255,0.08);
+    border-color:rgba(255,255,255,0.22);
   }
 
 }
+
 </style>
+
+
 </body>
 </html>
