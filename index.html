@@ -584,6 +584,62 @@
   background: rgba(255,255,255,0.32);
 }
 
+
+/* ===== ENHANCED PREMIUM MENU ===== */
+
+.drawer-menu {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,8,8,0.98) 0%,
+      rgba(0,0,0,0.94) 100%
+    ) !important;
+
+  box-shadow:
+    0 0 40px rgba(0,0,0,0.55),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.drawer-top {
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+.drawer-label {
+  letter-spacing: 0.5em !important;
+  color: rgba(255,255,255,0.38) !important;
+  margin-bottom: 0px !important;
+}
+
+.drawer-links a {
+  border-radius: 18px;
+  transition:
+    transform .35s ease,
+    background .35s ease,
+    color .35s ease,
+    letter-spacing .35s ease !important;
+}
+
+.drawer-links a:hover {
+  background: rgba(255,255,255,0.03);
+  color: #ffffff !important;
+  transform: scale(1.02);
+  letter-spacing: 0.28em;
+}
+
+.drawer-links a::after {
+  width: min(280px, 72%) !important;
+  background: rgba(255,255,255,0.06) !important;
+}
+
+.drawer-close {
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.04) !important;
+}
+
+.drawer-close:hover {
+  transform: rotate(180deg) scale(1.05) !important;
+}
+
 </style>
 </head>
 <body>
@@ -609,7 +665,7 @@
       <div class="site-menu-panel__top">
         <div>
           <div class="site-menu-eyebrow">Giotrade Navigation</div>
-          <div class="site-menu-title">Explore the site</div>
+          <div class="site-menu-title"></div>
         </div>
         <button class="site-menu-close" type="button" onclick="closeSiteMenu()" aria-label="Close navigation menu">×</button>
       </div>
