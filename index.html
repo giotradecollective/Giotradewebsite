@@ -55,6 +55,18 @@
     .ticker-change.up   { color:#00ff99; background:rgba(0,255,153,0.10); }
     .ticker-change.down { color:#ff4d4d; background:rgba(255,77,77,0.10); }
     .ticker-status { color:rgba(255,255,255,0.3); padding-left:32px; font-size:12px; letter-spacing:0.2em; }
+    .ticker-demo-badge {
+      font-size:9px; font-weight:700; letter-spacing:0.3em;
+      color:#ffcc00; background:rgba(255,204,0,0.12);
+      border:1px solid rgba(255,204,0,0.3);
+      padding:3px 8px; border-radius:3px; flex-shrink:0; margin-right:8px;
+    }
+    @media (max-width:768px) {
+      .market-ticker { padding:10px 0; }
+      .ticker-item   { font-size:11px; gap:8px; }
+      .ticker-change { font-size:9px; padding:2px 5px; }
+      .ticker-track  { gap:36px; animation-duration:60s; }
+    }
 
     .hero { position:relative; width:100vw; height:100vh; min-height:640px; display:flex; flex-direction:column; overflow:hidden; }
     .hero__bg {
@@ -938,69 +950,145 @@
 <!-- GIOTRADE LIVE TICKER SCRIPT           -->
 <!-- ══════════════════════════════════════ -->
 <script>
-(function() {
+(function () {
+
+  /* ─── CONFIG ─────────────────────────────────────────── */
   const API_URL  = "http://127.0.0.1:5000/api/quotes";
   const INTERVAL = 2000;
-  let   tickerReady = false;
 
-  function buildHTML(quotes) {
-    // Duplicate the array so the scroll loops seamlessly
+  /* ─── FALLBACK DATA (mirrors your real Weltrade symbols)
+         Shown on mobile / when MT5 server is unreachable.
+         Prices & % simulate realistic market snapshot.     */
+  const FALLBACK = [
+    { label:"PainX 999",   price_str:"1,204.87",  change_pct: -0.18 },
+    { label:"PainX 800",   price_str:"985.42",    change_pct:  0.07 },
+    { label:"PainX 600",   price_str:"734.91",    change_pct: -0.31 },
+    { label:"PainX 400",   price_str:"512.66",    change_pct:  0.14 },
+    { label:"PainX 1200",  price_str:"1,498.23",  change_pct: -0.09 },
+    { label:"GainX 999",   price_str:"3,841.55",  change_pct:  0.42 },
+    { label:"GainX 800",   price_str:"3,102.78",  change_pct:  0.28 },
+    { label:"GainX 600",   price_str:"2,467.34",  change_pct:  0.17 },
+    { label:"GainX 400",   price_str:"1,823.90",  change_pct: -0.05 },
+    { label:"GainX 1200",  price_str:"4,210.12",  change_pct:  0.55 },
+    { label:"FlipX 5",     price_str:"103,609.00",change_pct: -0.10 },
+    { label:"FlipX 4",     price_str:"98,412.50", change_pct:  0.03 },
+    { label:"FlipX 3",     price_str:"103,609.00",change_pct: -0.22 },
+    { label:"FlipX 2",     price_str:"110,081.00",change_pct:  0.38 },
+    { label:"FlipX 1",     price_str:"87,334.75", change_pct:  0.11 },
+    { label:"FiboX",       price_str:"56,784.20", change_pct: -0.44 },
+    { label:"FX Vol 99",   price_str:"4,821.60",  change_pct:  0.29 },
+    { label:"FX Vol 80",   price_str:"3,914.45",  change_pct: -0.16 },
+    { label:"FX Vol 60",   price_str:"2,734.88",  change_pct:  0.08 },
+    { label:"FX Vol 40",   price_str:"1,502.31",  change_pct:  0.21 },
+    { label:"FX Vol 20",   price_str:"812.74",    change_pct: -0.33 },
+    { label:"BreakX 600",  price_str:"100,646.07",change_pct: -0.10 },
+    { label:"BreakX 1200", price_str:"104,410.94",change_pct:  0.01 },
+    { label:"BreakX 1800", price_str:"109,234.60",change_pct:  0.19 },
+    { label:"QuadX",       price_str:"105,467.50",change_pct:  0.38 },
+    { label:"PlusX 1",     price_str:"90,402.00", change_pct: -0.27 },
+  ];
+
+  /* ─── STATE ──────────────────────────────────────────── */
+  let tickerReady  = false;
+  let usingFallback = false;
+
+  /* ─── BUILD HTML ─────────────────────────────────────── */
+  function buildHTML(quotes, isFallback) {
     const doubled = [...quotes, ...quotes];
-    return doubled.map((q, i) => {
-      const dir = q.change_pct >= 0 ? "up" : "down";
+    let html = "";
+    if (isFallback) {
+      html += `<span class="ticker-dot ticker-demo-badge">DEMO</span>`;
+    }
+    doubled.forEach(q => {
+      const dir   = q.change_pct >= 0 ? "up"  : "down";
       const arrow = q.change_pct >= 0 ? "▲" : "▼";
-      return `
+      html += `
         <span class="ticker-item">
           <span class="ticker-label">${q.label}</span>
           <span class="ticker-price">${q.price_str}</span>
           <span class="ticker-change ${dir}">${arrow} ${Math.abs(q.change_pct).toFixed(2)}%</span>
         </span>
         <span class="ticker-sep">|</span>`;
-    }).join("");
+    });
+    return html;
   }
 
+  /* ─── ANIMATE FALLBACK PRICES (subtle drift for realism) */
+  function driftFallback() {
+    if (!usingFallback) return;
+    const track = document.getElementById("ticker-track");
+    if (!track) return;
+    const items = track.querySelectorAll(".ticker-item");
+    const half  = items.length / 2;
+    FALLBACK.forEach((q, i) => {
+      // tiny random drift ±0.05%
+      const drift = (Math.random() - 0.5) * 0.001;
+      q.change_pct = Math.round((q.change_pct + drift) * 100) / 100;
+      const dir   = q.change_pct >= 0 ? "up"  : "down";
+      const arrow = q.change_pct >= 0 ? "▲" : "▼";
+      [i, i + half].forEach(idx => {
+        if (!items[idx]) return;
+        const badge = items[idx].querySelector(".ticker-change");
+        if (badge) {
+          badge.textContent = `${arrow} ${Math.abs(q.change_pct).toFixed(2)}%`;
+          badge.className   = `ticker-change ${dir}`;
+        }
+      });
+    });
+  }
+
+  /* ─── REFRESH FROM LIVE API ──────────────────────────── */
   async function refreshTicker() {
     try {
-      const res  = await fetch(API_URL, { cache: "no-store" });
+      const controller = new AbortController();
+      const timeout    = setTimeout(() => controller.abort(), 1500);
+      const res  = await fetch(API_URL, { cache:"no-store", signal:controller.signal });
+      clearTimeout(timeout);
       const data = await res.json();
       const quotes = data.quotes || [];
-      if (!quotes.length) return;
+      if (!quotes.length) throw new Error("empty");
 
       const track = document.getElementById("ticker-track");
       if (!track) return;
 
-      // Only rebuild DOM when first loaded; after that just update prices in-place
-      if (!tickerReady) {
-        track.innerHTML = buildHTML(quotes);
+      if (!tickerReady || usingFallback) {
+        // First load or switching from fallback → rebuild
+        usingFallback = false;
+        track.innerHTML = buildHTML(quotes, false);
         tickerReady = true;
       } else {
-        // Update prices & change badges without rebuilding (keeps animation smooth)
-        const items  = track.querySelectorAll(".ticker-item");
-        const half   = items.length / 2;
+        // Smooth in-place update
+        const items = track.querySelectorAll(".ticker-item");
+        const half  = items.length / 2;
         quotes.forEach((q, i) => {
-          const dir   = q.change_pct >= 0 ? "up" : "down";
+          const dir   = q.change_pct >= 0 ? "up"  : "down";
           const arrow = q.change_pct >= 0 ? "▲" : "▼";
-          // Update both copies (original + duplicate)
           [i, i + half].forEach(idx => {
             if (!items[idx]) return;
             items[idx].querySelector(".ticker-price").textContent = q.price_str;
             const badge = items[idx].querySelector(".ticker-change");
             badge.textContent = `${arrow} ${Math.abs(q.change_pct).toFixed(2)}%`;
-            badge.className = `ticker-change ${dir}`;
+            badge.className   = `ticker-change ${dir}`;
           });
         });
       }
+
     } catch (err) {
+      // Live server unreachable — show fallback (works on mobile / remote)
       const track = document.getElementById("ticker-track");
-      if (track && !tickerReady) {
-        track.innerHTML = '<span class="ticker-status">MT5 SERVER OFFLINE — RECONNECTING…</span>';
+      if (!track) return;
+      if (!tickerReady) {
+        usingFallback = true;
+        track.innerHTML = buildHTML(FALLBACK, true);
+        tickerReady = true;
       }
     }
   }
 
-  // Kick off immediately, then poll every 2 s
   refreshTicker();
   setInterval(refreshTicker, INTERVAL);
+  setInterval(driftFallback, 3000); // animate fallback prices subtly
+
 })();
 </script>
 
