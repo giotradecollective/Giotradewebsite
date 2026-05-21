@@ -65,13 +65,18 @@
       padding:3px 8px; border-radius:3px; flex-shrink:0; margin-right:8px;
     }
     @media (max-width:768px) {
-      .market-ticker { padding:8px 0; height: auto; min-height: 36px; }
-      .ticker-track  { gap:24px; animation-duration:40s; display: inline-flex !important; }
-      .ticker-item   { font-size:10px; gap:6px; flex-shrink: 0 !important; display: inline-flex !important; }
-      .ticker-label  { margin-right: 2px; }
-      .ticker-price  { font-weight: 600; }
-      .ticker-change { font-size:8px; padding:1px 4px; }
-      .ticker-sep    { margin: 0 4px; font-size: 12px; }
+      /* Ticker — ensure ALL assets scroll through on mobile */
+      .market-ticker { padding:8px 0; height:auto; min-height:36px; overflow:hidden; }
+      /* 180 s covers 50 assets at a comfortable reading speed */
+      .ticker-track  { gap:20px; animation-duration:180s; display:inline-flex !important;
+                       white-space:nowrap; will-change:transform; }
+      .ticker-item   { font-size:10px; gap:5px; flex-shrink:0 !important;
+                       display:inline-flex !important; align-items:center; }
+      .ticker-label  { color:rgba(255,255,255,0.38); font-weight:300; }
+      .ticker-price  { font-weight:600; color:#fff; }
+      .ticker-change { font-size:8px; padding:2px 4px; border-radius:2px; }
+      .ticker-sep    { margin:0 3px; font-size:11px; color:rgba(255,255,255,0.12); }
+      .ticker-demo-badge { font-size:8px; padding:2px 6px; }
     }
   
 
@@ -959,40 +964,79 @@
 <script>
 (function () {
 
-  /* ─── CONFIG ─────────────────────────────────────────── */
+  /* ─── CONFIG ─────────────────────────────────────────────────────────
+     API_URL: When the site is viewed on the SAME PC as VSCode, use
+     127.0.0.1.  When viewed on a phone/tablet on the same Wi-Fi, set
+     this to your PC's local IP, e.g. "http://192.168.1.50:5000/api/quotes"
+     You can find your PC IP by running:  ipconfig  in PowerShell.
+     ─────────────────────────────────────────────────────────────────── */
   const API_URL  = "http://127.0.0.1:5000/api/quotes";
   const INTERVAL = 2000;
 
-  /* ─── FALLBACK DATA (mirrors your real Weltrade symbols)
-         Shown on mobile / when MT5 server is unreachable.
-         Prices & % simulate realistic market snapshot.     */
+  /* ─── FALLBACK DATA
+     Shown when the local Python server is unreachable (e.g. on mobile
+     or when VSCode is not running).  Covers ALL asset classes so the
+     full ticker is visible on every device.  Prices are realistic
+     snapshots that drift subtly to give a live feel.               */
   const FALLBACK = [
-    { label:"PainX 999",   price_str:"1,204.87",  change_pct: -0.18 },
-    { label:"PainX 800",   price_str:"985.42",    change_pct:  0.07 },
-    { label:"PainX 600",   price_str:"734.91",    change_pct: -0.31 },
-    { label:"PainX 400",   price_str:"512.66",    change_pct:  0.14 },
-    { label:"PainX 1200",  price_str:"1,498.23",  change_pct: -0.09 },
-    { label:"GainX 999",   price_str:"3,841.55",  change_pct:  0.42 },
-    { label:"GainX 800",   price_str:"3,102.78",  change_pct:  0.28 },
-    { label:"GainX 600",   price_str:"2,467.34",  change_pct:  0.17 },
-    { label:"GainX 400",   price_str:"1,823.90",  change_pct: -0.05 },
-    { label:"GainX 1200",  price_str:"4,210.12",  change_pct:  0.55 },
-    { label:"FlipX 5",     price_str:"103,609.00",change_pct: -0.10 },
-    { label:"FlipX 4",     price_str:"98,412.50", change_pct:  0.03 },
-    { label:"FlipX 3",     price_str:"103,609.00",change_pct: -0.22 },
-    { label:"FlipX 2",     price_str:"110,081.00",change_pct:  0.38 },
-    { label:"FlipX 1",     price_str:"87,334.75", change_pct:  0.11 },
-    { label:"FiboX",       price_str:"56,784.20", change_pct: -0.44 },
-    { label:"FX Vol 99",   price_str:"4,821.60",  change_pct:  0.29 },
-    { label:"FX Vol 80",   price_str:"3,914.45",  change_pct: -0.16 },
-    { label:"FX Vol 60",   price_str:"2,734.88",  change_pct:  0.08 },
-    { label:"FX Vol 40",   price_str:"1,502.31",  change_pct:  0.21 },
-    { label:"FX Vol 20",   price_str:"812.74",    change_pct: -0.33 },
-    { label:"BreakX 600",  price_str:"100,646.07",change_pct: -0.10 },
-    { label:"BreakX 1200", price_str:"104,410.94",change_pct:  0.01 },
-    { label:"BreakX 1800", price_str:"109,234.60",change_pct:  0.19 },
-    { label:"QuadX",       price_str:"105,467.50",change_pct:  0.38 },
-    { label:"PlusX 1",     price_str:"90,402.00", change_pct: -0.27 },
+    // ── Agriculture
+    { label:"Live Cattle",    price_str:"195.23",    change_pct:  0.12 },
+    { label:"Wheat",          price_str:"542.75",    change_pct: -0.34 },
+    { label:"Cotton",         price_str:"82.40",     change_pct:  0.08 },
+    { label:"Corn",           price_str:"448.50",    change_pct: -0.21 },
+    { label:"Soybeans",       price_str:"1,182.60",  change_pct:  0.15 },
+    { label:"Coffee",         price_str:"214.30",    change_pct: -0.44 },
+    { label:"Sugar",          price_str:"19.87",     change_pct:  0.06 },
+    // ── Metals
+    { label:"Gold Futures",   price_str:"2,342.80",  change_pct:  0.31 },
+    { label:"Silver Futures", price_str:"27.64",     change_pct:  0.18 },
+    { label:"Copper Futures", price_str:"4.52",      change_pct: -0.09 },
+    // ── Energy
+    { label:"Crude Oil",      price_str:"78.45",     change_pct: -0.52 },
+    { label:"Brent Oil",      price_str:"82.10",     change_pct: -0.47 },
+    { label:"Natural Gas",    price_str:"2.31",      change_pct:  0.22 },
+    // ── Indices
+    { label:"Nasdaq Futures", price_str:"19,842.50", change_pct:  0.38 },
+    { label:"S&P 500 Futures",price_str:"5,312.25",  change_pct:  0.24 },
+    { label:"Dow Futures",    price_str:"39,204.00", change_pct:  0.17 },
+    { label:"Russell 2000",   price_str:"2,084.30",  change_pct: -0.11 },
+    // ── Crypto
+    { label:"Bitcoin",        price_str:"67,412.00", change_pct:  1.24 },
+    { label:"Ethereum",       price_str:"3,521.80",  change_pct:  0.88 },
+    { label:"Solana",         price_str:"172.40",    change_pct:  1.05 },
+    { label:"XRP",            price_str:"0.5842",    change_pct: -0.33 },
+    // ── Forex
+    { label:"USD/ZAR",        price_str:"18.6240",   change_pct:  0.14 },
+    { label:"EUR/USD",        price_str:"1.0842",    change_pct: -0.08 },
+    { label:"GBP/USD",        price_str:"1.2714",    change_pct:  0.05 },
+    { label:"USD/JPY",        price_str:"154.320",   change_pct:  0.11 },
+    // ── Synthetics (Weltrade)
+    { label:"PainX 999",      price_str:"1,204.87",  change_pct: -0.18 },
+    { label:"PainX 800",      price_str:"985.42",    change_pct:  0.07 },
+    { label:"PainX 600",      price_str:"734.91",    change_pct: -0.31 },
+    { label:"PainX 400",      price_str:"512.66",    change_pct:  0.14 },
+    { label:"PainX 1200",     price_str:"1,498.23",  change_pct: -0.09 },
+    { label:"GainX 999",      price_str:"3,841.55",  change_pct:  0.42 },
+    { label:"GainX 800",      price_str:"3,102.78",  change_pct:  0.28 },
+    { label:"GainX 600",      price_str:"2,467.34",  change_pct:  0.17 },
+    { label:"GainX 400",      price_str:"1,823.90",  change_pct: -0.05 },
+    { label:"GainX 1200",     price_str:"4,210.12",  change_pct:  0.55 },
+    { label:"FlipX 5",        price_str:"103,609.00",change_pct: -0.10 },
+    { label:"FlipX 4",        price_str:"98,412.50", change_pct:  0.03 },
+    { label:"FlipX 3",        price_str:"103,609.00",change_pct: -0.22 },
+    { label:"FlipX 2",        price_str:"110,081.00",change_pct:  0.38 },
+    { label:"FlipX 1",        price_str:"87,334.75", change_pct:  0.11 },
+    { label:"FiboX",          price_str:"56,784.20", change_pct: -0.44 },
+    { label:"FX Vol 99",      price_str:"4,821.60",  change_pct:  0.29 },
+    { label:"FX Vol 80",      price_str:"3,914.45",  change_pct: -0.16 },
+    { label:"FX Vol 60",      price_str:"2,734.88",  change_pct:  0.08 },
+    { label:"FX Vol 40",      price_str:"1,502.31",  change_pct:  0.21 },
+    { label:"FX Vol 20",      price_str:"812.74",    change_pct: -0.33 },
+    { label:"BreakX 600",     price_str:"100,646.07",change_pct: -0.10 },
+    { label:"BreakX 1200",    price_str:"104,410.94",change_pct:  0.01 },
+    { label:"BreakX 1800",    price_str:"109,234.60",change_pct:  0.19 },
+    { label:"QuadX",          price_str:"105,467.50",change_pct:  0.38 },
+    { label:"PlusX 1",        price_str:"90,402.00", change_pct: -0.27 },
   ];
 
   /* ─── STATE ──────────────────────────────────────────── */
@@ -1030,73 +1074,94 @@
     const track = document.getElementById("ticker-track");
     if (!track) return;
     const items = track.querySelectorAll(".ticker-item");
-    const half  = items.length / 2;
+    const repeatCount = FALLBACK.length < 10 ? 4 : 2;
     FALLBACK.forEach((q, i) => {
-      // tiny random drift ±0.05%
       const drift = (Math.random() - 0.5) * 0.001;
       q.change_pct = Math.round((q.change_pct + drift) * 100) / 100;
       const dir   = q.change_pct >= 0 ? "up"  : "down";
       const arrow = q.change_pct >= 0 ? "▲" : "▼";
-      [i, i + half].forEach(idx => {
-        if (!items[idx]) return;
+      for (let r = 0; r < repeatCount; r++) {
+        const idx = i + r * FALLBACK.length;
+        if (!items[idx]) continue;
         const badge = items[idx].querySelector(".ticker-change");
         if (badge) {
           badge.textContent = `${arrow} ${Math.abs(q.change_pct).toFixed(2)}%`;
           badge.className   = `ticker-change ${dir}`;
         }
-      });
+      }
     });
   }
 
-  /* ─── REFRESH FROM LIVE API ──────────────────────────── */
+  /* ─── ADJUST ANIMATION SPEED based on item count ──────── */
+  function setTickerSpeed(count) {
+    const track = document.getElementById("ticker-track");
+    if (!track) return;
+    // ~2 s per item on desktop, ~3.5 s per item on mobile
+    const isMobile = window.innerWidth <= 768;
+    const sPerItem = isMobile ? 3.5 : 2.0;
+    const duration = Math.max(30, Math.round(count * sPerItem));
+    track.style.animationDuration = duration + "s";
+  }
+
+  /* ─── REFRESH FROM LIVE API ──────────────────── */
   async function refreshTicker() {
     try {
       const controller = new AbortController();
-      const timeout    = setTimeout(() => controller.abort(), 1500);
-     const res = await fetch(API_URL + "?t=" + Date.now(), {
-  cache: "no-store",
-  signal: controller.signal
-});
+      const timeout    = setTimeout(() => controller.abort(), 2500);
+      const res = await fetch(API_URL + "?t=" + Date.now(), {
+        cache: "no-store",
+        signal: controller.signal
+      });
       clearTimeout(timeout);
-      const data = await res.json();
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data   = await res.json();
       const quotes = data.quotes || [];
       if (!quotes.length) throw new Error("empty");
 
       const track = document.getElementById("ticker-track");
       if (!track) return;
 
-      if (!tickerReady || usingFallback || track.querySelectorAll('.ticker-item').length !== (quotes.length * (quotes.length < 10 ? 4 : 2))) {
+      const repeatCount = quotes.length < 10 ? 4 : 2;
+      const expectedItems = quotes.length * repeatCount;
+
+      if (!tickerReady || usingFallback ||
+          track.querySelectorAll(".ticker-item").length !== expectedItems) {
+        // Full rebuild (first load, or switching from fallback, or count changed)
         usingFallback = false;
         track.innerHTML = buildHTML(quotes, false);
+        setTickerSpeed(quotes.length);
         tickerReady = true;
       } else {
+        // In-place update (no DOM rebuild — keeps animation smooth)
         const items = track.querySelectorAll(".ticker-item");
-        const repeatCount = quotes.length < 10 ? 4 : 2;
         quotes.forEach((q, i) => {
           const dir   = q.change_pct >= 0 ? "up"  : "down";
           const arrow = q.change_pct >= 0 ? "▲" : "▼";
-          for(let r=0; r<repeatCount; r++) {
-            const idx = i + (r * quotes.length);
+          for (let r = 0; r < repeatCount; r++) {
+            const idx = i + r * quotes.length;
             if (!items[idx]) continue;
             const priceEl = items[idx].querySelector(".ticker-price");
             const badgeEl = items[idx].querySelector(".ticker-change");
-            if(priceEl.textContent !== q.price_str) priceEl.textContent = q.price_str;
+            if (priceEl && priceEl.textContent !== q.price_str)
+              priceEl.textContent = q.price_str;
             const newText = `${arrow} ${Math.abs(q.change_pct).toFixed(2)}%`;
-            if(badgeEl.textContent !== newText) {
-                badgeEl.textContent = newText;
-                badgeEl.className = `ticker-change ${dir}`;
+            if (badgeEl && badgeEl.textContent !== newText) {
+              badgeEl.textContent = newText;
+              badgeEl.className   = `ticker-change ${dir}`;
             }
           }
         });
       }
 
     } catch (err) {
-      // Live server unreachable — show fallback (works on mobile / remote)
+      /* Live server unreachable — show full fallback (all asset classes).
+         This is the normal state on mobile when the laptop is off.    */
       const track = document.getElementById("ticker-track");
       if (!track) return;
       if (!tickerReady) {
         usingFallback = true;
         track.innerHTML = buildHTML(FALLBACK, true);
+        setTickerSpeed(FALLBACK.length);
         tickerReady = true;
       }
     }
@@ -1104,7 +1169,7 @@
 
   refreshTicker();
   setInterval(refreshTicker, INTERVAL);
-  setInterval(driftFallback, 3000); // animate fallback prices subtly
+  setInterval(driftFallback, 3000);
 
 })();
 </script>
