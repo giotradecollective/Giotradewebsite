@@ -65,10 +65,13 @@
       padding:3px 8px; border-radius:3px; flex-shrink:0; margin-right:8px;
     }
     @media (max-width:768px) {
-      .market-ticker { padding:10px 0; }
-      .ticker-item   { font-size:11px; gap:8px; }
-      .ticker-change { font-size:9px; padding:2px 5px; }
-      .ticker-track  { gap:36px; animation-duration:60s; }
+      .market-ticker { padding:8px 0; height: auto; min-height: 36px; }
+      .ticker-track  { gap:24px; animation-duration:40s; display: inline-flex !important; }
+      .ticker-item   { font-size:10px; gap:6px; flex-shrink: 0 !important; display: inline-flex !important; }
+      .ticker-label  { margin-right: 2px; }
+      .ticker-price  { font-weight: 600; }
+      .ticker-change { font-size:8px; padding:1px 4px; }
+      .ticker-sep    { margin: 0 4px; font-size: 12px; }
     }
   
 
@@ -998,16 +1001,20 @@
 
   /* ─── BUILD HTML ─────────────────────────────────────── */
   function buildHTML(quotes, isFallback) {
-    const doubled = [...quotes, ...quotes];
+    // Increase duplication for small datasets to ensure no gaps on large screens or mobile orientation shifts
+    const repeatCount = quotes.length < 10 ? 4 : 2;
+    let doubled = [];
+    for(let i=0; i<repeatCount; i++) doubled = doubled.concat(quotes);
+    
     let html = "";
     if (isFallback) {
-      html += `<span class="ticker-dot ticker-demo-badge">DEMO</span>`;
+      html += `<span class="ticker-demo-badge">DEMO</span>`;
     }
-    doubled.forEach(q => {
+    doubled.forEach((q, index) => {
       const dir   = q.change_pct >= 0 ? "up"  : "down";
       const arrow = q.change_pct >= 0 ? "▲" : "▼";
       html += `
-        <span class="ticker-item">
+        <span class="ticker-item" data-symbol="${q.symbol}">
           <span class="ticker-label">${q.label}</span>
           <span class="ticker-price">${q.price_str}</span>
           <span class="ticker-change ${dir}">${arrow} ${Math.abs(q.change_pct).toFixed(2)}%</span>
@@ -1058,25 +1065,28 @@
       const track = document.getElementById("ticker-track");
       if (!track) return;
 
-      if (!tickerReady || usingFallback) {
-        // First load or switching from fallback → rebuild
+      if (!tickerReady || usingFallback || track.querySelectorAll('.ticker-item').length !== (quotes.length * (quotes.length < 10 ? 4 : 2))) {
         usingFallback = false;
         track.innerHTML = buildHTML(quotes, false);
         tickerReady = true;
       } else {
-        // Smooth in-place update
         const items = track.querySelectorAll(".ticker-item");
-        const half  = items.length / 2;
+        const repeatCount = quotes.length < 10 ? 4 : 2;
         quotes.forEach((q, i) => {
           const dir   = q.change_pct >= 0 ? "up"  : "down";
           const arrow = q.change_pct >= 0 ? "▲" : "▼";
-          [i, i + half].forEach(idx => {
-            if (!items[idx]) return;
-            items[idx].querySelector(".ticker-price").textContent = q.price_str;
-            const badge = items[idx].querySelector(".ticker-change");
-            badge.textContent = `${arrow} ${Math.abs(q.change_pct).toFixed(2)}%`;
-            badge.className   = `ticker-change ${dir}`;
-          });
+          for(let r=0; r<repeatCount; r++) {
+            const idx = i + (r * quotes.length);
+            if (!items[idx]) continue;
+            const priceEl = items[idx].querySelector(".ticker-price");
+            const badgeEl = items[idx].querySelector(".ticker-change");
+            if(priceEl.textContent !== q.price_str) priceEl.textContent = q.price_str;
+            const newText = `${arrow} ${Math.abs(q.change_pct).toFixed(2)}%`;
+            if(badgeEl.textContent !== newText) {
+                badgeEl.textContent = newText;
+                badgeEl.className = `ticker-change ${dir}`;
+            }
+          }
         });
       }
 
@@ -1094,7 +1104,7 @@
 
   refreshTicker();
   setInterval(refreshTicker, INTERVAL);
-  setInterval(driftFallback, 5000); // animate fallback prices subtly
+  setInterval(driftFallback, 3000); // animate fallback prices subtly
 
 })();
 </script>
