@@ -261,7 +261,7 @@
     .news-featured { display:grid; grid-template-columns:1fr 1fr; gap:3px; margin-bottom:3px; }
     .news-feat-img {
       background:#1a1a1a;
-      background-image:url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=900&q=80&auto=format&fit=crop');
+      background-image:url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663669545265/iIrnRmkWbrVIPGXp.png');
       background-size:cover; background-position:center;
       filter:grayscale(85%) brightness(0.55); min-height:380px;
     }
@@ -587,35 +587,35 @@
     <div class="news-feat-body">
       <div>
         <div class="news-feat-issue">
-          <div class="news-feat-issue__badge">Issue No. 01</div>
-          <div class="news-feat-issue__date">14 April 2026</div>
+          <div class="news-feat-issue__badge">Issue No. 03</div>
+          <div class="news-feat-issue__date">May 2026</div>
         </div>
-        <div class="news-feat-headline">Should We Fear the Current Global Tension Around Oil?</div>
-        <div class="news-feat-byline">By Ethan R. Hayes &nbsp;&middot;&nbsp; Commodities</div>
-        <p class="news-feat-excerpt">As tensions continue to rise in key oil-producing regions, prices have shown sharp and unpredictable movements. Oil isn&rsquo;t just fuel, it underpins the entire global economy. We break down what&rsquo;s really happening, and whether households should be worried.</p>
+        <div class="news-feat-headline">Why Sugar Could Become the Next Major Global Commodity Story</div>
+        <div class="news-feat-byline">By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities</div>
+        <p class="news-feat-excerpt">While global attention remains focused on oil and inflation, sugar is quietly becoming a major commodity story. Influenced by energy markets, climate, and trade policy, its impact could be far-reaching.</p>
       </div>
-      <button class="news-feat-cta" onclick="openArticle('oil')">Read Full Article</button>
+      <button class="news-feat-cta" onclick="openArticle('sugar')">Read Full Article</button>
     </div>
   </div>
 
   <div class="news-grid">
-    <div class="news-card" onclick="openArticle('oil')">
-      <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">14 Apr 2026</div><div class="news-card__issue">Issue 01</div></div>
-      <div class="news-card__title">Should We Fear the Current Global Tension Around Oil?</div>
-      <p class="news-card__excerpt">Oil markets reacted sharply to regional tensions. We explain what drives price movements and why the system is designed to absorb disruption.</p>
+    <div class="news-card" onclick="openArticle('sugar')">
+      <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">May 2026</div><div class="news-card__issue">Issue 03</div></div>
+      <div class="news-card__title">Why Sugar Could Become the Next Major Global Commodity Story</div>
+      <p class="news-card__excerpt">Sugar is emerging as a key commodity influenced by energy and climate. We examine its growing role in the global economy.</p>
       <button class="news-card__link">Read</button>
     </div>
     <div class="news-card" onclick="openArticle('oil2')">
       <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">May 2026</div><div class="news-card__issue">Issue 02</div></div>
       <div class="news-card__title">Global Oil Tensions Continue to Pressure Markets and Household Costs</div>
-      <p class="news-card__excerpt">Geopolitical pressure on oil supply routes deepens. We examine how sustained energy instability is spilling into inflation, household budgets, and global supply chains.</p>
+      <p class="news-card__excerpt">Geopolitical pressure on oil supply routes deepens. We examine how sustained energy instability is spilling into inflation.</p>
       <button class="news-card__link">Read</button>
     </div>
-    <div class="news-card" style="opacity:0.45; pointer-events:none;">
-      <div class="news-card__meta"><div class="news-card__cat">Strategy</div><div class="news-card__date">Coming Soon</div><div class="news-card__issue">Issue 03</div></div>
-      <div class="news-card__title">Next Issue Incoming</div>
-      <p class="news-card__excerpt">New content drops weekly. Topics include synthetic indices, global equities, and macroeconomic analysis relevant to South African investors.</p>
-      <button class="news-card__link">Coming Soon</button>
+    <div class="news-card" onclick="openArticle('oil')">
+      <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">14 Apr 2026</div><div class="news-card__issue">Issue 01</div></div>
+      <div class="news-card__title">Should We Fear the Current Global Tension Around Oil?</div>
+      <p class="news-card__excerpt">Oil markets reacted sharply to regional tensions. We explain what drives price movements and why the system is designed to adapt.</p>
+      <button class="news-card__link">Read</button>
     </div>
   </div>
 
@@ -773,9 +773,41 @@
 
 <script>
   const articles = {
+    sugar: {
+      issue: 'Issue No. 03',
+      date: 'May 2026',
+      category: 'Commodities',
+      headline: 'Why Sugar Could Become the Next Major Global Commodity Story',
+      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities',
+      body: `
+        <h3>A Commodity Few Are Watching Closely</h3>
+        <p>While global attention remains focused on oil, inflation, and interest rates, another commodity is quietly becoming increasingly important within global markets: sugar.</p>
+        <p>Traditionally viewed simply as a food product, sugar is now emerging as a commodity influenced by energy markets, climate conditions, global trade policies, and supply chain pressures. As a result, economists and commodity analysts are beginning to pay closer attention to developments within the global sugar market.</p>
+        <p>Although sugar rarely dominates headlines in the same way as oil or gold, current conditions suggest it could become one of the more significant commodity stories of the year.</p>
+        <h3>Why Sugar Matters More Than Most People Realize</h3>
+        <p>Sugar plays a larger role in the global economy than many consumers may expect. Beyond its direct use in food production, sugar is also linked to:</p>
+        <ul>
+          <li>Global agricultural markets</li>
+          <li>Fuel production through ethanol</li>
+          <li>International trade flows</li>
+          <li>Food inflation and consumer pricing</li>
+        </ul>
+        <p>This makes sugar highly sensitive to broader economic and environmental conditions. In many developing economies especially, sugar remains an important agricultural commodity that supports employment, exports, and domestic food supply chains.</p>
+        <h3>The Growing Link Between Sugar and Oil Prices</h3>
+        <p>One of the most important developments affecting the sugar market is its increasing connection to global energy prices. In countries such as Brazil, one of the world’s largest sugar producers, sugarcane is used not only to produce food sugar but also ethanol fuel.</p>
+        <p>When oil prices rise, ethanol becomes more profitable, and more sugarcane is redirected toward fuel production, leaving less sugar available for food markets. This relationship creates a direct connection between energy markets and global sugar supply.</p>
+        <h3>Climate Conditions and Export Restrictions</h3>
+        <p>Weather patterns and government policies are also adding pressure. Concerns surrounding droughts and irregular rainfall in major producing regions like India, Thailand, and Brazil have raised fears about weaker harvests.</p>
+        <p>Furthermore, several governments are taking steps to protect domestic supply. India, for instance, recently extended restrictions on sugar exports to stabilize domestic availability. When major exporters limit international supply, global markets often react quickly, especially when inventories are already under pressure.</p>
+        <h3>Impact on Everyday Consumers</h3>
+        <p>Higher sugar costs can contribute to increased food manufacturing expenses, higher prices for beverages and packaged goods, and additional inflationary pressure within grocery markets. While consumers may not immediately notice shifts within commodity markets, prolonged price increases often become visible through everyday retail costs over time.</p>
+        <h3>Conclusion</h3>
+        <p>Rising energy prices, climate-related production risks, and tightening global supply conditions are all contributing to growing uncertainty within the sugar market. For global markets, sugar represents another example of how interconnected modern commodities have become in an increasingly uncertain economic environment.</p>
+      `
+    },
     oil: {
       issue: 'Issue No. 01',
-      date: '14 April 2026',
+      date: 'April 2026',
       category: 'Commodities',
       headline: 'Should We Fear the Current Global Tension Around Oil?',
       byline: 'By Ethan R. Hayes &nbsp;&middot;&nbsp; Commodities',
