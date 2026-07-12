@@ -372,6 +372,13 @@
       padding:13px 3px; cursor:pointer; transition:background .25s;
     }
     .news-subscribe__btn:hover { background:rgba(255,255,255,0.85); }
+    .news-subscribe__btn:disabled { opacity:0.6; cursor:default; }
+    .news-subscribe__message {
+      margin-top:14px; font-size:0.76rem; font-weight:300; letter-spacing:0.02em;
+      max-width:320px; text-align:right; line-height:1.5;
+    }
+    .news-subscribe__message.success { color:#7CE8A0; }
+    .news-subscribe__message.error { color:#FF8A8A; }
 
     footer { background:#080808; padding:60px 56px 40px; border-top:1px solid rgba(255,255,255,0.06); display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:40px; }
     .footer__wordmark { font-size:1.32rem; font-weight:700; letter-spacing:0.23em; color:var(--white); }
@@ -425,6 +432,7 @@
       .news-subscribe { flex-direction:column; }
       .news-subscribe__form { width:100%; }
       .news-subscribe__input { flex:1; width:auto; }
+      .news-subscribe__message { text-align:left; max-width:100%; }
       .article-box { padding:80px 24px 52px; }
     .article-close { 
       top: 20px !important; 
@@ -624,13 +632,14 @@
       <p>Get each new issue of Giotrade Network delivered directly to your inbox &mdash; every week.</p>
     </div>
     <div class="news-subscribe__form">
-  <form action="https://giotradegroup.us5.list-manage.com/subscribe/post?u=3651c420d2921d262740af1ac&amp;id=874d71b3ce&amp;f_id=0019f8e9f0" method="post" target="_blank" style="display:flex;gap:0;">
-    <input class="news-subscribe__input" type="email" name="EMAIL" placeholder="Your email address" required/>
+  <form id="mc-subscribe-form" onsubmit="return giotradeSubscribe(event)" style="display:flex;gap:0;">
+    <input class="news-subscribe__input" type="email" name="EMAIL" id="mc-subscribe-email" placeholder="Your email address" required/>
     <div style="position:absolute;left:-5000px;" aria-hidden="true">
-      <input type="text" name="b_3651c420d2921d262740af1ac_874d71b3ce" tabindex="-1" value="">
+      <input type="text" name="b_3651c420d2921d262740af1ac_874d71b3ce" id="mc-subscribe-honeypot" tabindex="-1" value="">
     </div>
-    <button type="submit" class="news-subscribe__btn">Subscribe</button>
+    <button type="submit" class="news-subscribe__btn" id="mc-subscribe-btn">Subscribe</button>
   </form>
+  <div id="mc-subscribe-message" class="news-subscribe__message" style="display:none;"></div>
 </div>
   </div>
 </section>
@@ -919,6 +928,80 @@
       document.getElementById('tou-modal').style.display = 'none';
     }
   });
+</script>
+
+<!-- ══════════════════════════════════════ -->
+<!-- NEWSLETTER SUBSCRIBE (AJAX / JSONP)   -->
+<!-- Stays on-page instead of redirecting  -->
+<!-- to Mailchimp's hosted confirmation.   -->
+<!-- ══════════════════════════════════════ -->
+<script>
+  function giotradeSubscribe(e) {
+    e.preventDefault();
+
+    var emailInput = document.getElementById('mc-subscribe-email');
+    var honeypot   = document.getElementById('mc-subscribe-honeypot');
+    var btn        = document.getElementById('mc-subscribe-btn');
+    var msg        = document.getElementById('mc-subscribe-message');
+    var email      = emailInput.value.trim();
+
+    // Bot trap — if the hidden field got filled in, silently drop it.
+    if (honeypot && honeypot.value !== '') return false;
+    if (!email) return false;
+
+    var originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Subscribing…';
+    msg.style.display = 'none';
+
+    var callbackName = 'mcCallback_' + Date.now();
+
+    function cleanup() {
+      btn.disabled = false;
+      btn.textContent = originalText;
+      var s = document.getElementById(callbackName);
+      if (s) s.remove();
+      delete window[callbackName];
+    }
+
+    window[callbackName] = function (data) {
+      msg.style.display = 'block';
+      if (data && data.result === 'success') {
+        msg.className = 'news-subscribe__message success';
+        msg.textContent = "Thanks — you're subscribed! Look out for news and updates.";
+        emailInput.value = '';
+      } else {
+        var text = (data && data.msg ? data.msg : 'Something went wrong. Please try again.')
+          .replace(/<[^>]*>/g, '')
+          .replace(/^\d+\s*-\s*/, '');
+        msg.className = 'news-subscribe__message error';
+        msg.textContent = text;
+      }
+      cleanup();
+    };
+
+    var params = new URLSearchParams({
+      u: '3651c420d2921d262740af1ac',
+      id: '874d71b3ce',
+      f_id: '0019f8e9f0',
+      EMAIL: email,
+      b_3651c420d2921d262740af1ac_874d71b3ce: '',
+      c: callbackName
+    });
+
+    var script = document.createElement('script');
+    script.id  = callbackName;
+    script.src = 'https://giotradegroup.us5.list-manage.com/subscribe/post-json?' + params.toString();
+    script.onerror = function () {
+      msg.style.display = 'block';
+      msg.className = 'news-subscribe__message error';
+      msg.textContent = 'Something went wrong. Please try again later.';
+      cleanup();
+    };
+    document.body.appendChild(script);
+
+    return false;
+  }
 </script>
 
 <!-- INVESTMENT TOOLS STORE MODAL -->
