@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,6 +141,14 @@
     }
     .nav__mobile-panel a:hover { color:var(--white); }
     .nav__mobile-panel .nav__cta { margin-top:10px; }
+    .nav__mobile-close {
+      position:absolute; top:62px; right:22px; z-index:16;
+      width:44px; height:44px; background:transparent; border:1px solid rgba(255,255,255,0.3);
+      border-radius:50%; cursor:pointer; color:var(--white);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.1rem; line-height:1; transition:background .25s, border-color .25s;
+    }
+    .nav__mobile-close:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.6); }
     .nav__cta {
       font-size:0.71rem; font-weight:400; letter-spacing:0.22em; text-transform:uppercase;
       color:var(--white); border:1px solid rgba(255,255,255,0.5);
@@ -538,6 +547,7 @@
   </nav>
 
   <div class="nav__mobile-panel" id="nav-mobile-panel">
+    <button class="nav__mobile-close" aria-label="Close menu" onclick="closeMobileNav()">&#x2715;</button>
     <a href="#about" onclick="closeMobileNav()">About</a>
     <a href="#services" onclick="closeMobileNav()">Services</a>
     <a href="#markets" onclick="closeMobileNav()">Markets</a>
