@@ -104,6 +104,7 @@
       position:relative; z-index:10;
       width:100%; display:flex; align-items:center; justify-content:space-between;
       padding:28px 56px;
+      flex-direction: row;
     }
     .nav__links { display:flex; gap:40px; list-style:none; }
     .nav__links a {
@@ -141,7 +142,7 @@
     .nav__mobile-panel a:hover { color:var(--white); }
     .nav__mobile-panel .nav__cta { margin-top:10px; }
     .nav__mobile-close {
-      position:absolute; top:22px; right:22px; z-index:16;
+      position:absolute; top:62px; right:22px; z-index:16;
       width:44px; height:44px; background:transparent; border:1px solid rgba(255,255,255,0.3);
       border-radius:50%; cursor:pointer; color:var(--white);
       display:flex; align-items:center; justify-content:center;
@@ -450,8 +451,8 @@
     .modal-footer-note { margin-top:40px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.07); font-size:0.72rem; color:rgba(255,255,255,0.25); text-align:center; letter-spacing:0.04em; }
 
     @media(max-width:768px){
-      nav { padding:20px 22px; } .nav__links { display:none; } .nav__cta { display:none; }
-      .nav__burger { display:flex; }
+      nav { padding:20px 22px; justify-content: flex-end; } .nav__links { display:none; } .nav__cta { display:none; }
+      .nav__burger { display:flex; margin-left: auto; }
       .nav__mobile-panel { display:flex; }
       .logo-block { top:130px; width:240px; }
       .logo-img { width:270px; height:270px; }
@@ -585,8 +586,7 @@
   </div>
 </section>
 
-<span id="markets" style="position:relative; top:-90px; display:block;"></span>
-<section class="section section--alt" id="services">
+<section class="section section--alt" id="markets">
   <div class="section__label">Where We Invest Your Money</div>
   <h2 class="section__title" style="max-width:700px;">Three powerful markets.<br>Endless opportunity.</h2>
   <div class="markets-wrap">
@@ -620,7 +620,7 @@
     </div>
   </div>
 
-  <div class="section__label" style="margin-top:100px;">What We Do For You</div>
+  <div id="services" class="section__label" style="margin-top:100px;">What We Do For You</div>
   <h2 class="section__title" style="max-width:700px;">More than investing <br>A full ecosystem.</h2>
   <div class="svc-grid">
     <div class="svc-card"><div class="svc-card__num">01</div><div class="svc-card__title">Quantitative Research</div><p class="svc-card__desc">We dig deep into data. Our quant research team analyses market patterns, volatility cycles, and statistical edges to build strategies grounded in numbers, not guesswork.</p></div>
