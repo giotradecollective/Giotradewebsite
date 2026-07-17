@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Client Portal — GIOTRADE Investment Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --white:#ffffff;
+    --off-white:rgba(255,255,255,0.82);
+    --dim:rgba(255,255,255,0.52);
+    --faint:rgba(255,255,255,0.28);
+    --bg:#0a0a0a;
+    --panel:#0c0c0c;
+    --line:rgba(255,255,255,0.10);
+    --line-soft:rgba(255,255,255,0.06);
+    --font:'Barlow','Helvetica Neue',Arial,sans-serif;
+  }
+  html,body{width:100%;min-height:100%;background:var(--bg);color:var(--white);font-family:var(--font);}
+
+  a{color:inherit;}
+
+  /* ── Top bar ── */
+  .portal-nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:26px 48px;border-bottom:1px solid var(--line-soft);
+  }
+  .portal-nav__brand{font-size:1.1rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;}
+  .portal-nav__brand span{font-weight:200;color:var(--dim);margin-left:6px;font-size:0.65em;letter-spacing:0.3em;}
+  .portal-nav__back{
+    font-size:0.68rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--dim);text-decoration:none;display:flex;align-items:center;gap:10px;
+    transition:color .25s;
+  }
+  .portal-nav__back:hover{color:var(--white);}
+  .portal-nav__back::before{content:'\2190';font-size:0.9rem;}
+
+  /* ── Layout ── */
+  .portal{
+    min-height:calc(100vh - 82px);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  /* ── Left: identity panel ── */
+  .portal__side{
+    background:var(--panel);
+    border-right:1px solid var(--line-soft);
+    padding:80px 64px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;
+  }
+  .portal__side::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+    background:linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.02));
+  }
+  .side__eyebrow{font-size:0.6rem;letter-spacing:0.46em;text-transform:uppercase;color:var(--faint);margin-bottom:22px;}
+  .side__title{font-size:clamp(1.9rem,3vw,2.6rem);font-weight:200;line-height:1.16;max-width:420px;margin-bottom:20px;}
+  .side__body{font-size:0.9rem;font-weight:300;color:var(--dim);line-height:1.85;max-width:400px;}
+
+  .access-list{margin-top:56px;display:flex;flex-direction:column;gap:2px;}
+  .access-item{
+    display:flex;align-items:center;gap:18px;
+    padding:18px 0;border-top:1px solid var(--line-soft);
+  }
+  .access-item:last-child{border-bottom:1px solid var(--line-soft);}
+  .access-item__mark{
+    width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);flex-shrink:0;
+  }
+  .access-item__label{font-size:0.82rem;font-weight:300;letter-spacing:0.03em;color:var(--off-white);}
+
+  .side__foot{margin-top:56px;font-size:0.65rem;letter-spacing:0.08em;color:var(--faint);line-height:1.7;max-width:380px;}
+
+  /* ── Right: form panel ── */
+  .portal__form{
+    display:flex;align-items:center;justify-content:center;
+    padding:64px 48px;
+  }
+  .form-card{width:100%;max-width:400px;}
+  .form-card__eyebrow{font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--faint);margin-bottom:14px;}
+  .form-card__title{font-size:1.7rem;font-weight:200;margin-bottom:8px;}
+  .form-card__sub{font-size:0.82rem;font-weight:300;color:var(--dim);margin-bottom:40px;}
+
+  .field{margin-bottom:22px;}
+  .field label{
+    display:block;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--dim);margin-bottom:10px;
+  }
+  .field input{
+    width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--line);
+    color:var(--white);font-family:var(--font);font-size:0.9rem;padding:14px 16px;
+    outline:none;transition:border-color .25s,background .25s;letter-spacing:0.01em;
+  }
+  .field input::placeholder{color:rgba(255,255,255,0.22);}
+  .field input:focus{border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.06);}
+
+  .field-row{display:flex;align-items:center;justify-content:space-between;margin:-6px 0 30px;}
+  .remember{display:flex;align-items:center;gap:10px;font-size:0.76rem;color:var(--dim);}
+  .remember input{accent-color:#fff;width:14px;height:14px;}
+  .forgot-link{font-size:0.76rem;color:var(--dim);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);transition:color .25s,border-color .25s;}
+  .forgot-link:hover{color:var(--white);border-color:rgba(255,255,255,0.6);}
+
+  .btn-login{
+    width:100%;font-family:var(--font);font-size:0.72rem;font-weight:400;
+    letter-spacing:0.26em;text-transform:uppercase;color:var(--white);
+    background:transparent;border:1px solid rgba(255,255,255,0.6);
+    padding:16px 0;cursor:pointer;position:relative;overflow:hidden;transition:color .35s;
+  }
+  .btn-login::before{
+    content:'';position:absolute;inset:0;background:var(--white);
+    transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:0;
+  }
+  .btn-login:hover::before{transform:scaleX(1);}
+  .btn-login:hover{color:#0a0a0a;}
+  .btn-login span{position:relative;z-index:1;}
+
+  .form-foot{margin-top:28px;font-size:0.72rem;color:var(--faint);line-height:1.7;text-align:center;}
+  .form-foot a{color:var(--dim);text-decoration:underline;text-underline-offset:3px;}
+  .form-foot a:hover{color:var(--white);}
+
+  .divider-row{display:flex;align-items:center;gap:16px;margin:32px 0;}
+  .divider-row .line{flex:1;height:1px;background:var(--line-soft);}
+  .divider-row span{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--faint);}
+
+  .tier-note{
+    display:flex;gap:12px;align-items:flex-start;
+    background:rgba(255,255,255,0.03);border:1px solid var(--line-soft);
+    padding:16px 18px;font-size:0.72rem;color:var(--dim);line-height:1.7;
+  }
+  .tier-note strong{color:var(--off-white);font-weight:500;}
+
+  @media(max-width:860px){
+    .portal-nav{padding:20px 22px;}
+    .portal{grid-template-columns:1fr;}
+    .portal__side{padding:52px 26px 44px;border-right:none;border-bottom:1px solid var(--line-soft);}
+    .side__title{max-width:100%;}
+    .side__body{max-width:100%;}
+    .access-list{margin-top:36px;}
+    .side__foot{max-width:100%;margin-top:36px;}
+    .portal__form{padding:48px 24px 72px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="portal-nav">
+  <div class="portal-nav__brand">GIOTRADE<span>CLIENT PORTAL</span></div>
+  <a href="index.html" class="portal-nav__back">Back to site</a>
+</nav>
+
+<div class="portal">
+
+  <!-- LEFT: identity / what's inside -->
+  <div class="portal__side">
+    <div>
+      <div class="side__eyebrow">Client Portal</div>
+      <h1 class="side__title">Your secure investment workspace.</h1>
+      <p class="side__body">One login gives you a live view of your portfolio, your statements, and the research our team publishes for clients only.</p>
+
+      <div class="access-list">
+        <div class="access-item"><span class="access-item__mark"></span><span class="access-item__label">Portfolio Dashboard</span></div>
+        <div class="access-item"><span class="access-item__mark"></span><span class="access-item__label">Statements</span></div>
+        <div class="access-item"><span class="access-item__mark"></span><span class="access-item__label">Premium Research</span></div>
+        <div class="access-item"><span class="access-item__mark"></span><span class="access-item__label">Education Centre</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: login form -->
+  <div class="portal__form">
+    <div class="form-card">
+      <h2 class="form-card__title">Client &amp; Investor Login</h2>
+      <p class="form-card__sub">Enter your details to access your account.</p>
+
+      <form id="portal-login-form" novalidate>
+        <div class="field">
+          <label for="portal-email">Email address</label>
+          <input type="email" id="portal-email" name="email" placeholder="you@email.com" autocomplete="username" required/>
+        </div>
+        <div class="field">
+          <label for="portal-password">Password</label>
+          <input type="password" id="portal-password" name="password" placeholder="••••••••" autocomplete="current-password" required/>
+        </div>
+
+        <div class="field-row">
+          <label class="remember"><input type="checkbox" name="remember"/> Keep me signed in</label>
+          <a href="#" class="forgot-link" id="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-login"><span>Log In</span></button>
+      </form>
+
+      <div class="divider-row"><div class="line"></div><span>New here</span><div class="line"></div></div>
+
+      <div class="tier-note">
+        <span>&#128274;</span>
+        <span><strong>First time logging in?</strong> Client Portal access is issued by your GIOTRADE advisor once onboarding is complete. Contact us at <a href="mailto:collectiveinvestments@giotradegroup.co.za" style="color:var(--off-white);">collectiveinvestments@giotradegroup.co.za</a> if you haven't received your credentials.</span>
+      </div>
+
+      <p class="form-foot">Two-factor authentication may be required depending on your account settings.<br>Protected by encrypted, session-based authentication.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Front-end scaffold only — wire this up to your auth backend (see notes).
+  document.getElementById('portal-login-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    // POST to your login endpoint here, e.g. fetch('/api/login', {...})
+    alert('This is a design preview. Connect this form to your authentication backend to enable login.');
+  });
+  document.getElementById('forgot-link').addEventListener('click', function(e){
+    e.preventDefault();
+    alert('Wire this to your password-reset flow (e.g. /portal/forgot-password.html).');
+  });
+</script>
+
+</body>
+</html>
