@@ -286,7 +286,65 @@ ${button}
 document.getElementById("logout-btn").addEventListener("click", logout);
  async function loadStatements(){
 
-    alert("Loading Statements...");
+    const profile = await getCurrentProfile();
+
+    const { data, error } = await supabaseClient
+        .from("statements")
+        .select("*")
+        .eq("investor_id", profile.id)
+        .order("statement_date",{ascending:false});
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    let html = `
+    <h2 style="margin-bottom:25px;">Investment Statements</h2>
+    `;
+
+    if(data.length===0){
+
+        html += "<p>No statements available.</p>";
+
+    }else{
+
+        data.forEach(statement=>{
+
+            html += `
+            <div class="statement-row">
+
+                <div>
+                    <strong>${statement.title}</strong><br>
+                    <small>${statement.statement_date}</small>
+                </div>
+
+                <button onclick="downloadStatement('${statement.file_path}')">
+                    Download
+                </button>
+
+            </div>
+            `;
+
+        });
+
+    }
+
+    document.getElementById("viewer").innerHTML = html;
+
+    document.getElementById("viewerModal").style.display="flex";
+
+}   // ← End of loadStatements()
+
+
+async function downloadStatement(path){
+
+    const { data } = supabaseClient
+        .storage
+        .from("statements")
+        .getPublicUrl(path);
+
+    window.open(data.publicUrl,"_blank");
 
 }
 
