@@ -7,73 +7,257 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;600;700&display=swap" rel="stylesheet"/>
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-  body{background:#0a0a0a;color:#fff;font-family:'Barlow','Helvetica Neue',Arial,sans-serif;}
-  .bar{display:flex;justify-content:space-between;align-items:center;padding:26px 48px;border-bottom:1px solid rgba(255,255,255,0.08);}
-  .brand{font-weight:700;letter-spacing:0.2em;}
-  .brand span{font-weight:200;color:rgba(255,255,255,0.5);margin-left:6px;font-size:0.7em;}
-  .logout{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;background:none;border:none;cursor:pointer;font-family:inherit;}
-  .logout:hover{color:#fff;}
-  main{padding:64px 48px;max-width:900px;}
-  h1{font-weight:200;font-size:2rem;margin-bottom:12px;}
-  p.role{color:rgba(255,255,255,0.55);font-size:0.85rem;letter-spacing:0.05em;margin-bottom:40px;text-transform:uppercase;}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
-  .card{border:1px solid rgba(255,255,255,0.1);padding:24px;background:rgba(255,255,255,0.02);}
-  .card h3{font-weight:400;margin-bottom:8px;font-size:1rem;}
-  .card p{color:rgba(255,255,255,0.5);font-size:0.85rem;line-height:1.6;}
-  #loading{padding:64px 48px;color:rgba(255,255,255,0.5);}
+
+  body{
+    background:#0a0a0a;
+    color:#fff;
+    font-family:'Barlow','Helvetica Neue',Arial,sans-serif;
+  }
+
+  .bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:26px 48px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .brand{
+    font-weight:700;
+    letter-spacing:.2em;
+  }
+
+  .brand span{
+    font-weight:200;
+    color:rgba(255,255,255,.5);
+    margin-left:6px;
+    font-size:.7em;
+  }
+
+  .logout{
+    font-size:.7rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.6);
+    text-decoration:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+  }
+
+  .logout:hover{
+    color:#fff;
+  }
+
+  main{
+    padding:64px 48px;
+    max-width:1100px;
+  }
+
+  h1{
+    font-weight:200;
+    font-size:2rem;
+    margin-bottom:18px;
+  }
+
+  .profile-card{
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.02);
+    padding:28px;
+    margin-bottom:40px;
+  }
+
+  .profile-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+  }
+
+  .profile-item h4{
+    color:rgba(255,255,255,.45);
+    font-weight:400;
+    margin-bottom:6px;
+    font-size:.75rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+
+  .profile-item p{
+    font-size:1rem;
+  }
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+  }
+
+  .card{
+    border:1px solid rgba(255,255,255,.1);
+    padding:24px;
+    background:rgba(255,255,255,.02);
+  }
+
+  .card h3{
+    font-weight:400;
+    margin-bottom:8px;
+  }
+
+  .card p{
+    color:rgba(255,255,255,.5);
+    line-height:1.6;
+    font-size:.85rem;
+  }
+
+  #loading{
+    padding:64px 48px;
+    color:rgba(255,255,255,.5);
+  }
 </style>
 </head>
+
 <body>
-  <div id="loading">Loading your dashboard…</div>
 
-  <div id="app" style="display:none;">
-    <div class="bar">
-      <div class="brand">GIOTRADE<span>PORTAL</span></div>
-      <button class="logout" id="logout-btn">Log out</button>
-    </div>
+<div id="loading">Loading your dashboard…</div>
 
-    <main>
-      <h1 id="welcome"></h1>
-      <p class="role" id="role-label"></p>
-      <div class="cards" id="cards"></div>
-    </main>
-  </div>
+<div id="app" style="display:none;">
+
+<div class="bar">
+<div class="brand">GIOTRADE<span>PORTAL</span></div>
+<button class="logout" id="logout-btn">Log out</button>
+</div>
+
+<main>
+
+<h1 id="welcome"></h1>
+
+<div class="profile-card">
+
+<div class="profile-grid">
+
+<div class="profile-item">
+<h4>Investor Number</h4>
+<p id="investor-number"></p>
+</div>
+
+<div class="profile-item">
+<h4>Portfolio</h4>
+<p id="portfolio"></p>
+</div>
+
+<div class="profile-item">
+<h4>Advisor</h4>
+<p id="advisor"></p>
+</div>
+
+<div class="profile-item">
+<h4>Portfolio Value</h4>
+<p id="portfolio-value"></p>
+</div>
+
+<div class="profile-item">
+<h4>Status</h4>
+<p id="status"></p>
+</div>
+
+<div class="profile-item">
+<h4>Role</h4>
+<p id="role-label"></p>
+</div>
+
+</div>
+
+</div>
+
+<div class="cards" id="cards"></div>
+
+</main>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
+
 <script>
-  const CARD_DEFS = [
-    { roles: ['administrator'], title: 'User Management', body: 'Create, edit, and deactivate portal users and roles.' },
-    { roles: ['administrator'], title: 'System Settings', body: 'Manage global portal configuration.' },
-    { roles: ['administrator', 'portfolio_manager'], title: 'Client Portfolios', body: 'Review and manage assigned client portfolios.' },
-    { roles: ['administrator', 'research_analyst'], title: 'Research Library', body: 'Publish and manage premium research content.' },
-    { roles: ['investor'], title: 'Portfolio Dashboard', body: 'Your live portfolio summary and performance.' },
-    { roles: ['investor'], title: 'Statements', body: 'Download your latest investment statements.' },
-    { roles: ['investor'], title: 'Premium Research', body: 'Client-only research and market commentary.' },
-    { roles: ['network_subscriber'], title: 'Network Updates', body: 'Latest GIOTRADE Network content and subscriber notices.' },
-    { roles: ['nexgen_student'], title: 'Education Centre', body: 'Your NexGen course modules and progress.' },
-  ];
 
-  (async () => {
-    const profile = await requireAuth() && await getCurrentProfile();
-    if (!profile) return; // requireAuth already redirected
+const CARD_DEFS = [
 
-    document.getElementById('welcome').textContent = `Welcome back, ${profile.full_name}.`;
-    document.getElementById('role-label').textContent = ROLE_LABELS[profile.role] || profile.role;
+{ roles:['administrator'], title:'User Management', body:'Create, edit and deactivate portal users.' },
 
-    const cardsEl = document.getElementById('cards');
-    CARD_DEFS.filter(c => c.roles.includes(profile.role)).forEach(c => {
-      const div = document.createElement('div');
-      div.className = 'card';
-      div.innerHTML = `<h3>${c.title}</h3><p>${c.body}</p>`;
-      cardsEl.appendChild(div);
-    });
+{ roles:['administrator'], title:'System Settings', body:'Manage portal configuration.' },
 
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  })();
+{ roles:['administrator','portfolio_manager'], title:'Client Portfolios', body:'Review assigned portfolios.' },
 
-  document.getElementById('logout-btn').addEventListener('click', logout);
+{ roles:['administrator','research_analyst'], title:'Research Library', body:'Manage premium research.' },
+
+{ roles:['investor'], title:'Portfolio Dashboard', body:'Your live portfolio summary and performance.' },
+
+{ roles:['investor'], title:'Statements', body:'Download investment statements.' },
+
+{ roles:['investor'], title:'Premium Research', body:'Exclusive market research.' },
+
+{ roles:['network_subscriber'], title:'Network Updates', body:'Latest GIOTRADE Network news.' },
+
+{ roles:['nexgen_student'], title:'Education Centre', body:'Your course modules and progress.' }
+
+];
+
+(async()=>{
+
+const profile = await requireAuth() && await getCurrentProfile();
+
+if(!profile) return;
+
+document.getElementById('welcome').textContent =
+`Welcome back, ${profile.full_name}.`;
+
+document.getElementById('investor-number').textContent =
+profile.investor_number || '-';
+
+document.getElementById('portfolio').textContent =
+profile.portfolio_type || '-';
+
+document.getElementById('advisor').textContent =
+profile.advisor || '-';
+
+document.getElementById('portfolio-value').textContent =
+'R' + Number(profile.portfolio_value || 0).toLocaleString('en-ZA');
+
+document.getElementById('status').textContent =
+profile.status || '-';
+
+document.getElementById('role-label').textContent =
+ROLE_LABELS[profile.role] || profile.role;
+
+const cards=document.getElementById('cards');
+
+CARD_DEFS
+.filter(c=>c.roles.includes(profile.role))
+.forEach(c=>{
+
+const div=document.createElement('div');
+
+div.className='card';
+
+div.innerHTML=
+`<h3>${c.title}</h3><p>${c.body}</p>`;
+
+cards.appendChild(div);
+
+});
+
+document.getElementById('loading').style.display='none';
+
+document.getElementById('app').style.display='block';
+
+})();
+
+document
+.getElementById('logout-btn')
+.addEventListener('click',logout);
+
 </script>
+
 </body>
 </html>
