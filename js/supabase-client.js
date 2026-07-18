@@ -43,31 +43,33 @@ async function getCurrentProfile() {
   } = await supabaseClient.auth.getSession();
 
   if (!session) return null;
-
-  const { data, error } = await supabaseClient
-    .from('profiles')
+const { data, error } = await supabaseClient
+    .from("profiles")
     .select(`
-      full_name,
-      role,
-      investor_number,
-      portfolio_type,
-      advisor,
-      phone,
-      portfolio_value,
-      status
+        id,
+        full_name,
+        role,
+        investor_number,
+        portfolio_type,
+        advisor,
+        portfolio_value,
+        status,
+        last_statement,
+        unread_research,
+        documents_available
     `)
-    .eq('id', session.user.id)
+    .eq("id", session.user.id)
     .single();
 
-  if (error) {
-    console.error(error);
+if(error || !data){
+    console.log(error);
     return null;
-  }
+}
 
-  return {
+return{
     ...data,
-    email: session.user.email
-  };
+    email:session.user.email
+};
 }
 
 /** Require login */
