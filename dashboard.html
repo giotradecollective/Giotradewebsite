@@ -180,83 +180,78 @@
 <script src="js/supabase-client.js"></script>
 
 <script>
-
 const CARD_DEFS = [
-
-{ roles:['administrator'], title:'User Management', body:'Create, edit and deactivate portal users.' },
-
-{ roles:['administrator'], title:'System Settings', body:'Manage portal configuration.' },
-
-{ roles:['administrator','portfolio_manager'], title:'Client Portfolios', body:'Review assigned portfolios.' },
-
-{ roles:['administrator','research_analyst'], title:'Research Library', body:'Manage premium research.' },
-
-{ roles:['investor'], title:'Portfolio Dashboard', body:'Your live portfolio summary and performance.' },
-
-{ roles:['investor'], title:'Statements', body:'Download investment statements.' },
-
-{ roles:['investor'], title:'Premium Research', body:'Exclusive market research.' },
-
-{ roles:['network_subscriber'], title:'Network Updates', body:'Latest GIOTRADE Network news.' },
-
-{ roles:['nexgen_student'], title:'Education Centre', body:'Your course modules and progress.' }
-
+  { roles:['administrator'], title:'User Management', body:'Create, edit and deactivate portal users.' },
+  { roles:['administrator'], title:'System Settings', body:'Manage portal configuration.' },
+  { roles:['administrator','portfolio_manager'], title:'Client Portfolios', body:'Review assigned portfolios.' },
+  { roles:['administrator','research_analyst'], title:'Research Library', body:'Manage premium research.' },
+  { roles:['investor'], title:'Portfolio Dashboard', body:'Your live portfolio summary and performance.' },
+  { roles:['investor'], title:'Statements', body:'Download investment statements.' },
+  { roles:['investor'], title:'Premium Research', body:'Exclusive market research.' },
+  { roles:['network_subscriber'], title:'Network Updates', body:'Latest GIOTRADE Network news.' },
+  { roles:['nexgen_student'], title:'Education Centre', body:'Your course modules and progress.' }
 ];
 
-(async()=>{
+(async () => {
 
-const profile = await requireAuth() && await getCurrentProfile();
+    await requireAuth();
 
-if(!profile) return;
+    const profile = await getCurrentProfile();
 
-document.getElementById('welcome').textContent =
-`Welcome back, ${profile.full_name}.`;
+    console.log("PROFILE FROM SUPABASE:", profile);
 
-document.getElementById('investor-number').textContent =
-profile.investor_number || '-';
+    if (!profile) {
+        alert("No profile found.");
+        return;
+    }
 
-document.getElementById('portfolio').textContent =
-profile.portfolio_type || '-';
+    document.getElementById('welcome').textContent =
+        `Welcome back, ${profile.full_name}`;
 
-document.getElementById('advisor').textContent =
-profile.advisor || '-';
+    document.getElementById('investor-number').textContent =
+        profile.investor_number || "Not Set";
 
-document.getElementById('portfolio-value').textContent =
-'R' + Number(profile.portfolio_value || 0).toLocaleString('en-ZA');
+    document.getElementById('portfolio').textContent =
+        profile.portfolio_type || "Not Set";
 
-document.getElementById('status').textContent =
-profile.status || '-';
+    document.getElementById('advisor').textContent =
+        profile.advisor || "Not Set";
 
-document.getElementById('role-label').textContent =
-ROLE_LABELS[profile.role] || profile.role;
+    document.getElementById('portfolio-value').textContent =
+        profile.portfolio_value != null
+            ? "R" + Number(profile.portfolio_value).toLocaleString("en-ZA")
+            : "Not Set";
 
-const cards=document.getElementById('cards');
+    document.getElementById('status').textContent =
+        profile.status || "Not Set";
 
-CARD_DEFS
-.filter(c=>c.roles.includes(profile.role))
-.forEach(c=>{
+    document.getElementById('role-label').textContent =
+        ROLE_LABELS[profile.role] || profile.role;
 
-const div=document.createElement('div');
+    const cards = document.getElementById('cards');
 
-div.className='card';
+    CARD_DEFS
+        .filter(card => card.roles.includes(profile.role))
+        .forEach(card => {
 
-div.innerHTML=
-`<h3>${c.title}</h3><p>${c.body}</p>`;
+            const div = document.createElement("div");
+            div.className = "card";
+            div.innerHTML = `
+                <h3>${card.title}</h3>
+                <p>${card.body}</p>
+            `;
 
-cards.appendChild(div);
+            cards.appendChild(div);
 
-});
+        });
 
-document.getElementById('loading').style.display='none';
-
-document.getElementById('app').style.display='block';
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("app").style.display = "block";
 
 })();
 
-document
-.getElementById('logout-btn')
-.addEventListener('click',logout);
-
+document.getElementById("logout-btn").addEventListener("click", logout);
+ 
 </script>
 
 </body>
