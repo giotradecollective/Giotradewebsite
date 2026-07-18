@@ -288,6 +288,8 @@ document.getElementById("logout-btn").addEventListener("click", logout);
 
     const profile = await getCurrentProfile();
 
+    console.log(profile);
+
     const { data, error } = await supabaseClient
         .from("statements")
         .select("*")
@@ -339,12 +341,17 @@ document.getElementById("logout-btn").addEventListener("click", logout);
 
 async function downloadStatement(path){
 
-    const { data } = supabaseClient
+    const { data, error } = await supabaseClient
         .storage
         .from("statements")
-        .getPublicUrl(path);
+        .createSignedUrl(path, 60); // link valid for 60 seconds
 
-    window.open(data.publicUrl,"_blank");
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    window.open(data.signedUrl,"_blank");
 
 }
 
