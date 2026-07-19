@@ -39,6 +39,18 @@
   .access-list{margin-top:56px;display:flex;flex-direction:column;gap:2px;}
   .access-item{display:flex;align-items:center;gap:18px;padding:18px 0;border-top:1px solid var(--line-soft);}
   .access-item:last-child{border-bottom:1px solid var(--line-soft);}
+
+  /* ── Latest headlines widget ── */
+  .side__news{margin-top:56px;}
+  .side__news-label{font-size:0.6rem;letter-spacing:0.34em;text-transform:uppercase;color:var(--faint);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;}
+  .side__news-label a{font-size:0.6rem;letter-spacing:0.1em;color:var(--dim);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);}
+  .side__news-label a:hover{color:var(--white);border-color:rgba(255,255,255,0.6);}
+  .news-mini{display:flex;flex-direction:column;}
+  .news-mini-item{display:block;padding:16px 0;border-top:1px solid var(--line-soft);text-decoration:none;transition:opacity .2s;}
+  .news-mini-item:last-child{border-bottom:1px solid var(--line-soft);}
+  .news-mini-item:hover{opacity:0.7;}
+  .news-mini-item__meta{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+  .news-mini-item__title{font-size:0.86rem;font-weight:300;color:var(--off-white);line-height:1.5;}
   .access-item__mark{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);flex-shrink:0;}
   .access-item__label{font-size:0.82rem;font-weight:300;letter-spacing:0.03em;color:var(--off-white);}
 
@@ -103,6 +115,27 @@
       <div class="side__eyebrow">Client Portal</div>
       <h1 class="side__title">Your secure investment workspace.</h1>
       <p class="side__body">One login gives you a live view of your portfolio, your statements, and the research our team publishes for clients only.</p>
+
+      <div class="side__news">
+        <div class="side__news-label">
+          <span>Latest from Giotrade Network</span>
+          <a href="index.html#news">View all</a>
+        </div>
+        <div class="news-mini">
+          <a class="news-mini-item" href="index.html#news">
+            <div class="news-mini-item__meta">Commodities &middot; May 2026</div>
+            <div class="news-mini-item__title">Why Sugar Could Become the Next Major Global Commodity Story</div>
+          </a>
+          <a class="news-mini-item" href="index.html#news">
+            <div class="news-mini-item__meta">Commodities &middot; May 2026</div>
+            <div class="news-mini-item__title">Global Oil Tensions Continue to Pressure Markets and Household Costs</div>
+          </a>
+          <a class="news-mini-item" href="index.html#news">
+            <div class="news-mini-item__meta">Commodities &middot; April 2026</div>
+            <div class="news-mini-item__title">Should We Fear the Current Global Tension Around Oil?</div>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
