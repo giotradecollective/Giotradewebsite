@@ -259,8 +259,8 @@
     .scroll-hint__line { width:1px; height:36px; background:linear-gradient(to bottom,rgba(255,255,255,0.7),transparent); }
     .scroll-hint__label { font-size:0.57rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--white); }
 
-    .section { background:#0c0c0c; padding:100px 56px; }
-    .section--alt { background:#111111; }
+    .section { background:#0a0a0a; padding:100px 56px; }
+    .section--alt { background:#0a0a0a; }
     .section__label { font-size:0.61rem; letter-spacing:0.46em; text-transform:uppercase; color:rgba(255,255,255,0.27); margin-bottom:18px; }
     .section__title { font-size:clamp(1.7rem,3.2vw,2.6rem); font-weight:200; color:var(--white); max-width:580px; line-height:1.2; margin-bottom:22px; }
     .section__body { font-size:0.93rem; font-weight:300; color:rgba(255,255,255,0.51); max-width:510px; line-height:1.86; }
@@ -274,14 +274,13 @@
     .markets-wrap { margin-top:60px; display:flex; flex-direction:column; gap:3px; }
     .mkt-flagship {
       display:grid; grid-template-columns:1fr auto; align-items:center; gap:32px;
-      padding:48px 52px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14);
+      padding:48px 0; background:transparent; border:none;
       position:relative; overflow:hidden; transition:background .35s;
     }
     .mkt-flagship::before {
-      content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
-      background:linear-gradient(to bottom,rgba(255,255,255,0.8),rgba(255,255,255,0.1));
+      display: none;
     }
-    .mkt-flagship:hover { background:rgba(255,255,255,0.09); }
+    .mkt-flagship:hover { background:transparent; }
     .mkt-flagship__pill {
       display:inline-flex; align-items:center; gap:8px;
       font-size:0.6rem; font-weight:600; letter-spacing:0.32em; text-transform:uppercase;
@@ -338,7 +337,7 @@
       filter:grayscale(85%) brightness(0.55); min-height:380px;
     }
     .news-feat-body {
-      padding:52px 48px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+      padding:52px 48px; background:transparent; border:none;
       display:flex; flex-direction:column; justify-content:space-between;
     }
     .news-feat-issue { display:flex; align-items:center; gap:16px; margin-bottom:28px; }
@@ -361,10 +360,10 @@
 
     .news-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; margin-top:3px; }
     .news-card {
-      padding:38px 36px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);
+      padding:38px 0; background:transparent; border:none;
       display:flex; flex-direction:column; transition:background .3s, transform .3s; cursor:pointer;
     }
-    .news-card:hover { background:rgba(255,255,255,0.055); transform:translateY(-3px); }
+    .news-card:hover { background:transparent; transform:translateY(-3px); }
     .news-card__meta { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
     .news-card__cat {
       font-size:0.56rem; letter-spacing:0.34em; text-transform:uppercase;
@@ -624,7 +623,7 @@
 
 <section class="section section--alt" id="markets">
   <div class="section__label">Where We Invest Your Money</div>
-  <h2 class="section__title" style="max-width:700px;">Three powerful markets.<br>Endless opportunity.</h2>
+  <h2 class="section__title" style="max-width:700px;">Flagship market.<br>Endless opportunity.</h2>
   <div class="markets-wrap">
     <div class="mkt-flagship">
       <div>
@@ -640,20 +639,7 @@
         <div class="mkt-tag">Always Open</div>
       </div>
     </div>
-    <div class="mkt-row">
-      <div class="mkt-card">
-        <div class="mkt-card__num">02</div>
-        <div class="mkt-card__title">Traditional Equities &amp; Stocks</div>
-        <div class="mkt-card__sub">Global Stock Markets</div>
-        <p class="mkt-card__desc">We take high-conviction positions in global equity markets, identifying companies and sectors with genuine long-term momentum. Whether it is growth stocks, blue chips or emerging market plays, we bring research-backed discipline to every trade.</p>
-      </div>
-      <div class="mkt-card">
-        <div class="mkt-card__num">03</div>
-        <div class="mkt-card__title">Commodities</div>
-        <div class="mkt-card__sub">Hard &amp; Soft Commodities</div>
-        <p class="mkt-card__desc">From gold and oil to agricultural assets, commodities give your portfolio real diversification and a natural inflation hedge. We trade both hard commodities (metals, energy) and soft commodities (agricultural products) with precision timing.</p>
-      </div>
-    </div>
+
   </div>
 
   <div id="services" class="section__label" style="margin-top:100px;">What We Do For You</div>
@@ -696,26 +682,26 @@
     </div>
   </div>
 
-  <div class="news-grid">
-    <div class="news-card" onclick="openArticle('sugar')">
-      <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">May 2026</div><div class="news-card__issue">Issue 03</div></div>
-      <div class="news-card__title">Why Sugar Could Become the Next Major Global Commodity Story</div>
-      <p class="news-card__excerpt">Sugar is emerging as a key commodity influenced by energy and climate. We examine its growing role in the global economy.</p>
-      <button class="news-card__link">Read</button>
+    <div class="news-grid">
+      <div class="news-card" onclick="openArticle('sugar')">
+        <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">May 2026</div><div class="news-card__issue">Issue 03</div></div>
+        <div class="news-card__title">Why Sugar Could Become the Next Major Global Commodity Story</div>
+        <p class="news-card__excerpt">Sugar is emerging as a key commodity influenced by energy and climate. We examine its growing role in the global economy.</p>
+        <button class="news-card__link">Read</button>
+      </div>
+      <div class="news-card" onclick="openArticle('oil2')">
+        <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">May 2026</div><div class="news-card__issue">Issue 02</div></div>
+        <div class="news-card__title">Global Oil Tensions Continue to Pressure Markets and Household Costs</div>
+        <p class="news-card__excerpt">Geopolitical pressure on oil supply routes deepens. We examine how sustained energy instability is spilling into inflation.</p>
+        <button class="news-card__link">Read</button>
+      </div>
+      <div class="news-card" onclick="openArticle('oil')">
+        <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">14 Apr 2026</div><div class="news-card__issue">Issue 01</div></div>
+        <div class="news-card__title">Should We Fear the Current Global Tension Around Oil?</div>
+        <p class="news-card__excerpt">Oil markets reacted sharply to regional tensions. We explain what drives price movements and why the system is designed to adapt.</p>
+        <button class="news-card__link">Read</button>
+      </div>
     </div>
-    <div class="news-card" onclick="openArticle('oil2')">
-      <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">May 2026</div><div class="news-card__issue">Issue 02</div></div>
-      <div class="news-card__title">Global Oil Tensions Continue to Pressure Markets and Household Costs</div>
-      <p class="news-card__excerpt">Geopolitical pressure on oil supply routes deepens. We examine how sustained energy instability is spilling into inflation.</p>
-      <button class="news-card__link">Read</button>
-    </div>
-    <div class="news-card" onclick="openArticle('oil')">
-      <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">14 Apr 2026</div><div class="news-card__issue">Issue 01</div></div>
-      <div class="news-card__title">Should We Fear the Current Global Tension Around Oil?</div>
-      <p class="news-card__excerpt">Oil markets reacted sharply to regional tensions. We explain what drives price movements and why the system is designed to adapt.</p>
-      <button class="news-card__link">Read</button>
-    </div>
-  </div>
 
   <div class="news-subscribe">
     <div class="news-subscribe__text">
@@ -750,12 +736,34 @@
     <p class="footer__copy" style="margin-top:8px;">22 Fredman Dr, Sandown, Sandton, 2196</p>
     <p class="footer__copy" style="margin-top:4px;"><a href="tel:+27118232235" style="color:rgba(255,255,255,0.17);text-decoration:none;">T +27 11 823 2235</a></p>
     <p class="footer__copy" style="margin-top:4px;"><a href="mailto:collectiveinvestments@giotradegroup.co.za" style="color:rgba(255,255,255,0.17);text-decoration:none;">collectiveinvestments@giotradegroup.co.za</a></p>
+    
+    <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 32px;">
+      <div style="font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 4px;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">GROUP</span></div>
+      <div style="font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.25); font-style: italic; margin-bottom: 24px;">Powering our subsidiaries</div>
+      
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Investment Solutions</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Network</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">NexGen Programme</span></div>
+        </div>
+      </div>
+    </div>
   </div>
   <ul class="footer__links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#markets">Markets</a></li>
+    <li><a href="#" onclick="openStoreModal(); return false;">Investment Tools Store</a></li>
     <li><a href="#news">News &amp; Insights</a></li>
+    <li><a href="https://edustore.giotradegroup.co.za" target="_blank" rel="noopener">Edustore</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <ul class="footer__links">
