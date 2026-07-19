@@ -1147,6 +1147,42 @@
 
 <style>
 
+/* ── Cookie consent banner ── */
+#cookie-banner{
+  display:none;
+  position:fixed; left:0; right:0; bottom:0; z-index:99999;
+  background:rgba(8,8,8,0.97); backdrop-filter:blur(10px);
+  border-top:1px solid rgba(255,255,255,0.12);
+  padding:22px 32px;
+  font-family:'Barlow','Helvetica Neue',Arial,sans-serif;
+}
+#cookie-banner.active{ display:flex; }
+.cookie-banner__inner{
+  max-width:1200px; margin:0 auto; width:100%;
+  display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
+}
+.cookie-banner__text{ flex:1; min-width:240px; }
+.cookie-banner__text p{
+  font-size:0.82rem; font-weight:300; color:rgba(255,255,255,0.7); line-height:1.7; margin:0;
+}
+.cookie-banner__text a{ color:#fff; text-decoration:underline; text-underline-offset:3px; }
+.cookie-banner__actions{ display:flex; gap:12px; flex-shrink:0; flex-wrap:wrap; }
+.cookie-btn{
+  font-family:inherit; font-size:0.68rem; font-weight:400; letter-spacing:0.16em; text-transform:uppercase;
+  padding:11px 22px; cursor:pointer; border:1px solid rgba(255,255,255,0.5);
+  background:transparent; color:#fff; transition:background .25s, color .25s;
+  white-space:nowrap;
+}
+.cookie-btn:hover{ background:rgba(255,255,255,0.1); }
+.cookie-btn--accept{ background:#fff; color:#0a0a0a; border-color:#fff; }
+.cookie-btn--accept:hover{ background:rgba(255,255,255,0.85); }
+@media(max-width:768px){
+  #cookie-banner{ padding:18px 20px; }
+  .cookie-banner__inner{ flex-direction:column; align-items:stretch; gap:16px; }
+  .cookie-banner__actions{ width:100%; }
+  .cookie-btn{ flex:1; text-align:center; }
+}
+
 .mobile-store-fab{
   display:none;
 }
@@ -1419,6 +1455,49 @@
   setInterval(driftFallback, 3000);
 
 })();
+</script>
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookie-banner">
+  <div class="cookie-banner__inner">
+    <div class="cookie-banner__text">
+      <p>We use cookies to keep the site running smoothly and to understand how it's used. See our <a href="#" onclick="document.getElementById('popia-modal').style.display='flex';return false;">Privacy Policy</a> for details.</p>
+    </div>
+    <div class="cookie-banner__actions">
+      <button class="cookie-btn" onclick="giotradeCookieDecline()">Decline</button>
+      <button class="cookie-btn cookie-btn--accept" onclick="giotradeCookieAccept()">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var STORAGE_KEY = 'giotrade_cookie_consent';
+    var banner = document.getElementById('cookie-banner');
+
+    function getConsent(){
+      try { return localStorage.getItem(STORAGE_KEY); } catch(e){ return null; }
+    }
+    function setConsent(value){
+      try { localStorage.setItem(STORAGE_KEY, value); } catch(e){}
+    }
+
+    if (!getConsent()) {
+      banner.classList.add('active');
+    }
+
+    window.giotradeCookieAccept = function(){
+      setConsent('accepted');
+      banner.classList.remove('active');
+      // Analytics/marketing scripts that require consent can be
+      // initialized here once the user has accepted.
+    };
+
+    window.giotradeCookieDecline = function(){
+      setConsent('declined');
+      banner.classList.remove('active');
+      // Only essential/functional cookies should be set when declined.
+    };
+  })();
 </script>
 
 </body>
