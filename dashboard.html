@@ -52,7 +52,57 @@
 
   main{
     padding:64px 48px;
-    max-width:1100px;
+    max-width:1320px;
+  }
+
+  .dash-layout{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:40px;
+    align-items:start;
+  }
+
+  /* ── Currency converter sidebar widget ── */
+  .sidebar-card{
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.02);
+    padding:26px;
+  }
+  .sidebar-card + .sidebar-card{ margin-top:24px; }
+  .sidebar-card h3{
+    font-weight:400; font-size:.95rem; margin-bottom:6px;
+  }
+  .sidebar-card p.sidebar-card__sub{
+    color:rgba(255,255,255,.4); font-size:.75rem; margin-bottom:22px; line-height:1.6;
+  }
+  .fx-row{ display:flex; gap:10px; margin-bottom:14px; }
+  .fx-field{ flex:1; }
+  .fx-field label{
+    display:block; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(255,255,255,.4); margin-bottom:8px;
+  }
+  .fx-field input, .fx-field select{
+    width:100%; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.14);
+    color:#fff; font-family:inherit; font-size:.85rem; padding:10px 12px; outline:none;
+  }
+  .fx-field select{ cursor:pointer; }
+  .fx-field input:focus, .fx-field select:focus{ border-color:rgba(255,255,255,.4); }
+  .fx-swap{
+    display:flex; align-items:center; justify-content:center;
+    width:100%; background:transparent; border:1px solid rgba(255,255,255,.14); color:rgba(255,255,255,.6);
+    padding:8px 0; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
+    margin-bottom:14px; transition:background .2s, color .2s;
+  }
+  .fx-swap:hover{ background:rgba(255,255,255,.06); color:#fff; }
+  .fx-result{
+    border-top:1px solid rgba(255,255,255,.08); padding-top:16px; margin-top:4px;
+  }
+  .fx-result__value{ font-size:1.5rem; font-weight:200; }
+  .fx-result__rate{ font-size:.7rem; color:rgba(255,255,255,.35); margin-top:6px; }
+  .fx-note{ font-size:.65rem; color:rgba(255,255,255,.25); margin-top:14px; line-height:1.6; }
+
+  @media(max-width:960px){
+    .dash-layout{ grid-template-columns:1fr; }
   }
 
   h1{
@@ -151,6 +201,10 @@
 
 <h1 id="welcome"></h1>
 
+<div class="dash-layout">
+
+<div class="dash-main">
+
 <div class="profile-card">
 
 <div class="profile-grid">
@@ -190,6 +244,54 @@
 </div>
 
 <div class="cards" id="cards"></div>
+
+</div>
+
+<div class="dash-sidebar">
+  <div class="sidebar-card">
+    <h3>Currency Converter</h3>
+    <p class="sidebar-card__sub">Convert your portfolio value into another currency using live exchange rates.</p>
+
+    <div class="fx-row">
+      <div class="fx-field">
+        <label for="fx-amount">Amount</label>
+        <input type="number" id="fx-amount" value="1000" min="0" step="any"/>
+      </div>
+    </div>
+
+    <div class="fx-row">
+      <div class="fx-field">
+        <label for="fx-from">From</label>
+        <select id="fx-from">
+          <option value="ZAR" selected>ZAR - South African Rand</option>
+          <option value="USD">USD - US Dollar</option>
+          <option value="EUR">EUR - Euro</option>
+          <option value="GBP">GBP - British Pound</option>
+        </select>
+      </div>
+      <div class="fx-field">
+        <label for="fx-to">To</label>
+        <select id="fx-to">
+          <option value="USD" selected>USD - US Dollar</option>
+          <option value="ZAR">ZAR - South African Rand</option>
+          <option value="EUR">EUR - Euro</option>
+          <option value="GBP">GBP - British Pound</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="fx-swap" id="fx-swap-btn">&#8645; Swap currencies</button>
+
+    <div class="fx-result">
+      <div class="fx-result__value" id="fx-result-value">&mdash;</div>
+      <div class="fx-result__rate" id="fx-result-rate">Fetching live rate&hellip;</div>
+    </div>
+
+    <p class="fx-note" id="fx-note">Rates update automatically. For reference only — actual transaction rates may differ.</p>
+  </div>
+</div>
+
+</div>
 
 </main>
 
@@ -284,6 +386,93 @@ ${button}
 })();
 
 document.getElementById("logout-btn").addEventListener("click", logout);
+
+/* ── Currency Converter widget ──
+   Uses a free, keyless exchange-rate API. If it's unreachable (e.g. no
+   internet, or blocked), falls back to approximate static rates so the
+   widget still works — clearly labelled as an estimate in that case. */
+(function () {
+  const amountEl = document.getElementById('fx-amount');
+  const fromEl   = document.getElementById('fx-from');
+  const toEl     = document.getElementById('fx-to');
+  const swapBtn  = document.getElementById('fx-swap-btn');
+  const valueEl  = document.getElementById('fx-result-value');
+  const rateEl   = document.getElementById('fx-result-rate');
+  const noteEl   = document.getElementById('fx-note');
+
+  // Approximate fallback rates (relative to 1 ZAR), used only if the
+  // live API can't be reached.
+  const FALLBACK_PER_ZAR = { ZAR: 1, USD: 0.055, EUR: 0.051, GBP: 0.043 };
+
+  let ratesCache = null; // { base: 'ZAR', rates: { USD, EUR, GBP, ZAR }, live: true/false }
+
+  function formatMoney(value, code) {
+    try {
+      return new Intl.NumberFormat('en-ZA', { style: 'currency', currency: code, maximumFractionDigits: 2 }).format(value);
+    } catch (e) {
+      return code + ' ' + value.toFixed(2);
+    }
+  }
+
+  async function loadRates() {
+    try {
+      const res = await fetch('https://open.er-api.com/v6/latest/ZAR');
+      if (!res.ok) throw new Error('bad response');
+      const data = await res.json();
+      if (!data.rates) throw new Error('no rates');
+      ratesCache = { base: 'ZAR', rates: data.rates, live: true };
+      noteEl.textContent = 'Live rates. For reference only — actual transaction rates may differ.';
+    } catch (e) {
+      ratesCache = { base: 'ZAR', rates: FALLBACK_PER_ZAR, live: false };
+      noteEl.textContent = 'Estimated rates (live feed unavailable). For reference only.';
+    }
+    convert();
+  }
+
+  function convert() {
+    if (!ratesCache) return;
+    const amount = parseFloat(amountEl.value);
+    const from   = fromEl.value;
+    const to     = toEl.value;
+
+    if (isNaN(amount)) {
+      valueEl.textContent = '—';
+      rateEl.textContent = '';
+      return;
+    }
+
+    const rates = ratesCache.rates;
+    if (!(from in rates) || !(to in rates)) {
+      valueEl.textContent = '—';
+      rateEl.textContent = 'Rate unavailable for this pair.';
+      return;
+    }
+
+    // Convert via ZAR base: amount(from) -> ZAR -> to
+    const amountInZAR = from === 'ZAR' ? amount : amount / rates[from];
+    const result = to === 'ZAR' ? amountInZAR : amountInZAR * rates[to];
+    const unitRate = (to === 'ZAR' ? 1 : rates[to]) / (from === 'ZAR' ? 1 : rates[from]);
+
+    valueEl.textContent = formatMoney(result, to);
+    rateEl.textContent = `1 ${from} = ${unitRate.toFixed(4)} ${to}` + (ratesCache.live ? '' : ' (estimated)');
+  }
+
+  swapBtn.addEventListener('click', function () {
+    const f = fromEl.value;
+    fromEl.value = toEl.value;
+    toEl.value = f;
+    convert();
+  });
+
+  amountEl.addEventListener('input', convert);
+  fromEl.addEventListener('change', convert);
+  toEl.addEventListener('change', convert);
+
+  loadRates();
+  // Refresh live rates periodically in case the widget stays open a while.
+  setInterval(loadRates, 5 * 60 * 1000);
+})();
+
  async function loadStatements(){
 
     const profile = await getCurrentProfile();
