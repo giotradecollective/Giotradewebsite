@@ -157,8 +157,12 @@
 
   .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:repeat(2,1fr);
     gap:18px;
+  }
+
+  @media(max-width:640px){
+    .cards{ grid-template-columns:1fr; }
   }
 
   .card{
@@ -392,6 +396,8 @@ const CARD_DEFS = [
   { roles:['administrator','research_analyst'], title:'Research Library', body:'Manage premium research.' },
   { roles:['investor'], title:'Investment Statements', body:'Download your official monthly and annual investment statements.' },
   { roles:['investor'], title:'Premium Research', body:'Access exclusive GIOTRADE Network research.' },
+  { roles:['investor'], title:'FICA Documentation', body:'Your personal FICA compliance documents — proof of identity, proof of address and other verification records held securely on file.' },
+  { roles:['investor'], title:'Investment Contracts', body:'Your signed mandates, agreements and contract documentation for every portfolio held with GIOTRADE.' },
 ];
 
 (async () => {
@@ -452,6 +458,10 @@ else if(card.title==="Investment Contracts"){
 
 else if(card.title==="Premium Research"){
     button='<button class="open-module" onclick="loadResearch()">Open</button>';
+}
+
+else if(card.title==="FICA Documentation"){
+    button='<button class="open-module" onclick="loadFica()">Open</button>';
 }
 
 div.innerHTML=`
@@ -637,6 +647,12 @@ async function loadDocuments(){
 async function loadResearch(){
 
     alert("Loading Research...");
+
+}
+
+async function loadFica(){
+
+    alert("Loading FICA Documentation...");
 
 }
 </script>
