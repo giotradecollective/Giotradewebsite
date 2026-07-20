@@ -210,6 +210,31 @@
     color:rgba(255,255,255,.5);
 }
 
+.statement-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.statement-row button{
+    background:#ffffff;
+    color:#000;
+    border:none;
+    padding:8px 16px;
+    font-family:'Barlow',sans-serif;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.statement-row button:hover{
+    background:#d9d9d9;
+}
+
 /* ── GIOTRADE LIVE MARKET TICKER (shared with homepage) ── */
 .market-ticker {
   width:100%; background:#050505;
@@ -638,21 +663,147 @@ async function downloadStatement(path){
 
 }
 
+async function loadFica(){
+
+    const profile = await getCurrentProfile();
+
+    const { data, error } = await supabaseClient
+        .from("fica_documents")
+        .select("*")
+        .eq("investor_id", profile.id)
+        .order("document_date", { ascending: false });
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    let html = `
+    <h2 style="margin-bottom:25px;">FICA Documentation</h2>
+    `;
+
+    if(data.length === 0){
+
+        html += "<p>No FICA documents available.</p>";
+
+    }else{
+
+        data.forEach(doc => {
+
+            html += `
+            <div class="statement-row">
+
+                <div>
+                    <strong>${doc.title}</strong><br>
+                    <small>${doc.document_date}</small>
+                </div>
+
+                <button onclick="downloadFicaDocument('${doc.file_path}')">
+                    Download
+                </button>
+
+            </div>
+            `;
+
+        });
+
+    }
+
+    document.getElementById("viewer").innerHTML = html;
+
+    document.getElementById("viewerModal").style.display = "flex";
+
+}   // ← End of loadFica()
+
+
+async function downloadFicaDocument(path){
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("fica_documents")
+        .createSignedUrl(path, 60); // link valid for 60 seconds
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    window.open(data.signedUrl, "_blank");
+
+}
+
 async function loadDocuments(){
 
-    alert("Loading Documents...");
+    const profile = await getCurrentProfile();
+
+    const { data, error } = await supabaseClient
+        .from("contracts")
+        .select("*")
+        .eq("investor_id", profile.id)
+        .order("contract_date", { ascending: false });
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    let html = `
+    <h2 style="margin-bottom:25px;">Investment Contracts</h2>
+    `;
+
+    if(data.length === 0){
+
+        html += "<p>No contracts available.</p>";
+
+    }else{
+
+        data.forEach(doc => {
+
+            html += `
+            <div class="statement-row">
+
+                <div>
+                    <strong>${doc.title}</strong><br>
+                    <small>${doc.contract_date}</small>
+                </div>
+
+                <button onclick="downloadContract('${doc.file_path}')">
+                    Download
+                </button>
+
+            </div>
+            `;
+
+        });
+
+    }
+
+    document.getElementById("viewer").innerHTML = html;
+
+    document.getElementById("viewerModal").style.display = "flex";
+
+}   // ← End of loadDocuments()
+
+
+async function downloadContract(path){
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("contracts")
+        .createSignedUrl(path, 60); // link valid for 60 seconds
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    window.open(data.signedUrl, "_blank");
 
 }
 
 async function loadResearch(){
 
     alert("Loading Research...");
-
-}
-
-async function loadFica(){
-
-    alert("Loading FICA Documentation...");
 
 }
 </script>
