@@ -159,6 +159,42 @@
     font-size:1rem;
   }
 
+  /* ── Balance hide/show toggle ── */
+  .balance-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .balance-value{
+    font-variant-numeric:tabular-nums;
+    letter-spacing:.02em;
+  }
+
+  .balance-toggle{
+    background:none;
+    border:none;
+    padding:2px;
+    margin:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:rgba(255,255,255,.4);
+    transition:color .2s;
+    line-height:0;
+  }
+
+  .balance-toggle:hover{
+    color:#fff;
+  }
+
+  .balance-toggle svg{
+    width:16px;
+    height:16px;
+    display:block;
+  }
+
   .cards{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -343,7 +379,12 @@
 
 <div class="profile-item">
 <h4>Portfolio Value</h4>
-<p id="portfolio-value"></p>
+<div class="balance-row">
+<p class="balance-value" id="portfolio-value"></p>
+<button type="button" class="balance-toggle" id="portfolio-value-toggle" aria-label="Hide portfolio value" aria-pressed="false" title="Hide balance">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+</button>
+</div>
 </div>
 
 <div class="profile-item">
@@ -400,7 +441,12 @@
     <button class="fx-swap" id="fx-swap-btn">&#8645; Swap currencies</button>
 
     <div class="fx-result">
-      <div class="fx-result__value" id="fx-result-value">&mdash;</div>
+      <div class="balance-row">
+        <div class="fx-result__value balance-value" id="fx-result-value">&mdash;</div>
+        <button type="button" class="balance-toggle" id="fx-result-toggle" aria-label="Hide converted amount" aria-pressed="false" title="Hide balance">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
       <div class="fx-result__rate" id="fx-result-rate">Fetching live rate&hellip;</div>
     </div>
 
@@ -416,6 +462,71 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
+
+<script>
+/* ── Balance visibility (hide/show) ──────────────────────────────
+   Lets the investor mask sensitive figures (portfolio value, converted
+   amounts) with one click, and remembers the choice for next time. */
+(function () {
+  const STORAGE_KEY = 'giotrade_balances_hidden';
+  const MASK = '••••••';
+
+  const EYE_OPEN =
+    '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/>';
+  const EYE_CLOSED =
+    '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.6 20.6 0 0 1 5.06-5.94"/>' +
+    '<path d="M9.9 4.24A10.58 10.58 0 0 1 12 4c7 0 11 7 11 7a20.55 20.55 0 0 1-2.16 3.19"/>' +
+    '<path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/>';
+
+  let hidden = localStorage.getItem(STORAGE_KEY) === '1';
+  const entries = {}; // valueId -> { el, btn }
+
+  function paintButton(btn) {
+    btn.querySelector('svg').innerHTML = hidden ? EYE_CLOSED : EYE_OPEN;
+    btn.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+    const label = hidden ? 'Show balance' : 'Hide balance';
+    btn.setAttribute('aria-label', label);
+    btn.title = label;
+  }
+
+  function paintValue(entry) {
+    if (entry.el.dataset.real === undefined) return;
+    entry.el.textContent = hidden ? MASK : entry.el.dataset.real;
+  }
+
+  function paintAll() {
+    Object.values(entries).forEach((entry) => {
+      paintValue(entry);
+      paintButton(entry.btn);
+    });
+  }
+
+  function bind(valueId, toggleId) {
+    const el = document.getElementById(valueId);
+    const btn = document.getElementById(toggleId);
+    if (!el || !btn) return;
+    entries[valueId] = { el, btn };
+    paintButton(btn);
+    btn.addEventListener('click', function () {
+      hidden = !hidden;
+      localStorage.setItem(STORAGE_KEY, hidden ? '1' : '0');
+      paintAll();
+    });
+  }
+
+  function setValue(valueId, text) {
+    const entry = entries[valueId];
+    if (!entry) return;
+    entry.el.dataset.real = text;
+    entry.el.textContent = hidden ? MASK : text;
+  }
+
+  bind('portfolio-value', 'portfolio-value-toggle');
+  bind('fx-result-value', 'fx-result-toggle');
+
+  window.BalanceVisibility = { setValue: setValue, isHidden: function () { return hidden; } };
+})();
+</script>
 
 <script>
 const CARD_DEFS = [
@@ -454,10 +565,12 @@ const CARD_DEFS = [
     document.getElementById('advisor').textContent =
         profile.advisor || "Not Set";
 
-    document.getElementById('portfolio-value').textContent =
+    window.BalanceVisibility.setValue(
+        'portfolio-value',
         profile.portfolio_value != null
             ? "R" + Number(profile.portfolio_value).toLocaleString("en-ZA")
-            : "Not Set";
+            : "Not Set"
+    );
 
     document.getElementById('status').textContent =
         profile.status || "Not Set";
@@ -519,7 +632,6 @@ document.getElementById("logout-btn").addEventListener("click", logout);
   const fromEl   = document.getElementById('fx-from');
   const toEl     = document.getElementById('fx-to');
   const swapBtn  = document.getElementById('fx-swap-btn');
-  const valueEl  = document.getElementById('fx-result-value');
   const rateEl   = document.getElementById('fx-result-rate');
   const noteEl   = document.getElementById('fx-note');
 
@@ -559,14 +671,14 @@ document.getElementById("logout-btn").addEventListener("click", logout);
     const to     = toEl.value;
 
     if (isNaN(amount)) {
-      valueEl.textContent = '—';
+      window.BalanceVisibility.setValue('fx-result-value', '—');
       rateEl.textContent = '';
       return;
     }
 
     const rates = ratesCache.rates;
     if (!(from in rates) || !(to in rates)) {
-      valueEl.textContent = '—';
+      window.BalanceVisibility.setValue('fx-result-value', '—');
       rateEl.textContent = 'Rate unavailable for this pair.';
       return;
     }
@@ -576,7 +688,7 @@ document.getElementById("logout-btn").addEventListener("click", logout);
     const result = to === 'ZAR' ? amountInZAR : amountInZAR * rates[to];
     const unitRate = (to === 'ZAR' ? 1 : rates[to]) / (from === 'ZAR' ? 1 : rates[from]);
 
-    valueEl.textContent = formatMoney(result, to);
+    window.BalanceVisibility.setValue('fx-result-value', formatMoney(result, to));
     rateEl.textContent = `1 ${from} = ${unitRate.toFixed(4)} ${to}` + (ratesCache.live ? '' : ' (estimated)');
   }
 
