@@ -386,18 +386,22 @@ a:focus-visible{
     text-shadow:0 1px 6px rgba(0,0,0,.7);
 }
 .viewer-panel h2{ font-weight:300; margin:0; }
+.viewer-brand{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+}
 .viewer-brand__name{
     font-weight:700;
-    font-size:1.5rem;
+    font-size:1.4rem;
     letter-spacing:.06em;
 }
 .viewer-brand__tag{
     font-weight:200;
-    font-size:.75rem;
-    letter-spacing:.28em;
+    font-size:.72rem;
+    letter-spacing:.22em;
     text-transform:uppercase;
     color:rgba(255,255,255,.5);
-    margin-top:6px;
 }
 .viewer-close{
     background:none; border:none; color:#fff; font-size:22px; cursor:pointer;
@@ -1289,8 +1293,8 @@ async function downloadResearch(path){
 
 <div id="viewerModal" class="viewer-overlay">
 <div class="viewer-panel">
-<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:25px;">
-<div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+<div class="viewer-brand">
 <div class="viewer-brand__name">GIOTRADE</div>
 <div class="viewer-brand__tag">Investment Solutions</div>
 </div>
