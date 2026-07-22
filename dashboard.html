@@ -365,6 +365,33 @@ a:focus-visible{
 .confirm-actions .confirm-primary{ background:#fff; color:#000; border-color:#fff; }
 .confirm-actions .confirm-primary:hover{ background:#d9d9d9; }
 
+/* ── Document viewer modal (Statements / Research / FICA / Contracts) ── */
+.viewer-overlay{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,.45);
+    -webkit-backdrop-filter:blur(10px);
+    backdrop-filter:blur(10px);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:9999;
+}
+.viewer-panel{
+    width:min(900px, 95vw);
+    max-height:90%;
+    overflow:auto;
+    background:transparent;
+    padding:30px;
+}
+.viewer-panel, .viewer-panel *{
+    text-shadow:0 1px 6px rgba(0,0,0,.7);
+}
+.viewer-panel h2{ font-weight:300; margin:0; }
+.viewer-close{
+    background:none; border:none; color:#fff; font-size:22px; cursor:pointer;
+    padding:0; line-height:1;
+}
+.viewer-close:hover{ color:rgba(255,255,255,.7); }
+
 /* ── Trust note ── */
 .trust-note{
     display:flex;
@@ -1187,36 +1214,11 @@ async function loadResearch(){
 }
 </script>
 
-<div id="viewerModal" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.75);
-justify-content:center;
-align-items:center;
-z-index:9999;
-">
-<div style="
-width:min(900px, 95vw);
-max-height:90%;
-overflow:auto;
-background:#111;
-padding:30px;
-border:1px solid rgba(255,255,255,.15);
-">
-<div style="display:flex;justify-content:space-between;margin-bottom:25px;">
-<h2 style="font-weight:300;">GIOTRADE Investment Solutions</h2>
-<button onclick="document.getElementById('viewerModal').style.display='none'"
-style="
-background:none;
-border:none;
-color:white;
-font-size:22px;
-cursor:pointer;
-">
+<div id="viewerModal" class="viewer-overlay">
+<div class="viewer-panel">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+<h2>GIOTRADE Investment Solutions</h2>
+<button class="viewer-close" onclick="document.getElementById('viewerModal').style.display='none'">
 ×
 </button>
 </div>
