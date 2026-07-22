@@ -50,7 +50,8 @@ async function getCurrentProfile() {
       status,
       last_statement,
       unread_research,
-      documents_available
+      documents_available,
+      updated_at
     `)
     .eq('id', session.user.id)
     .single();
