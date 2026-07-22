@@ -1209,7 +1209,67 @@ async function downloadContract(path){
 
 async function loadResearch(){
 
-    showToast("Loading Research...", 'info');
+    const { data, error } = await supabaseClient
+        .from("research")
+        .select("*")
+        .order("published_date", { ascending: false });
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    let html = `
+    <h2 style="margin-bottom:25px;">Premium Research</h2>
+    `;
+
+    if(data.length === 0){
+
+        html += "<p>No research documents available yet.</p>";
+
+    }else{
+
+        data.forEach(doc => {
+
+            html += `
+            <div class="statement-row">
+
+                <div>
+                    <strong>${doc.title}</strong><br>
+                    <small>${doc.published_date}</small>
+                    ${doc.description ? `<br><small>${doc.description}</small>` : ""}
+                </div>
+
+                <button onclick="downloadResearch('${doc.file_path}')">
+                    Download
+                </button>
+
+            </div>
+            `;
+
+        });
+
+    }
+
+    document.getElementById("viewer").innerHTML = html;
+    document.getElementById("viewerModal").style.display = "flex";
+
+}   // ← End of loadResearch()
+
+
+async function downloadResearch(path){
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("research")
+        .createSignedUrl(path, 60); // link valid for 60 seconds
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    window.open(data.signedUrl, "_blank");
 
 }
 </script>
