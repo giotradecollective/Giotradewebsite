@@ -71,7 +71,7 @@
       z-index:100; font-family:'Barlow',sans-serif;
     }
 
-
+    .ticker-track {
       display:inline-flex; align-items:center; gap:60px;
       animation:tickerScroll 100s linear infinite;
     }
@@ -1635,9 +1635,6 @@
     for(let i=0; i<repeatCount; i++) doubled = doubled.concat(quotes);
     
     let html = "";
-    if (isFallback) {
-      html += `<span class="ticker-demo-badge">DEMO</span>`;
-    }
     doubled.forEach((q, index) => {
       const dir   = q.change_pct >= 0 ? "up"  : "down";
       const arrow = q.change_pct >= 0 ? "▲" : "▼";
