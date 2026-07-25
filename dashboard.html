@@ -456,6 +456,37 @@ a:focus-visible{
     background:#d9d9d9;
 }
 
+/* ── Client document upload module ── */
+.upload-form{ margin-top:10px; }
+.upload-field{ margin-bottom:16px; }
+.upload-field label{
+    display:block; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(255,255,255,.5); margin-bottom:8px;
+}
+.upload-field select,
+.upload-field textarea{
+    width:100%; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.14);
+    color:#fff; font-family:inherit; font-size:.85rem; padding:10px 12px; outline:none;
+}
+.upload-field select{ cursor:pointer; }
+.upload-field textarea{ resize:vertical; min-height:70px; }
+.upload-field input[type="file"]{
+    width:100%; color:rgba(255,255,255,.7); font-size:.8rem;
+}
+.upload-submit{
+    background:#fff; color:#000; border:none; padding:10px 20px;
+    font-family:'Barlow',sans-serif; font-size:.72rem; letter-spacing:.12em;
+    text-transform:uppercase; cursor:pointer; transition:.2s;
+}
+.upload-submit:hover{ background:#d9d9d9; }
+.upload-submit:disabled{ opacity:.5; cursor:default; }
+.doc-status{
+    font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 8px; border-radius:3px; margin-left:10px; display:inline-block;
+}
+.doc-status.pending{ color:#ffcc00; background:rgba(255,204,0,.12); }
+.doc-status.reviewed{ color:#00ff99; background:rgba(0,255,153,.10); }
+
 /* ── GIOTRADE LIVE MARKET TICKER (shared with homepage) ── */
 .market-ticker {
   width:100%; background:#050505;
@@ -811,6 +842,8 @@ const CARD_DEFS = [
   { roles:['investor'], title:'Premium Research', body:'Access exclusive GIOTRADE Network research.' },
   { roles:['investor'], title:'FICA Documentation', body:'Your personal FICA compliance documents — proof of identity, proof of address and other verification records held securely on file.' },
   { roles:['investor'], title:'Investment Contracts', body:'Your signed mandates, agreements and contract documentation for every portfolio held with GIOTRADE.' },
+  { roles:['investor'], title:'Submit a Document', body:'Upload a document for your advisor to review — proof of address, a signed form, or anything else they\'ve requested.' },
+  { roles:['administrator','portfolio_manager'], title:'Client Document Submissions', body:'Review documents submitted by clients and awaiting review.' },
 ];
 
 (async () => {
@@ -882,6 +915,14 @@ else if(card.title==="Premium Research"){
 
 else if(card.title==="FICA Documentation"){
     button='<button class="open-module" onclick="loadFica()">Open</button>';
+}
+
+else if(card.title==="Submit a Document"){
+    button='<button class="open-module" onclick="openUploadModule()">Open</button>';
+}
+
+else if(card.title==="Client Document Submissions"){
+    button='<button class="open-module" onclick="loadClientSubmissions()">Open</button>';
 }
 
 div.innerHTML=`
@@ -1223,6 +1264,265 @@ async function downloadContract(path){
     window.open(data.signedUrl, "_blank");
 
 }
+
+/* ── Client document upload (investor) ──────────────────────────
+   Investor picks a file, we upload it to the private "client_uploads"
+   Storage bucket under their own investor_id folder, then log a row
+   in the client_uploads table so staff can find and review it. */
+const UPLOAD_BUCKET = "client_uploads";
+
+async function openUploadModule(){
+
+    const profile = await getCurrentProfile();
+
+    let html = `
+    <h2 style="margin-bottom:25px;">Submit a Document</h2>
+
+    <div class="upload-form">
+        <div class="upload-field">
+            <label for="upload-category">Document Type</label>
+            <select id="upload-category">
+                <option value="Proof of Address">Proof of Address</option>
+                <option value="Proof of Identity">Proof of Identity</option>
+                <option value="Banking Details">Banking Details</option>
+                <option value="Signed Form">Signed Form</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="upload-field">
+            <label for="upload-note">Note (optional)</label>
+            <textarea id="upload-note" placeholder="Anything your advisor should know about this document"></textarea>
+        </div>
+
+        <div class="upload-field">
+            <label for="upload-file">File</label>
+            <input type="file" id="upload-file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"/>
+        </div>
+
+        <button class="upload-submit" id="upload-submit-btn" onclick="submitClientUpload()">Upload Document</button>
+    </div>
+
+    <h3 style="margin:36px 0 12px;font-weight:400;font-size:.95rem;">Your Submissions</h3>
+    <div id="my-uploads-list"><p>Loading&hellip;</p></div>
+    `;
+
+    document.getElementById("viewer").innerHTML = html;
+    document.getElementById("viewerModal").style.display = "flex";
+
+    refreshMyUploads(profile.id);
+
+}   // ← End of openUploadModule()
+
+
+async function refreshMyUploads(investorId){
+
+    const { data, error } = await supabaseClient
+        .from("client_uploads")
+        .select("*")
+        .eq("investor_id", investorId)
+        .order("uploaded_at", { ascending:false });
+
+    const listEl = document.getElementById("my-uploads-list");
+    if (!listEl) return;
+
+    if(error){
+        listEl.innerHTML = "<p>Couldn't load your submissions.</p>";
+        return;
+    }
+
+    if(data.length === 0){
+        listEl.innerHTML = "<p>You haven't submitted any documents yet.</p>";
+        return;
+    }
+
+    listEl.innerHTML = data.map(doc => `
+        <div class="statement-row">
+            <div>
+                <strong>${doc.file_name}</strong>
+                <span class="doc-status ${doc.status}">${doc.status}</span>
+                <br><small>${doc.category || ""} &middot; ${new Date(doc.uploaded_at).toLocaleString("en-ZA")}</small>
+                ${doc.note ? `<br><small>${doc.note}</small>` : ""}
+            </div>
+        </div>
+    `).join("");
+
+}   // ← End of refreshMyUploads()
+
+
+async function submitClientUpload(){
+
+    const profile = await getCurrentProfile();
+
+    const fileInput = document.getElementById("upload-file");
+    const category  = document.getElementById("upload-category").value;
+    const note      = document.getElementById("upload-note").value.trim();
+    const btn       = document.getElementById("upload-submit-btn");
+
+    const file = fileInput.files[0];
+
+    if(!file){
+        showToast("Please choose a file to upload.", 'error');
+        return;
+    }
+
+    if(file.size > 20 * 1024 * 1024){
+        showToast("File is too large — please keep uploads under 20MB.", 'error');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Uploading…";
+
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const filePath = `${profile.id}/${Date.now()}_${safeName}`;
+
+    const { error: uploadError } = await supabaseClient
+        .storage
+        .from(UPLOAD_BUCKET)
+        .upload(filePath, file);
+
+    if(uploadError){
+        showToast(uploadError.message, 'error');
+        btn.disabled = false;
+        btn.textContent = "Upload Document";
+        return;
+    }
+
+    const { error: insertError } = await supabaseClient
+        .from("client_uploads")
+        .insert({
+            investor_id: profile.id,
+            file_path: filePath,
+            file_name: file.name,
+            category: category,
+            note: note || null,
+            status: "pending"
+        });
+
+    if(insertError){
+        showToast(insertError.message, 'error');
+        btn.disabled = false;
+        btn.textContent = "Upload Document";
+        return;
+    }
+
+    showToast("Document submitted. Your advisor will review it shortly.", 'success');
+
+    fileInput.value = "";
+    document.getElementById("upload-note").value = "";
+    btn.disabled = false;
+    btn.textContent = "Upload Document";
+
+    refreshMyUploads(profile.id);
+
+}   // ← End of submitClientUpload()
+
+
+/* ── Client document submissions (admin / portfolio manager) ───── */
+async function loadClientSubmissions(){
+
+    const { data, error } = await supabaseClient
+        .from("client_uploads")
+        .select("*")
+        .order("uploaded_at", { ascending:false });
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    const investorIds = [...new Set(data.map(d => d.investor_id))];
+
+    let profilesById = {};
+    if(investorIds.length > 0){
+        const { data: profilesData } = await supabaseClient
+            .from("profiles")
+            .select("id, full_name, investor_number")
+            .in("id", investorIds);
+
+        (profilesData || []).forEach(p => { profilesById[p.id] = p; });
+    }
+
+    let html = `
+    <h2 style="margin-bottom:25px;">Client Document Submissions</h2>
+    `;
+
+    if(data.length === 0){
+
+        html += "<p>No documents have been submitted yet.</p>";
+
+    }else{
+
+        data.forEach(doc => {
+
+            const investor = profilesById[doc.investor_id];
+            const investorLabel = investor
+                ? `${investor.full_name}${investor.investor_number ? " (" + investor.investor_number + ")" : ""}`
+                : "Unknown investor";
+
+            html += `
+            <div class="statement-row">
+
+                <div>
+                    <strong>${doc.file_name}</strong>
+                    <span class="doc-status ${doc.status}">${doc.status}</span>
+                    <br><small>${investorLabel} &middot; ${doc.category || ""} &middot; ${new Date(doc.uploaded_at).toLocaleString("en-ZA")}</small>
+                    ${doc.note ? `<br><small>${doc.note}</small>` : ""}
+                </div>
+
+                <div style="display:flex;gap:8px;">
+                    <button onclick="downloadClientUpload('${doc.file_path}')">Download</button>
+                    ${doc.status !== "reviewed" ? `<button onclick="markUploadReviewed('${doc.id}')">Mark Reviewed</button>` : ""}
+                </div>
+
+            </div>
+            `;
+
+        });
+
+    }
+
+    document.getElementById("viewer").innerHTML = html;
+    document.getElementById("viewerModal").style.display = "flex";
+
+}   // ← End of loadClientSubmissions()
+
+
+async function downloadClientUpload(path){
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from(UPLOAD_BUCKET)
+        .createSignedUrl(path, 60); // link valid for 60 seconds
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    window.open(data.signedUrl, "_blank");
+
+}
+
+
+async function markUploadReviewed(id){
+
+    const { error } = await supabaseClient
+        .from("client_uploads")
+        .update({ status: "reviewed" })
+        .eq("id", id);
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    showToast("Marked as reviewed.", 'success');
+    loadClientSubmissions();
+
+}
+
 
 async function loadResearch(){
 
