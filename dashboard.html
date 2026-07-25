@@ -843,6 +843,8 @@ const CARD_DEFS = [
   { roles:['investor'], title:'FICA Documentation', body:'Your personal FICA compliance documents — proof of identity, proof of address and other verification records held securely on file.' },
   { roles:['investor'], title:'Investment Contracts', body:'Your signed mandates, agreements and contract documentation for every portfolio held with GIOTRADE.' },
   { roles:['investor'], title:'Submit a Document', body:'Upload a document for your advisor to review — proof of address, a signed form, or anything else they\'ve requested.' },
+  { roles:['investor'], title:'Documents For Your Attention', body:'Important documents your advisor has sent you to review or keep on file.' },
+  { roles:['administrator','portfolio_manager'], title:'Send Document to Client', body:'Upload a document directly to a specific client\'s portal for their attention.' },
   { roles:['administrator','portfolio_manager'], title:'Client Document Submissions', body:'Review documents submitted by clients and awaiting review.' },
 ];
 
@@ -919,6 +921,14 @@ else if(card.title==="FICA Documentation"){
 
 else if(card.title==="Submit a Document"){
     button='<button class="open-module" onclick="openUploadModule()">Open</button>';
+}
+
+else if(card.title==="Documents For Your Attention"){
+    button='<button class="open-module" onclick="loadAttentionDocuments()">Open</button>';
+}
+
+else if(card.title==="Send Document to Client"){
+    button='<button class="open-module" onclick="openSendDocumentModule()">Open</button>';
 }
 
 else if(card.title==="Client Document Submissions"){
@@ -1417,6 +1427,208 @@ async function submitClientUpload(){
     refreshMyUploads(profile.id);
 
 }   // ← End of submitClientUpload()
+
+
+/* ── Documents For Your Attention (investor download side) ─────── */
+const ATTENTION_BUCKET = "attention_documents";
+
+async function loadAttentionDocuments(){
+
+    const profile = await getCurrentProfile();
+
+    const { data, error } = await supabaseClient
+        .from("attention_documents")
+        .select("*")
+        .eq("investor_id", profile.id)
+        .order("uploaded_at", { ascending:false });
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    let html = `
+    <h2 style="margin-bottom:25px;">Documents For Your Attention</h2>
+    `;
+
+    if(data.length === 0){
+
+        html += "<p>Your advisor hasn't sent you any documents yet.</p>";
+
+    }else{
+
+        data.forEach(doc => {
+
+            html += `
+            <div class="statement-row">
+
+                <div>
+                    <strong>${doc.title || doc.file_name}</strong><br>
+                    <small>${new Date(doc.uploaded_at).toLocaleString("en-ZA")}</small>
+                    ${doc.note ? `<br><small>${doc.note}</small>` : ""}
+                </div>
+
+                <button onclick="downloadAttentionDocument('${doc.file_path}')">
+                    Download
+                </button>
+
+            </div>
+            `;
+
+        });
+
+    }
+
+    document.getElementById("viewer").innerHTML = html;
+    document.getElementById("viewerModal").style.display = "flex";
+
+}   // ← End of loadAttentionDocuments()
+
+
+async function downloadAttentionDocument(path){
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from(ATTENTION_BUCKET)
+        .createSignedUrl(path, 60); // link valid for 60 seconds
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    window.open(data.signedUrl, "_blank");
+
+}
+
+
+/* ── Send Document to Client (admin / portfolio manager upload side) ── */
+async function openSendDocumentModule(){
+
+    const { data: investors, error } = await supabaseClient
+        .from("profiles")
+        .select("id, full_name, investor_number")
+        .eq("role", "investor")
+        .order("full_name", { ascending:true });
+
+    if(error){
+        showToast(error.message, 'error');
+        return;
+    }
+
+    const options = (investors || []).map(inv =>
+        `<option value="${inv.id}">${inv.full_name}${inv.investor_number ? " (" + inv.investor_number + ")" : ""}</option>`
+    ).join("");
+
+    let html = `
+    <h2 style="margin-bottom:25px;">Send Document to Client</h2>
+
+    <div class="upload-form">
+        <div class="upload-field">
+            <label for="send-doc-investor">Client</label>
+            <select id="send-doc-investor">
+                <option value="">Select a client&hellip;</option>
+                ${options}
+            </select>
+        </div>
+
+        <div class="upload-field">
+            <label for="send-doc-title">Document Title</label>
+            <input type="text" id="send-doc-title" placeholder="e.g. Q3 Portfolio Review" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);color:#fff;font-family:inherit;font-size:.85rem;padding:10px 12px;outline:none;"/>
+        </div>
+
+        <div class="upload-field">
+            <label for="send-doc-note">Note (optional)</label>
+            <textarea id="send-doc-note" placeholder="Anything the client should know about this document"></textarea>
+        </div>
+
+        <div class="upload-field">
+            <label for="send-doc-file">File</label>
+            <input type="file" id="send-doc-file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"/>
+        </div>
+
+        <button class="upload-submit" id="send-doc-btn" onclick="sendDocumentToClient()">Send Document</button>
+    </div>
+    `;
+
+    document.getElementById("viewer").innerHTML = html;
+    document.getElementById("viewerModal").style.display = "flex";
+
+}   // ← End of openSendDocumentModule()
+
+
+async function sendDocumentToClient(){
+
+    const staffProfile = await getCurrentProfile();
+
+    const investorId = document.getElementById("send-doc-investor").value;
+    const title       = document.getElementById("send-doc-title").value.trim();
+    const note        = document.getElementById("send-doc-note").value.trim();
+    const fileInput   = document.getElementById("send-doc-file");
+    const btn         = document.getElementById("send-doc-btn");
+
+    const file = fileInput.files[0];
+
+    if(!investorId){
+        showToast("Please select a client.", 'error');
+        return;
+    }
+
+    if(!file){
+        showToast("Please choose a file to send.", 'error');
+        return;
+    }
+
+    if(file.size > 20 * 1024 * 1024){
+        showToast("File is too large — please keep uploads under 20MB.", 'error');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const filePath = `${investorId}/${Date.now()}_${safeName}`;
+
+    const { error: uploadError } = await supabaseClient
+        .storage
+        .from(ATTENTION_BUCKET)
+        .upload(filePath, file);
+
+    if(uploadError){
+        showToast(uploadError.message, 'error');
+        btn.disabled = false;
+        btn.textContent = "Send Document";
+        return;
+    }
+
+    const { error: insertError } = await supabaseClient
+        .from("attention_documents")
+        .insert({
+            investor_id: investorId,
+            file_path: filePath,
+            file_name: file.name,
+            title: title || file.name,
+            note: note || null,
+            uploaded_by: staffProfile.id
+        });
+
+    if(insertError){
+        showToast(insertError.message, 'error');
+        btn.disabled = false;
+        btn.textContent = "Send Document";
+        return;
+    }
+
+    showToast("Document sent to client.", 'success');
+
+    document.getElementById("send-doc-title").value = "";
+    document.getElementById("send-doc-note").value = "";
+    fileInput.value = "";
+    btn.disabled = false;
+    btn.textContent = "Send Document";
+
+}   // ← End of sendDocumentToClient()
 
 
 /* ── Client document submissions (admin / portfolio manager) ───── */
