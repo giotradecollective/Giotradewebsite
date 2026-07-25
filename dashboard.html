@@ -129,14 +129,6 @@
     .dash-layout{ grid-template-columns:1fr; }
   }
 
-  .welcome-greeting{
-    font-size:.72rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.4);
-    margin-bottom:8px;
-  }
-
   h1{
     font-weight:200;
     font-size:2rem;
@@ -603,7 +595,6 @@ a:focus-visible{
 
 <main>
 
-<div class="welcome-greeting" id="welcome-greeting"></div>
 <h1 id="welcome"></h1>
 
 <div class="dash-layout">
@@ -886,10 +877,9 @@ const CARD_DEFS = [
         : hour < 12 ? "Good morning"
         : hour < 18 ? "Good afternoon"
         : "Good evening";
-    document.getElementById('welcome-greeting').textContent = greeting + ",";
 
     document.getElementById('welcome').textContent =
-        `Welcome back, ${profile.full_name}`;
+        `${greeting}, ${profile.full_name}`;
 
     document.getElementById('investor-number').textContent =
         profile.investor_number || "Not Set";
