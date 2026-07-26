@@ -889,7 +889,20 @@
     .mkt-panel__desc{font-size:0.9rem;font-weight:300;line-height:1.82;color:rgba(255,255,255,0.55);}
 
     @media (max-width:600px){
-      .mkt-tab{width:170px;height:130px;}
+      .mkt-tabs{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        justify-items:center;
+        gap:14px 8px;
+      }
+      .mkt-tab{width:150px;height:118px;}
+      /* first item (Synthetic Indices) centered on its own row, normal-triangle layout */
+      .mkt-tab:nth-child(1){grid-column:1 / span 2;}
+    }
+
+    @media (max-width:380px){
+      .mkt-tab{width:130px;height:104px;}
+      .mkt-tab__title{font-size:0.66rem;max-width:100px;}
     }
   </style>
 
