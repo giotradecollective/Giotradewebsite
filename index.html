@@ -144,7 +144,7 @@
       padding:28px 56px;
       flex-direction: row;
     }
-    .nav__links { display:flex; gap:40px; list-style:none; }
+    .nav__links { display:flex; gap:30px; list-style:none; }
     .nav__links a {
       text-decoration:none; color:var(--off-white);
       font-size:0.73rem; font-weight:300; letter-spacing:0.2em; text-transform:uppercase;
@@ -193,6 +193,7 @@
       color:var(--white); border:1px solid rgba(255,255,255,0.5);
       padding:10px 28px; text-decoration:none;
       position:relative; overflow:hidden; transition:color .3s;
+      margin-left:56px; flex-shrink:0;
     }
     .nav__cta::before {
       content:''; position:absolute; inset:0; background:var(--white);
@@ -268,48 +269,39 @@
     .section__title { font-size:clamp(1.7rem,3.2vw,2.6rem); font-weight:200; color:var(--white); max-width:580px; line-height:1.2; margin-bottom:22px; }
     .section__body { font-size:0.93rem; font-weight:300; color:rgba(255,255,255,0.51); max-width:510px; line-height:1.86; }
 
+    .about-subhead {
+      font-size:0.66rem; letter-spacing:0.3em; text-transform:uppercase;
+      color:rgba(255,255,255,0.34); margin-top:56px; padding-top:36px;
+      border-top:1px solid rgba(255,255,255,0.08); margin-bottom:16px;
+    }
+    .about-subhead:first-of-type { margin-top:60px; }
+    .about-callout {
+      font-size:1.02rem; font-weight:300; color:var(--white); line-height:1.7;
+      max-width:640px; margin-top:20px;
+    }
+    .about-list {
+      list-style:none; max-width:640px; margin-top:18px;
+      display:grid; grid-template-columns:1fr 1fr; gap:10px 30px;
+    }
+    .about-list li {
+      font-size:0.93rem; font-weight:300; color:rgba(255,255,255,0.51);
+      padding-left:18px; position:relative;
+    }
+    .about-list li::before {
+      content:''; position:absolute; left:2px; top:0.62em;
+      width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,0.4);
+    }
+    @media (max-width:640px){
+      .about-list { grid-template-columns:1fr; }
+    }
+
     .stats { display:flex; margin-top:44px; }
     .stat { flex:1; padding:44px 34px; }
     .stat:last-child { border-right:none; }
     .stat__number { font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:200; color:var(--white); margin-bottom:5px; }
     .stat__label { font-size:0.67rem; letter-spacing:0.28em; text-transform:uppercase; color:rgba(255,255,255,0.31); }
 
-    .markets-wrap { margin-top:60px; display:flex; flex-direction:column; gap:3px; }
-    .mkt-flagship {
-      display:grid; grid-template-columns:1fr auto; align-items:center; gap:32px;
-      padding:48px 0; background:transparent; border:none;
-      position:relative; overflow:hidden; transition:background .35s;
-    }
-    .mkt-flagship::before {
-      display: none;
-    }
-    .mkt-flagship:hover { background:transparent; }
-    .mkt-flagship__pill {
-      display:inline-flex; align-items:center; gap:8px;
-      font-size:0.6rem; font-weight:600; letter-spacing:0.32em; text-transform:uppercase;
-      color:var(--white); background:transparent; border:1px solid rgba(255,255,255,0.25);
-      padding:5px 14px; border-radius:2px; margin-bottom:20px;
-    }
-    .mkt-flagship__title { font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:300; color:var(--white); line-height:1.15; margin-bottom:14px; }
-    .mkt-flagship__title em { font-style:normal; opacity:0.45; font-size:0.65em; }
-    .mkt-flagship__desc { font-size:0.9rem; font-weight:300; line-height:1.82; color:rgba(255,255,255,0.55); max-width:580px; }
-    .mkt-flagship__tags { display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
-    .mkt-tag {
-      font-size:0.58rem; letter-spacing:0.26em; text-transform:uppercase;
-      color:rgba(255,255,255,0.55); border:none;
-      padding:2px 0; white-space:nowrap; text-align:right; transition:color .25s;
-    }
-    .mkt-tag:hover { color:var(--white); }
 
-    .mkt-row { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
-    .mkt-card {
-      padding:44px 0 0; background:transparent; border:none;
-      position:relative; overflow:visible;
-    }
-    .mkt-card__num { font-size:3.5rem; font-weight:700; line-height:1; color:rgba(255,255,255,0.04); position:absolute; top:20px; right:28px; user-select:none; }
-    .mkt-card__title { font-size:1.1rem; font-weight:400; color:var(--white); margin-bottom:10px; letter-spacing:0.03em; }
-    .mkt-card__sub { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:16px; }
-    .mkt-card__desc { font-size:0.84rem; font-weight:300; color:rgba(255,255,255,0.45); line-height:1.8; }
 
     .svc-accordion { margin-top:56px; border-top:1px solid rgba(255,255,255,0.08); }
     .svc-item { border-bottom:1px solid rgba(255,255,255,0.08); }
@@ -570,9 +562,6 @@
       .stats { flex-direction:column; }
       .stat { border-right:none; border-bottom:1px solid rgba(255,255,255,0.07); }
       footer { padding:44px 22px 30px; flex-direction:column; }
-      .mkt-flagship { grid-template-columns:1fr; }
-      .mkt-flagship__tags { flex-direction:row; flex-wrap:wrap; }
-      .mkt-row { grid-template-columns:1fr; }
       .news-featured { grid-template-columns:1fr; }
       .news-feat-img { min-height:220px; }
       .news-grid { grid-template-columns:1fr; }
@@ -666,8 +655,9 @@
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#markets">Markets</a></li>
-      <li><a href="#" onclick="openStoreModal(); return false;">Investment Tools Store</a></li>
+      <li><a href="#group">The Group</a></li>
       <li><a href="#news">News &amp; Insights</a></li>
+      <li><a href="#" onclick="openStoreModal(); return false;">Investment Tools Store</a></li>
       <li><a href="https://edustore.giotradegroup.co.za" target="_blank" rel="noopener">Edustore</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -682,8 +672,9 @@
     <a href="#about" onclick="closeMobileNav()">About</a>
     <a href="#services" onclick="closeMobileNav()">Services</a>
     <a href="#markets" onclick="closeMobileNav()">Markets</a>
-    <a href="#" onclick="closeMobileNav(); openStoreModal(); return false;">Investment Tools Store</a>
+    <a href="#group" onclick="closeMobileNav()">The Group</a>
     <a href="#news" onclick="closeMobileNav()">News &amp; Insights</a>
+    <a href="#" onclick="closeMobileNav(); openStoreModal(); return false;">Investment Tools Store</a>
     <a href="https://edustore.giotradegroup.co.za" target="_blank" rel="noopener" onclick="closeMobileNav()">Edustore</a>
     <a href="#contact" onclick="closeMobileNav()">Contact</a>
     <a href="portal.html" onclick="closeMobileNav()">Client Login</a>
@@ -707,52 +698,305 @@
 
 <section class="section" id="about" style="padding-bottom:30px;">
   <div class="section__label">Who We Are</div>
-  <h2 class="section__title" style="max-width:680px;">A new standard in global investment intelligence, built for investors who refuse to settle for average.</h2>
-  <p class="section__body" style="max-width:640px;">Giotrade Investment Solutions combines deep market expertise with cutting-edge analytical frameworks to deliver strategies that perform across cycles, in bull markets, bear markets, and everything in between. We don&rsquo;t chase trends. We engineer conviction, built on rigorous research, disciplined risk management, and a relentless focus on results.</p>
-  <p class="section__body" style="max-width:640px;margin-top:18px;">From first-time investors to seasoned institutions, we serve individuals, families, and organisations who are serious about sustainable, long-term growth. Every strategy we build is backed by real analysis, real accountability, and a team that treats your capital like our own. This is more than investment management, it&rsquo;s a partnership designed to compound your wealth, protect your downside, and put you ahead of the market, year after year.</p>
-  <p class="section__body" style="max-width:640px;margin-top:18px;">We also help businesses diversify and curb operational risk by investing in applicable commodities, such as farms and agricultural land, and by hedging exposure to the very commodities they rely on for day-to-day operations. It&rsquo;s a practical layer of protection for companies whose costs and margins move with the markets.</p>
-  <p class="section__body" style="max-width:640px;margin-top:18px;">The question isn&rsquo;t whether the markets will move. It&rsquo;s whether you&rsquo;ll be positioned to profit when they do. With Giotrade, you always are.</p>
+  <h2 class="section__title" style="max-width:680px;">Investing Beyond the Ordinary.</h2>
+  <p class="section__body" style="max-width:640px;">At GIOTRADE Investment Solutions, we believe exceptional wealth is created through disciplined thinking, intelligent risk management, and an unwavering commitment to long-term value creation. We are an independent investment management firm built for investors who expect more than conventional portfolio management. In a world dominated by noise, speculation, and short-term thinking, we provide clarity through rigorous research, institutional-grade analysis, and disciplined execution.</p>
+  <p class="section__body" style="max-width:640px;margin-top:18px;">Every investment decision we make is grounded in evidence rather than emotion, allowing us to identify opportunities, navigate uncertainty, and position capital with conviction across changing market environments.</p>
+  <p class="about-callout">Because markets will always change.<br>Our discipline never does.</p>
+
   <div class="stats">
     <div class="stat"><div class="stat__number">8+</div><div class="stat__label">Years of Experience</div></div>
     <div class="stat"><div class="stat__number">40+</div><div class="stat__label">Global Markets</div></div>
     <div class="stat"><div class="stat__number">$130k+</div><div class="stat__label">Assets Under Advisory</div></div>
     <div class="stat"><div class="stat__number">96%</div><div class="stat__label">Client Retention Rate</div></div>
   </div>
+
+  <style>
+    .ab-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:56px;padding-top:36px;border-top:1px solid rgba(255,255,255,0.08);}
+    .ab-tab{
+      padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.14);
+      background:transparent;cursor:pointer;font-family:var(--font);
+      font-size:0.72rem;font-weight:300;letter-spacing:0.03em;color:rgba(255,255,255,0.55);
+      transition:border-color .25s ease,background .25s ease,color .25s ease;
+    }
+    .ab-tab:hover{border-color:rgba(255,255,255,0.35);}
+    .ab-tab.is-active{background:#fff;border-color:#fff;color:#0a0a0a;font-weight:400;}
+
+    .ab-panel{margin-top:34px;min-height:220px;}
+    .ab-panel .section__body{max-width:640px;}
+    .ab-panel .about-callout{max-width:640px;}
+
+    @media (max-width:640px){
+      .ab-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;}
+      .ab-tab{flex-shrink:0;}
+    }
+  </style>
+
+  <div class="ab-tabs" id="ab-tabs"></div>
+  <div class="ab-panel" id="ab-panel"></div>
+
+  <script>
+  (function(){
+    var topics = [
+      {
+        label:"Philosophy",
+        heading:"A Research-Driven Investment Philosophy",
+        paragraphs:[
+          "Successful investing isn&rsquo;t about predicting tomorrow&rsquo;s headlines. It&rsquo;s about building resilient portfolios capable of performing through economic expansion, market corrections, inflationary cycles, and periods of heightened uncertainty. Our investment philosophy combines macroeconomic research, quantitative analysis, valuation frameworks, portfolio optimisation, and robust risk management into a single, disciplined investment process.",
+          "Rather than pursuing short-lived market trends, we focus on identifying enduring opportunities where capital can compound responsibly over time while remaining resilient when markets become unpredictable."
+        ],
+        callout:["Protect capital. Grow wealth. Manage risk with precision."]
+      },
+      {
+        label:"Purpose",
+        heading:"Investing With Purpose",
+        paragraphs:[
+          "Every investor&rsquo;s journey is unique. Whether you&rsquo;re preserving generational wealth, growing personal investments, preparing for retirement, or managing institutional capital, your portfolio should reflect your ambitions, not generic investment products. We build bespoke investment strategies for:"
+        ],
+        list:["Individual investors","High-net-worth families","Businesses","Family offices","Professional advisers","Institutional investors"],
+        afterListParagraph:"Every portfolio is designed around your objectives, liquidity requirements, investment horizon, and appetite for risk, ensuring your capital works with purpose and precision."
+      },
+      {
+        label:"Business Risk",
+        heading:"Protecting Businesses From Market Risk",
+        paragraphs:[
+          "Investment expertise extends far beyond portfolio management. For many businesses, commodity price volatility represents one of the most overlooked risks affecting profitability. Rising input costs can quietly erode margins, disrupt budgeting, and reduce long-term competitiveness.",
+          "Whether your business depends on agricultural commodities, industrial metals, energy markets, or other critical raw materials, we design sophisticated hedging solutions that help reduce exposure to adverse price movements. Our commodity risk management strategies enable businesses to improve cost certainty, strengthen financial resilience, and make strategic decisions with greater confidence, allowing leadership teams to focus on growing their businesses rather than worrying about market volatility."
+        ]
+      },
+      {
+        label:"Discipline",
+        heading:"Discipline Creates Confidence",
+        paragraphs:[
+          "Markets reward preparation. Our investment process is founded on independent research, continuous market monitoring, disciplined portfolio construction, and rigorous risk oversight. Every strategy is evaluated through a structured analytical framework designed to maximise opportunity while maintaining a clear focus on capital preservation."
+        ],
+        callout:["We don&rsquo;t rely on assumptions.","We rely on evidence."],
+        afterCalloutParagraph:"This disciplined approach allows us to remain objective during periods of market optimism and resilient during periods of uncertainty."
+      },
+      {
+        label:"Trust",
+        heading:"A Partnership Built on Trust",
+        paragraphs:[
+          "Choosing an investment manager is one of the most important financial decisions you&rsquo;ll ever make. It requires confidence that your capital is being managed with integrity, transparency, discipline, and accountability. At GIOTRADE Investment Solutions, we view every client relationship as a long-term partnership built on shared objectives and mutual trust.",
+          "Our success is measured not by short-term market movements, but by our ability to help clients build, preserve, and grow wealth over decades. Because true investment management isn&rsquo;t about outperforming for a quarter. It&rsquo;s about creating lasting financial success across generations."
+        ]
+      },
+      {
+        label:"The Future",
+        heading:"The Future Belongs to Prepared Investors",
+        paragraphs:[
+          "Markets will rise. Markets will fall. Economic cycles will change. Volatility will always exist. Opportunity will always remain for those prepared to recognise it. At GIOTRADE Investment Solutions, we don&rsquo;t simply help investors respond to the markets. We help them stay ahead of them."
+        ],
+        callout:["Invest with conviction.","Grow with discipline.","Build wealth with confidence."]
+      }
+    ];
+
+    var tabsEl = document.getElementById('ab-tabs');
+    var current = 0;
+
+    topics.forEach(function(t, i){
+      var tab = document.createElement('button');
+      tab.className = 'ab-tab' + (i===0 ? ' is-active' : '');
+      tab.textContent = t.label;
+      tab.onclick = function(){ setActive(i); };
+      tabsEl.appendChild(tab);
+    });
+
+    function setActive(i){
+      current = i;
+      document.querySelectorAll('.ab-tab').forEach(function(el, idx){ el.classList.toggle('is-active', idx===i); });
+      render();
+    }
+
+    function render(){
+      var t = topics[current];
+      var html = '<h3 style="font-size:1.15rem;font-weight:300;color:var(--white);margin-bottom:16px;">' + t.heading + '</h3>';
+
+      t.paragraphs.forEach(function(p, idx){
+        html += '<p class="section__body"' + (idx>0 ? ' style="margin-top:18px;"' : '') + '>' + p + '</p>';
+      });
+
+      if(t.list){
+        html += '<ul class="about-list">' + t.list.map(function(li){ return '<li>' + li + '</li>'; }).join('') + '</ul>';
+      }
+
+      if(t.afterListParagraph){
+        html += '<p class="section__body" style="margin-top:22px;">' + t.afterListParagraph + '</p>';
+      }
+
+      if(t.callout){
+        html += '<p class="about-callout">' + t.callout.join('<br>') + '</p>';
+      }
+
+      if(t.afterCalloutParagraph){
+        html += '<p class="section__body" style="margin-top:20px;">' + t.afterCalloutParagraph + '</p>';
+      }
+
+      document.getElementById('ab-panel').innerHTML = html;
+    }
+
+    render();
+  })();
+  </script>
 </section>
 
 <section class="section section--alt" id="markets" style="padding-top:30px;">
   <div class="section__label">Where We Invest Your Money</div>
   <h2 class="section__title" style="max-width:700px;">Three powerful markets.<br>Endless opportunity.</h2>
-  <div class="markets-wrap">
-    <div class="mkt-flagship">
-      <div>
-        <div class="mkt-flagship__pill">Flagship Market</div>
-        <div class="mkt-flagship__title">Synthetic Indices &nbsp;<em>(RNG)</em></div>
-        <p class="mkt-flagship__desc">This is where we shine brightest. Synthetic Indices are RNG algorithm-generated markets that never sleep, running 24 hours a day, 7 days a week, completely immune to geopolitical events, news shocks, or market sentiment. No earnings surprises, no central bank curveballs. Just pure, mathematical volatility that rewards disciplined strategy. We&rsquo;ve built deep expertise here, and it&rsquo;s the engine at the heart of Giotrade.</p>
-      </div>
-      <div class="mkt-flagship__tags">
-        <div class="mkt-tag">24/7 Markets</div>
-        <div class="mkt-tag">RNG-Driven</div>
-        <div class="mkt-tag">Volatility-Based</div>
-        <div class="mkt-tag">News-Independent</div>
-        <div class="mkt-tag">Always Open</div>
-      </div>
-    </div>
-    <div class="mkt-row">
-      <div class="mkt-card">
-        <div class="mkt-card__num">02</div>
-        <div class="mkt-card__title">Traditional Equities &amp; Stocks</div>
-        <div class="mkt-card__sub">Global Stock Markets</div>
-        <p class="mkt-card__desc">We take high-conviction positions in global equity markets, identifying companies and sectors with genuine long-term momentum. Whether it is growth stocks, blue chips or emerging market plays, we bring research-backed discipline to every trade.</p>
-      </div>
-      <div class="mkt-card">
-        <div class="mkt-card__num">03</div>
-        <div class="mkt-card__title">Commodities</div>
-        <div class="mkt-card__sub">Hard &amp; Soft Commodities</div>
-        <p class="mkt-card__desc">From gold and oil to agricultural assets, commodities give your portfolio real diversification and a natural inflation hedge. We trade both hard commodities (metals, energy) and soft commodities (agricultural products) with precision timing.</p>
-      </div>
-    </div>
-  </div>
+  <style>
+    .mkt-tabs{display:flex;flex-wrap:wrap;gap:14px;margin-top:50px;}
+    .mkt-tab{
+      position:relative;display:flex;align-items:center;justify-content:center;
+      width:200px;height:150px;background:transparent;border:none;cursor:pointer;
+      font-family:var(--font);flex-shrink:0;
+    }
+    .mkt-tab__blob{
+      position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+      transform-origin:50% 50%;animation:mkt-wiggle 7s ease-in-out infinite;
+    }
+    .mkt-tab__blob path{
+      fill:none;stroke:rgba(255,255,255,0.55);stroke-width:2.4;
+      stroke-linecap:round;stroke-linejoin:round;
+      transition:stroke .35s ease,stroke-width .35s ease;
+    }
+    .mkt-tab:hover .mkt-tab__blob{ animation-duration:2.4s; }
+    .mkt-tab:hover .mkt-tab__blob path{ stroke:rgba(255,255,255,0.85); }
+    .mkt-tab.is-active .mkt-tab__blob path{ stroke:#fff; stroke-width:2.8; }
+    .mkt-tab__title{
+      position:relative;z-index:1;font-size:0.72rem;font-weight:300;
+      color:rgba(255,255,255,0.7);letter-spacing:0.01em;white-space:normal;
+      text-align:center;max-width:120px;line-height:1.3;
+      transition:color .3s ease;
+    }
+    .mkt-tab.is-active .mkt-tab__title{color:#fff;font-weight:400;}
+
+    @keyframes mkt-wiggle{
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-1.6deg) scale(1.018); }
+      50% { transform: rotate(1deg) scale(0.985); }
+      75% { transform: rotate(-0.6deg) scale(1.01); }
+    }
+
+    .mkt-panel{
+      margin-top:40px;border-top:1px solid rgba(255,255,255,0.08);padding-top:40px;
+      max-width:640px;
+    }
+    .mkt-panel__pill{
+      display:inline-flex;align-items:center;gap:8px;font-size:0.65rem;letter-spacing:0.25em;
+      text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:16px;
+    }
+    .mkt-panel__title{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:16px;}
+    .mkt-panel__title em{font-style:normal;opacity:0.45;font-size:0.65em;}
+    .mkt-panel__desc{font-size:0.9rem;font-weight:300;line-height:1.82;color:rgba(255,255,255,0.55);}
+
+    @media (max-width:600px){
+      .mkt-tab{width:170px;height:130px;}
+    }
+  </style>
+
+  <div class="mkt-tabs" id="mkt-tabs"></div>
+  <div class="mkt-panel" id="mkt-panel"></div>
+
+  <script>
+  (function(){
+    // Seeded PRNG so each icon is stable across renders but distinct per loop/tab
+    function seededRandom(seed){
+      var s = seed % 2147483647; if(s <= 0) s += 2147483646;
+      return function(){ s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+    }
+
+    // Builds one hand-drawn wobbly loop (a rough circle) as a smooth SVG path,
+    // with a slight overlap at the start/end so it reads as a real pen scribble.
+    function scribbleLoop(cx, cy, r, seed){
+      var rand = seededRandom(seed);
+      var points = 10;
+      var wobble = 0.16;
+      var extra = 2; // extra points past a full turn, for the overlapping tail
+      var pts = [];
+      for(var i = 0; i <= points + extra; i++){
+        var angle = (i / points) * Math.PI * 2;
+        var rr = r * (1 + (rand() - 0.5) * wobble);
+        pts.push([ cx + Math.cos(angle) * rr, cy + Math.sin(angle) * rr ]);
+      }
+      var d = 'M ' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+      for(var j = 1; j < pts.length; j++){
+        var p0 = pts[j - 1], p1 = pts[j];
+        var mx = (p0[0] + p1[0]) / 2, my = (p0[1] + p1[1]) / 2;
+        d += ' Q ' + p0[0].toFixed(1) + ' ' + p0[1].toFixed(1) + ' ' + mx.toFixed(1) + ' ' + my.toFixed(1);
+      }
+      return d;
+    }
+
+    // Each icon layers 3 slightly offset scribble loops, like the reference artwork
+    function scribbleIconSVG(tabIndex){
+      var cx = 100, cy = 75;
+      var loops = [
+        { r: 66, dx: -5, dy: -4, seed: tabIndex * 97 + 11 },
+        { r: 61, dx: 4, dy: 3, seed: tabIndex * 97 + 47 },
+        { r: 56, dx: -3, dy: 5, seed: tabIndex * 97 + 83 }
+      ];
+      var paths = loops.map(function(l){
+        return '<path d="' + scribbleLoop(cx + l.dx, cy + l.dy, l.r, l.seed) + '"/>';
+      }).join('');
+      var delay = (tabIndex * 0.9).toFixed(2) + 's';
+      return '<svg class="mkt-tab__blob" viewBox="0 0 200 150" preserveAspectRatio="none" style="animation-delay:' + delay + ';">' + paths + '</svg>';
+    }
+
+    var markets = [
+      {
+        label:"Synthetic Indices",
+        pill:"Flagship Market",
+        title:"Synthetic Indices &nbsp;<em>(RNG)</em>",
+        desc:"This is where we shine brightest. Synthetic Indices are RNG algorithm-generated markets that never sleep, running 24 hours a day, 7 days a week, completely immune to geopolitical events, news shocks, or market sentiment. No earnings surprises, no central bank curveballs. Just pure, mathematical volatility that rewards disciplined strategy. We&rsquo;ve built deep expertise here, and it&rsquo;s the engine at the heart of Giotrade."
+      },
+      {
+        label:"Equities & Stocks",
+        pill:"Global Stock Markets",
+        title:"Traditional Equities &amp; Stocks",
+        desc:"We take high-conviction positions in global equity markets, identifying companies and sectors with genuine long-term momentum. Whether it is growth stocks, blue chips or emerging market plays, we bring research-backed discipline to every trade."
+      },
+      {
+        label:"Commodities",
+        pill:"Hard & Soft Commodities",
+        title:"Commodities",
+        desc:"From gold and oil to agricultural assets, commodities give your portfolio real diversification and a natural inflation hedge. We trade both hard commodities (metals, energy) and soft commodities (agricultural products) with precision timing."
+      }
+    ];
+
+    var tabsEl = document.getElementById('mkt-tabs');
+    var current = 0;
+
+    markets.forEach(function(m, i){
+      var tab = document.createElement('button');
+      tab.className = 'mkt-tab' + (i===0 ? ' is-active' : '');
+      tab.innerHTML =
+        scribbleIconSVG(i)
+        + '<span class="mkt-tab__title">' + m.label + '</span>';
+      tab.onclick = function(){ setActive(i); };
+      tabsEl.appendChild(tab);
+    });
+
+    function setActive(i){
+      current = i;
+      document.querySelectorAll('.mkt-tab').forEach(function(el, idx){ el.classList.toggle('is-active', idx===i); });
+      render();
+    }
+
+    function render(){
+      var m = markets[current];
+
+      var html = ''
+        + '<div>'
+        + '<div class="mkt-panel__pill">' + m.pill + '</div>'
+        + '<div class="mkt-panel__title">' + m.title + '</div>'
+        + '<p class="mkt-panel__desc">' + m.desc + '</p>'
+        + '</div>';
+
+      document.getElementById('mkt-panel').innerHTML = html;
+    }
+
+    render();
+  })();
+  </script>
 
   <div class="svc-section-bg" style="margin-top:100px;">
   <div id="services" class="section__label">What We Do For You</div>
@@ -888,7 +1132,7 @@
     services.forEach(function(s, i){
       var tab = document.createElement('button');
       tab.className = 'svc-tab' + (i===0 ? ' is-active' : '');
-      tab.innerHTML = '<span class="svc-tab__num">' + String(i+1).padStart(2,'0') + '</span><span class="svc-tab__title">' + s.title + '</span>';
+      tab.innerHTML = '<span class="svc-tab__title">' + s.title + '</span>';
       tab.onclick = function(){ setActive(i); };
       tabsEl.appendChild(tab);
     });
@@ -1000,6 +1244,59 @@
   <a href="mailto:collectiveinvestments@giotradegroup.co.za" class="btn-findout"><span>Contact Us</span></a>
 </section>
 
+<section class="section section--alt" id="group">
+  <style>
+    .group-companies{display:flex;flex-direction:column;gap:0;margin-top:36px;}
+    .group-company{
+      display:grid;grid-template-columns:280px 1fr;gap:40px;padding:32px 0;
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .group-company__name{font-size:1.1rem;font-weight:400;color:var(--white);letter-spacing:0.01em;}
+    .group-company__name span{opacity:0.4;font-weight:300;}
+    .group-company__desc{font-size:0.88rem;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.55);}
+    .group-closing{
+      margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08);
+      max-width:760px;
+    }
+    .group-closing__title{font-size:1.1rem;font-weight:400;color:var(--white);margin-bottom:14px;}
+    .group-closing__body{font-size:0.88rem;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.55);}
+    @media (max-width:780px){
+      .group-company{grid-template-columns:1fr;gap:10px;}
+    }
+  </style>
+
+  <div class="section__label">The Group Behind Giotrade</div>
+  <h2 class="section__title" style="max-width:760px;">Building the future of finance, technology, and education.</h2>
+  <p class="section__body" style="max-width:700px;">GIOTRADE Group is a diversified global holding company bringing together businesses that shape the future of investing, financial intelligence, technology, and education.</p>
+  <p class="section__body" style="max-width:700px;margin-top:16px;">United by a shared commitment to innovation, excellence, and long-term value creation, our companies operate across complementary sectors, delivering specialised solutions while advancing a common vision: empowering individuals, businesses, and institutions to thrive in an increasingly complex world.</p>
+  <p class="section__body" style="max-width:700px;margin-top:16px;">From investment management and financial research to technology development and youth empowerment, every subsidiary is built on the principles of integrity, innovation, and measurable impact.</p>
+
+  <div class="group-companies">
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>Investment Solutions</span></div>
+      <div class="group-company__desc">Our investment management and financial advisory business, providing research-driven investment solutions, portfolio management, commodity risk management, and institutional-grade market intelligence for individuals, businesses, and institutional investors.</div>
+    </div>
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>Network</span></div>
+      <div class="group-company__desc">Our global financial media and knowledge platform dedicated to delivering market insights, economic commentary, investment research, educational content, and thought leadership that empowers investors to make informed financial decisions.</div>
+    </div>
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>Technologies</span></div>
+      <div class="group-company__desc">Our technology and innovation division, delivering intelligent digital solutions that help organisations innovate, scale, and compete in an increasingly connected world. We combine software engineering, digital strategy, cloud technologies, automation, artificial intelligence, and data intelligence to solve complex business challenges &mdash; from custom software, enterprise applications, and secure client portals to business intelligence dashboards, executive reporting platforms, and real-time data visualisation solutions. Every solution is engineered for performance, security, and long-term value, purpose-built to enhance user experience, streamline operations, and strengthen decision-making.</div>
+    </div>
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>NexGen Programme</span></div>
+      <div class="group-company__desc">Our social impact initiative dedicated to empowering the next generation through financial literacy, entrepreneurship, investment education, mentorship, and skills development, creating opportunities that foster economic participation and long-term prosperity.</div>
+    </div>
+  </div>
+
+  <div class="group-closing">
+    <div class="group-closing__title">One Vision. Four Companies. Unlimited Possibilities.</div>
+    <p class="group-closing__body">Together, our businesses form an integrated ecosystem where finance, technology, research, and education work together to create lasting value.</p>
+    <p class="group-closing__body" style="margin-top:12px;">As markets evolve and industries transform, GIOTRADE Group remains committed to building businesses that not only adapt to change but help shape it. Through innovation, disciplined execution, and an unwavering pursuit of excellence, we create sustainable value for our clients, partners, communities, and future generations.</p>
+  </div>
+</section>
+
 <footer>
     <div style="flex: 1; min-width: 300px;">
       <div class="footer__wordmark">GIOTRADE<sup style="font-size:.55rem;vertical-align:super;font-weight:300;">&reg;</sup></div>
@@ -1023,6 +1320,10 @@
         <div style="display: flex; align-items: center; gap: 12px;">
           <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
           <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Network</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Technologies</span></div>
         </div>
         <div style="display: flex; align-items: center; gap: 12px;">
           <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
