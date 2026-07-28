@@ -41,7 +41,7 @@
       "@type": "ContactPoint",
       "telephone": "+27-11-823-2235",
       "contactType": "customer service",
-      "email": "info@giotradegroup.co.za",
+      "email": "collectiveinvestments@giotradegroup.co.za",
       "areaServed": "ZA"
     }
   }
@@ -876,6 +876,13 @@
       75% { transform: rotate(-0.6deg) scale(1.01); }
     }
 
+    @keyframes mkt-wiggle-mobile{
+      0%, 100% { transform: rotate(0deg) scale(1.55); }
+      25% { transform: rotate(-1.6deg) scale(1.575); }
+      50% { transform: rotate(1deg) scale(1.53); }
+      75% { transform: rotate(-0.6deg) scale(1.565); }
+    }
+
     .mkt-panel{
       margin-top:40px;border-top:1px solid rgba(255,255,255,0.08);padding-top:40px;
       max-width:640px;
@@ -898,6 +905,7 @@
       .mkt-tab{width:150px;height:118px;}
       /* first item (Synthetic Indices) centered on its own row, normal-triangle layout */
       .mkt-tab:nth-child(1){grid-column:1 / span 2;}
+      .mkt-tab__blob{ animation-name:mkt-wiggle-mobile; }
     }
 
     @media (max-width:380px){
@@ -943,9 +951,9 @@
     function scribbleIconSVG(tabIndex){
       var cx = 100, cy = 75;
       var loops = [
-        { r: 66, dx: -5, dy: -4, seed: tabIndex * 97 + 11 },
-        { r: 61, dx: 4, dy: 3, seed: tabIndex * 97 + 47 },
-        { r: 56, dx: -3, dy: 5, seed: tabIndex * 97 + 83 }
+        { r: 82, dx: -5, dy: -4, seed: tabIndex * 97 + 11 },
+        { r: 77, dx: 4, dy: 3, seed: tabIndex * 97 + 47 },
+        { r: 72, dx: -3, dy: 5, seed: tabIndex * 97 + 83 }
       ];
       var paths = loops.map(function(l){
         return '<path d="' + scribbleLoop(cx + l.dx, cy + l.dy, l.r, l.seed) + '"/>';
@@ -1254,7 +1262,7 @@
   <div class="section__label">Get In Touch</div>
   <h2 class="section__title" style="text-align:center;max-width:480px;">Ready to start your investment journey?</h2>
   <p class="section__body" style="text-align:center;margin-bottom:36px;">Our advisors are ready to discuss how we can tailor a strategy to your goals.</p>
-  <a href="mailto:info@giotradegroup.co.za" class="btn-findout"><span>Contact Us</span></a>
+  <a href="mailto:collectiveinvestments@giotradegroup.co.za" class="btn-findout"><span>Contact Us</span></a>
 </section>
 
 <section class="section section--alt" id="group">
@@ -1317,7 +1325,23 @@
       <p class="footer__copy">&copy; 2026 Giotrade Investment Solutions. All rights reserved.</p>
       <p class="footer__copy" style="margin-top:8px;">22 Fredman Dr, Sandown, Sandton, 2196</p>
       <p class="footer__copy" style="margin-top:4px;"><a href="tel:+27118232235" style="color:rgba(255,255,255,0.17);text-decoration:none;">T +27 11 823 2235</a></p>
-      <p class="footer__copy" style="margin-top:4px;"><a href="mailto:info@giotradegroup.co.za" style="color:rgba(255,255,255,0.17);text-decoration:none;">info@giotradegroup.co.za</a></p>
+      <p class="footer__copy" style="margin-top:4px;"><a href="mailto:collectiveinvestments@giotradegroup.co.za" style="color:rgba(255,255,255,0.17);text-decoration:none;">collectiveinvestments@giotradegroup.co.za</a></p>
+
+      <div style="margin-top:24px;">
+        <div style="font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,255,255,0.28); margin-bottom:12px;">Follow us on</div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <a href="https://x.com/giotradegroup" target="_blank" rel="noopener" aria-label="Follow us on X" style="display:flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(255,255,255,0.14); border-radius:50%; transition:border-color .25s, background .25s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent';">
+            <svg width="14" height="14" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="rgba(255,255,255,0.7)"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/giotradegroup" target="_blank" rel="noopener" aria-label="Follow us on LinkedIn" style="display:flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(255,255,255,0.14); border-radius:50%; transition:border-color .25s, background .25s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent';">
+            <svg width="15" height="15" viewBox="0 0 448 512" fill="rgba(255,255,255,0.7)" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- MIDDLE: GIOTRADE GROUP -->
