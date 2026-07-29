@@ -283,9 +283,12 @@
 
     .hero__copy {
       position:absolute; z-index:10;
-      top:65vh; right:56px;
+      top:53vh; right:56px;
       text-align:right; max-width:640px;
       animation:fadeUp 1.2s 0.3s ease both;
+    }
+    @media (min-width: 769px) {
+      .hero__copy { top: 65vh; }
     }
     @keyframes fadeUp {
       from { opacity:0; transform:translateY(28px); }
@@ -623,7 +626,7 @@
       .nav__mobile-panel { display:flex; }
       .logo-block { top:130px; width:100%; }
       .logo-img { width:270px; height:270px; }
-      .hero__copy { right:5vw; left:5vw; text-align:left; bottom:6vh; max-width:100%; top:auto; }
+      .hero__copy { right:5vw; left:5vw; text-align:left; bottom:6vh; max-width:100%; }
       .section { padding:68px 22px; }
       .stats { flex-direction:column; }
       .stat { border-right:none; border-bottom:1px solid rgba(255,255,255,0.07); }
