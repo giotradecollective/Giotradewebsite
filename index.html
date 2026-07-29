@@ -249,7 +249,7 @@
       from { opacity:0; transform:translateX(-50%) translateY(-22px); }
       to   { opacity:1; transform:translateX(-50%) translateY(0); }
     }
-    .logo-img { width:220px; height:220px; object-fit:contain; display:block; mix-blend-mode:screen; }
+    .logo-img { width:450px; height:450px; object-fit:contain; display:block; mix-blend-mode:screen; }
 
     .hero__copy {
       position:absolute; z-index:10;
@@ -587,14 +587,14 @@
     .modal-contact-box strong { color:var(--white); font-weight:500; }
     .modal-footer-note { margin-top:40px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.07); font-size:0.72rem; color:rgba(255,255,255,0.25); text-align:center; letter-spacing:0.04em; }
 
-    @media(max-width:768px){
+    @media (max-width:768px){
       nav { padding:20px 22px; justify-content: flex-end; } .nav__links { display:none; } .nav__cta { display:none; }
       .nav__burger { display:flex; margin-left: auto; }
       .nav__mobile-panel { display:flex; }
-      .hero { min-height:560px; }
-      .logo-block { top:48px; width:100%; }
-      .logo-img { width:180px; height:180px; }
-      .hero__copy { right:6vw; left:6vw; text-align:left; bottom:9vh; max-width:100%; }
+      .hero { min-height:680px; }
+      .logo-block { top:130px; width:100%; }
+      .logo-img { width:400px; height:400px; }
+      .hero__copy { right:5vw; left:5vw; text-align:left; bottom:6vh; max-width:100%; }
       .hero__headline { margin-top:14px; }
       .section { padding:68px 22px; }
       .stats { flex-direction:column; }
@@ -627,11 +627,12 @@
       .modal-box { padding:40px 24px; }
     }
 
-    @media(max-width:480px), (max-height:700px){
+    /* Original mobile breakpoint for smaller screens - commented out as per final_index_v2.html */
+    /* @media(max-width:480px), (max-height:700px){
       .logo-block { top:36px; }
       .hero__copy { bottom:11vh; }
       .hero__headline { margin-top:10px; }
-    }
+    } */
 
     #store-modal-overlay {
       display: none; position: fixed; inset: 0; 
