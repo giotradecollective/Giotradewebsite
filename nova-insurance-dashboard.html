@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Insurance — Executive Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#f2f2f0;
+  --card:#ffffff;
+  --border:#dcdcd9;
+  --border-soft:#e8e8e6;
+  --text:#141414;
+  --text-dim:#5c5c59;
+  --text-mute:#96968f;
+  --sage:#1a1a1a;
+  --sage-dark:#000000;
+  --sage-tint:#e9e9e7;
+  --amber:#65655f;
+  --amber-tint:#eaeae7;
+  --red:#7a3530;
+  --red-tint:#ece7e6;
+  --blue:#4a4a47;
+  --blue-tint:#e7e7e5;
+  --font-d:'Inter',sans-serif;
+  --font-logo:'Fraunces',serif;
+  --font-b:'Inter',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+  --r:14px;
+  --r-sm:10px;
+  --shadow:0 1px 2px rgba(20,30,20,.04), 0 1px 12px rgba(20,30,20,.04);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-b);
+  min-height:100vh;
+}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:#cfcfcb;border-radius:10px;}
+::-webkit-scrollbar-track{background:transparent;}
+button{cursor:pointer;font-family:inherit;}
+
+/* ---------- layout ---------- */
+.app{display:flex;min-height:100vh;}
+
+.sidebar{
+  width:246px;flex:none;
+  padding:24px 16px;
+  border-right:1px solid var(--border);
+  background:var(--card);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;
+}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px 22px;border-bottom:1px solid var(--border-soft);margin-bottom:18px;}
+.brand-mark{width:30px;height:30px;flex:none;}
+.brand-name{font-family:var(--font-logo);font-style:italic;font-weight:600;font-size:22px;color:var(--sage-dark);line-height:1;}
+.brand-sub{font-size:9.5px;color:var(--text-mute);letter-spacing:2px;margin-top:3px;font-weight:600;text-transform:uppercase;}
+
+.nav{display:flex;flex-direction:column;gap:1px;flex:1;}
+.nav-label{font-size:10.5px;color:var(--text-mute);letter-spacing:1.3px;font-weight:700;margin:16px 10px 7px;text-transform:uppercase;}
+.nav-label:first-child{margin-top:0;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:9px;
+  color:var(--text-dim);font-size:13.5px;font-weight:500;
+  cursor:pointer;transition:.15s ease;
+  border:1px solid transparent;
+}
+.nav-item svg{width:16px;height:16px;flex:none;opacity:.8;}
+.nav-item:hover{background:#eeeeec;color:var(--text);}
+.nav-item.active{background:var(--sage-tint);color:var(--sage-dark);font-weight:600;}
+.nav-item.active svg{opacity:1;}
+
+.sidebar-foot{
+  border-radius:var(--r);padding:16px 14px;margin-top:12px;
+  background:var(--sage-dark);color:#fff;position:relative;overflow:hidden;
+}
+.sidebar-foot .icon-badge{
+  width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.14);
+  display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+}
+.sidebar-foot .icon-badge svg{width:16px;height:16px;stroke:#fff;}
+.sidebar-foot h4{font-size:13.5px;font-weight:600;margin-bottom:4px;}
+.sidebar-foot p{font-size:11.5px;color:rgba(255,255,255,.72);line-height:1.5;margin-bottom:10px;}
+.sidebar-foot button{
+  background:#fff;color:var(--sage-dark);border:none;border-radius:20px;
+  font-size:11.5px;font-weight:700;padding:7px 13px;display:inline-flex;align-items:center;gap:5px;
+}
+
+.main{flex:1;min-width:0;padding:0 34px 50px;}
+
+.topbar{
+  position:sticky;top:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:26px 0 20px;
+  background:linear-gradient(180deg, var(--bg) 80%, transparent);
+}
+.topbar h1{font-family:var(--font-d);font-size:22px;font-weight:700;letter-spacing:-.2px;}
+.topbar p{color:var(--text-dim);font-size:13px;margin-top:4px;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.bell-btn{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--card);
+  display:flex;align-items:center;justify-content:center;position:relative;transition:.15s;
+}
+.bell-btn:hover{border-color:var(--sage);}
+.bell-btn svg{width:17px;height:17px;stroke:var(--text-dim);}
+.bell-dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff;}
+.user-block{display:flex;align-items:center;gap:10px;}
+.user-avatar{
+  width:36px;height:36px;border-radius:50%;background:var(--sage-tint);
+  display:flex;align-items:center;justify-content:center;flex:none;
+}
+.user-avatar svg{width:18px;height:18px;stroke:var(--sage-dark);}
+.user-text{line-height:1.3;}
+.user-text b{font-size:13px;font-weight:600;display:block;}
+.user-text span{font-size:11px;color:var(--text-mute);}
+
+.view{display:none;animation:fade .3s ease;}
+.view.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---------- grids ---------- */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px;}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:17px 19px;box-shadow:var(--shadow);
+}
+.card.clickable{cursor:pointer;transition:transform .15s ease, border-color .15s ease;}
+.card.clickable:hover{transform:translateY(-2px);border-color:var(--sage);}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.kpi-label{font-size:12px;color:var(--text-dim);font-weight:500;}
+.kpi-delta{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:20px;font-family:var(--font-m);}
+.kpi-delta.up{color:var(--sage-dark);background:var(--sage-tint);}
+.kpi-delta.down{color:var(--red);background:var(--red-tint);}
+.kpi-delta.warn{color:var(--amber);background:var(--amber-tint);}
+.kpi-value{font-family:var(--font-d);font-size:26px;font-weight:700;margin-top:9px;letter-spacing:-.3px;}
+.kpi-spark{height:32px;margin-top:6px;}
+
+.content-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;align-items:start;}
+.content-grid.even{grid-template-columns:1fr 1fr;}
+.panel{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow);
+}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;flex-wrap:wrap;gap:8px;}
+.panel-head h3{font-size:15px;font-weight:700;}
+.panel-head span{font-size:11.5px;color:var(--text-mute);font-family:var(--font-m);}
+.legend{display:flex;gap:14px;font-size:11.5px;color:var(--text-dim);flex-wrap:wrap;}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;}
+
+/* toolbar: search + chips */
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.search-box{
+  flex:1;min-width:180px;display:flex;align-items:center;gap:8px;
+  border:1px solid var(--border);border-radius:20px;padding:8px 14px;background:#f5f5f3;
+}
+.search-box svg{width:14px;height:14px;stroke:var(--text-mute);flex:none;}
+.search-box input{border:none;background:none;outline:none;font-size:13px;width:100%;color:var(--text);}
+.chip-filter{
+  border:1px solid var(--border);background:#fff;color:var(--text-dim);
+  font-size:12px;font-weight:600;padding:7px 13px;border-radius:20px;transition:.15s;white-space:nowrap;
+}
+.chip-filter:hover{border-color:var(--sage);}
+.chip-filter.active{background:var(--sage-dark);border-color:var(--sage-dark);color:#fff;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;padding:9px 10px;color:var(--text-mute);font-weight:700;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border-soft);}
+td{padding:12px 10px;border-bottom:1px solid var(--border-soft);color:var(--text);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+td.mono,th.mono{font-family:var(--font-m);}
+.text-dim{color:var(--text-dim);}
+
+.btn{
+  border-radius:20px;font-size:12px;font-weight:700;padding:7px 14px;border:1.4px solid var(--text);
+  background:#fff;color:var(--text);white-space:nowrap;transition:.15s;
+}
+.btn:hover{background:var(--text);color:#fff;}
+.btn.primary{background:var(--sage-dark);border-color:var(--sage-dark);color:#fff;}
+.btn.primary:hover{background:var(--sage);border-color:var(--sage);}
+.btn.ghost-red{border-color:var(--red);color:var(--red);}
+.btn.ghost-red:hover{background:var(--red);color:#fff;}
+.btn.ghost-sage{border-color:var(--sage-dark);color:var(--sage-dark);}
+.btn.ghost-sage:hover{background:var(--sage-dark);color:#fff;}
+.btn.sm{padding:5px 11px;font-size:11px;}
+
+.status{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:5px;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.approved{background:var(--sage-tint);color:var(--sage-dark);}
+.pending{background:var(--amber-tint);color:var(--amber);}
+.rejected{background:var(--red-tint);color:var(--red);}
+.investigating{background:var(--blue-tint);color:var(--blue);}
+
+.bar-row{margin-bottom:13px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-row .lbl{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;color:var(--text-dim);}
+.bar-row .lbl b{color:var(--text);font-weight:700;font-family:var(--font-m);}
+.track{height:7px;background:#e6e6e4;border-radius:20px;overflow:hidden;}
+.fill{height:100%;border-radius:20px;background:var(--sage);}
+
+.feed{display:flex;flex-direction:column;gap:13px;max-height:320px;overflow:auto;padding-right:2px;}
+.feed-item{display:flex;gap:11px;font-size:12.5px;}
+.feed-dot{width:7px;height:7px;border-radius:50%;margin-top:5px;flex:none;}
+.feed-item b{color:var(--text);font-weight:600;}
+.feed-item span{color:var(--text-mute);font-size:11px;display:block;margin-top:2px;font-family:var(--font-m);}
+
+.province-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.province{border-radius:11px;padding:11px 9px;border:1px solid var(--border);background:#f5f5f3;text-align:center;}
+.province .p-name{font-size:10.5px;color:var(--text-dim);margin-bottom:5px;font-weight:600;}
+.province .p-val{font-family:var(--font-m);font-size:15px;font-weight:700;}
+
+.chart-wrap{position:relative;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+.gauge-wrap{display:flex;align-items:center;gap:20px;}
+.gauge-num{font-family:var(--font-d);font-size:32px;font-weight:700;}
+.gauge-num small{font-size:12.5px;color:var(--text-dim);font-weight:500;display:block;margin-top:2px;font-family:var(--font-b);}
+
+/* Policy book (accordion) */
+.policy-row{border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;transition:.2s;}
+.policy-head{
+  display:grid;grid-template-columns:26px 2.1fr 1fr 1fr 1.1fr 1fr;gap:10px;align-items:center;
+  padding:14px 14px;cursor:pointer;background:#fff;transition:.2s;
+}
+.policy-row.open .policy-head{background:var(--sage-dark);color:#fff;}
+.policy-row.open .policy-head .p-addr{color:rgba(255,255,255,.75);}
+.policy-row.open .policy-head .status{background:rgba(255,255,255,.16);color:#fff;}
+.policy-row.open .policy-head .btn{background:#fff;color:var(--sage-dark);border-color:#fff;}
+.chev{width:14px;height:14px;transition:transform .2s;stroke:currentColor;}
+.policy-row.open .chev{transform:rotate(180deg);}
+.p-name{font-weight:700;font-size:13.5px;}
+.p-addr{font-size:11.5px;color:var(--text-mute);margin-top:2px;}
+.p-cell{font-size:13px;font-family:var(--font-m);}
+.policy-body{display:none;padding:18px 20px;background:#f7f7f5;}
+.policy-row.open .policy-body{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
+.cov-table th{padding:7px 8px;}
+.cov-table td{padding:9px 8px;}
+.bill-card{background:var(--sage-dark);color:#fff;border-radius:12px;padding:18px;text-align:center;height:fit-content;}
+.bill-card p{font-size:11px;color:rgba(255,255,255,.7);margin-bottom:4px;letter-spacing:.4px;text-transform:uppercase;font-weight:600;}
+.bill-card .amt{font-family:var(--font-d);font-size:26px;font-weight:700;margin-bottom:12px;}
+.bill-card button{width:100%;}
+
+.toast-wrap{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:999;}
+.toast{
+  background:var(--sage-dark);color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);display:flex;align-items:center;gap:8px;
+  animation:toastIn .25s ease;
+}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:1180px){
+  .content-grid,.content-grid.even,.two-col,.grid-3{grid-template-columns:1fr;}
+  .policy-head{grid-template-columns:22px 1.6fr 1fr 1fr;}
+  .policy-head > :nth-child(5),.policy-head > :nth-child(6){display:none;}
+}
+@media(max-width:880px){
+  .sidebar{display:none;}
+  .main{padding:0 18px 40px;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+        <rect x="1" y="1" width="38" height="38" rx="10.5" fill="url(#novaMarkGrad)"/>
+        <rect x="1" y="1" width="38" height="38" rx="10.5" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+        <path d="M12.5 27.5V12.5H15.6L26.2 24.4V12.5H27.5V27.5H24.4L13.8 15.6V27.5Z" fill="#fff"/>
+        <defs>
+          <linearGradient id="novaMarkGrad" x1="1" y1="1" x2="39" y2="39" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#000000"/>
+            <stop offset="1" stop-color="#3a3a3a"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <div class="brand-name">nova</div>
+        <div class="brand-sub">Insurance</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Portfolio</div>
+      <div class="nav-item" data-view="policybook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 4h12v16l-3-2-3 2-3-2-3 2z"/></svg>
+        Policy Book
+      </div>
+      <div class="nav-item" data-view="claims">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>
+        Claims Management
+      </div>
+      <div class="nav-item" data-view="underwriting">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6z"/></svg>
+        Underwriting &amp; Risk
+      </div>
+      <div class="nav-item" data-view="fraud">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg>
+        Fraud Intelligence
+      </div>
+      <div class="nav-item active" data-view="overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Executive Overview
+      </div>
+
+      <div class="nav-label">Relationships</div>
+      <div class="nav-item" data-view="customer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/></svg>
+        Customer Analytics
+      </div>
+      <div class="nav-item" data-view="broker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10l8-6 8 6v10"/><path d="M9 20v-6h6v6"/></svg>
+        Broker Performance
+      </div>
+
+      <div class="nav-label">Operations</div>
+      <div class="nav-item" data-view="operational">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>
+        Operational Monitoring
+      </div>
+      <div class="nav-item" data-view="financial">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4v16h16"/><rect x="7" y="12" width="3" height="5"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="14" width="3" height="3"/></svg>
+        Financial Reporting
+      </div>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 18a6 6 0 100-12 6 6 0 000 12z"/><path d="M12 8v4l2.5 1.5"/></svg></div>
+      <h4>Questions?</h4>
+      <p>Talk to our support desk — we typically reply within the hour.</p>
+      <button onclick="showToast('Support request sent — we\'ll be in touch shortly.')">Contact Support →</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="topbar">
+      <div>
+        <h1 id="pageTitle">Executive Overview</h1>
+        <p id="pageSub">Group-wide performance · Nova Insurance Group</p>
+      </div>
+      <div class="topbar-right">
+        <button class="bell-btn" onclick="showToast('3 new notifications: 1 SLA warning, 2 policy renewals due.')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1112 0c0 4 1.5 5.5 2 6.5H4c.5-1 2-2.5 2-6.5z"/><path d="M10 19a2 2 0 004 0"/></svg>
+          <span class="bell-dot"></span>
+        </button>
+        <div class="user-block">
+          <div class="user-avatar"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.6-4.2 4.2-6.2 7-6.2s5.4 2 7 6.2"/></svg></div>
+          <div class="user-text"><b>Ayanda Mokoena</b><span>Head of Operations</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="view active" id="view-overview">
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <div class="content-grid">
+        <div>
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Premiums vs. Claims Paid</h3>
+              <div class="legend"><span><i style="background:#1a1a1a"></i>Premiums</span><span><i style="background:#65655f"></i>Claims Paid</span></div>
+            </div>
+            <div class="chart-wrap" style="height:260px;"><canvas id="chartTrend"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Risk Concentration by Province</h3>
+              <span>Open claims per 1,000 policies</span>
+            </div>
+            <div class="province-grid" id="provinceGrid"></div>
+          </div>
+        </div>
+        <div>
+          <div class="panel">
+            <div class="panel-head"><h3>Claims Distribution</h3><span>by product</span></div>
+            <div class="chart-wrap" style="height:190px;"><canvas id="chartDonut"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Live Activity</h3><span>real-time</span></div>
+            <div class="feed" id="feedList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POLICY BOOK ============ -->
+    <section class="view" id="view-policybook">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Your Business Policies</h3>
+          <span id="policyCount">7 policies</span>
+        </div>
+        <div class="toolbar">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg>
+            <input id="policySearch" placeholder="Search policies by name or location…">
+          </div>
+          <button class="chip-filter active" data-filter="all">All</button>
+          <button class="chip-filter" data-filter="renew-soon">Renewing Soon</button>
+          <button class="chip-filter" data-filter="renew-far">Active</button>
+          <button class="chip-filter" data-filter="expired">Expired</button>
+        </div>
+        <div id="policyList"></div>
+      </div>
+    </section>
+
+    <!-- ============ CLAIMS ============ -->
+    <section class="view" id="view-claims">
+      <div class="content-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Recent Claims</h3><span>last 24 hours</span></div>
+          <div class="toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg>
+              <input id="claimSearch" placeholder="Search claims by customer…">
+            </div>
+            <button class="chip-filter active" data-cfilter="all">All</button>
+            <button class="chip-filter" data-cfilter="approved">Approved</button>
+            <button class="chip-filter" data-cfilter="pending">Pending</button>
+            <button class="chip-filter" data-cfilter="rejected">Rejected</button>
+          </div>
+          <table id="claimsTable">
+            <tr><th>Claim No.</th><th>Customer</th><th>Product</th><th class="mono">Amount</th><th>Status</th><th>Action</th></tr>
+          </table>
+        </div>
+        <div>
+          <div class="panel">
+            <div class="panel-head"><h3>SLA Monitoring</h3><span>claims processing</span></div>
+            <div class="bar-row"><div class="lbl"><span>Within SLA</span><b>78%</b></div><div class="track"><div class="fill" style="width:78%"></div></div></div>
+            <div class="bar-row"><div class="lbl"><span>At risk (&gt;3 days)</span><b>15%</b></div><div class="track"><div class="fill" style="width:15%;background:var(--amber)"></div></div></div>
+            <div class="bar-row"><div class="lbl"><span>Breached</span><b>7%</b></div><div class="track"><div class="fill" style="width:7%;background:var(--red)"></div></div></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Claims Frequency vs Severity</h3></div>
+            <div class="chart-wrap" style="height:170px;"><canvas id="chartFreqSev"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ UNDERWRITING ============ -->
+    <section class="view" id="view-underwriting">
+      <div class="content-grid even">
+        <div class="panel">
+          <div class="panel-head"><h3>Risk Category Distribution</h3></div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="chartRisk"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Policy Approval Pipeline</h3></div>
+          <div class="bar-row"><div class="lbl"><span>Submitted</span><b>1,240</b></div><div class="track"><div class="fill" style="width:100%"></div></div></div>
+          <div class="bar-row"><div class="lbl"><span>Under Review</span><b>860</b></div><div class="track"><div class="fill" style="width:69%"></div></div></div>
+          <div class="bar-row"><div class="lbl"><span>Risk Assessed</span><b>612</b></div><div class="track"><div class="fill" style="width:49%"></div></div></div>
+          <div class="bar-row"><div class="lbl"><span>Approved</span><b>542</b></div><div class="track"><div class="fill" style="width:44%"></div></div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>High-Risk Client Alerts &amp; Renewal Scoring</h3></div>
+        <table>
+          <tr><th>Client</th><th>Product</th><th>Risk Level</th><th class="mono">Renewal Probability</th><th>Action</th></tr>
+          <tr><td>Thabo Nkosi</td><td>Motor</td><td><span class="status rejected">High</span></td><td class="mono">42%</td><td><button class="btn sm ghost-sage" onclick="showToast('Renewal outreach scheduled for Thabo Nkosi.')">Contact Client</button></td></tr>
+          <tr><td>Lerato Dlamini</td><td>Home</td><td><span class="status pending">Medium</span></td><td class="mono">68%</td><td><button class="btn sm ghost-sage" onclick="showToast('Renewal outreach scheduled for Lerato Dlamini.')">Contact Client</button></td></tr>
+          <tr><td>Riaan Botha</td><td>Motor</td><td><span class="status rejected">High</span></td><td class="mono">51%</td><td><button class="btn sm ghost-sage" onclick="showToast('Renewal outreach scheduled for Riaan Botha.')">Contact Client</button></td></tr>
+          <tr><td>Amara Chetty</td><td>Life</td><td><span class="status approved">Low</span></td><td class="mono">91%</td><td><button class="btn sm" disabled style="opacity:.5;cursor:default;">On track</button></td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ FRAUD ============ -->
+    <section class="view" id="view-fraud">
+      <div class="content-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Suspicious Claims Monitor</h3><span>AI risk-scored</span></div>
+          <table id="fraudTable">
+            <tr><th>Claim No.</th><th>Customer</th><th class="mono">Amount</th><th class="mono">Fraud Score</th><th>Status</th><th>Action</th></tr>
+          </table>
+        </div>
+        <div>
+          <div class="panel">
+            <div class="panel-head"><h3>Fraud Risk Heatmap</h3><span>by province</span></div>
+            <div class="province-grid" id="provinceFraudGrid"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Investigation Workflow</h3></div>
+            <div class="bar-row"><div class="lbl"><span>Open cases</span><b id="openCases">23</b></div><div class="track"><div class="fill" id="openCasesBar" style="width:60%"></div></div></div>
+            <div class="bar-row"><div class="lbl"><span>Repeat claimants flagged</span><b>9</b></div><div class="track"><div class="fill" style="width:24%;background:var(--amber)"></div></div></div>
+            <div class="bar-row"><div class="lbl"><span>Confirmed fraud (YTD)</span><b>14</b></div><div class="track"><div class="fill" style="width:37%;background:var(--red)"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CUSTOMER ============ -->
+    <section class="view" id="view-customer">
+      <div class="grid-3">
+        <div class="card"><div class="kpi-label">Total Customers</div><div class="kpi-value">18,720</div></div>
+        <div class="card"><div class="kpi-label">Renewal Rate</div><div class="kpi-value">91%</div></div>
+        <div class="card"><div class="kpi-label">Average Premium</div><div class="kpi-value">R756</div></div>
+      </div>
+      <div class="content-grid even" style="margin-top:16px;">
+        <div class="panel">
+          <div class="panel-head"><h3>Customer Satisfaction</h3></div>
+          <div class="gauge-wrap">
+            <div class="chart-wrap" style="width:130px;height:130px;"><canvas id="chartGauge"></canvas></div>
+            <div class="gauge-num">94%<small>CSAT score, rolling 90-day</small></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Retention Trend</h3></div>
+          <div class="chart-wrap" style="height:170px;"><canvas id="chartRetention"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BROKER ============ -->
+    <section class="view" id="view-broker">
+      <div class="panel">
+        <div class="panel-head"><h3>Broker Performance</h3><span>top 5 by premium volume</span></div>
+        <table>
+          <tr><th>Broker</th><th class="mono">Policies Sold</th><th class="mono">Premium Volume</th><th class="mono">Loss Ratio</th><th>Rating</th></tr>
+          <tr><td>Sanlam Direct Brokers</td><td class="mono">1,842</td><td class="mono">R2.4M</td><td class="mono">36%</td><td><span class="status approved">A+</span></td></tr>
+          <tr><td>Highveld Risk Partners</td><td class="mono">1,290</td><td class="mono">R1.8M</td><td class="mono">41%</td><td><span class="status approved">A</span></td></tr>
+          <tr><td>Cape Coastal Cover</td><td class="mono">980</td><td class="mono">R1.3M</td><td class="mono">52%</td><td><span class="status pending">B</span></td></tr>
+          <tr><td>Jozi Underwriters</td><td class="mono">764</td><td class="mono">R0.9M</td><td class="mono">29%</td><td><span class="status approved">A+</span></td></tr>
+          <tr><td>Karoo Insurance Agency</td><td class="mono">402</td><td class="mono">R0.5M</td><td class="mono">63%</td><td><span class="status rejected">C</span></td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ OPERATIONAL ============ -->
+    <section class="view" id="view-operational">
+      <div class="content-grid even">
+        <div class="panel">
+          <div class="panel-head"><h3>Team Productivity</h3></div>
+          <div class="bar-row"><div class="lbl"><span>Claims Team</span><b>112 / day</b></div><div class="track"><div class="fill" style="width:82%"></div></div></div>
+          <div class="bar-row"><div class="lbl"><span>Underwriting Team</span><b>64 / day</b></div><div class="track"><div class="fill" style="width:70%"></div></div></div>
+          <div class="bar-row"><div class="lbl"><span>Customer Service</span><b>340 / day</b></div><div class="track"><div class="fill" style="width:88%"></div></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Escalations</h3><span>last 7 days</span></div>
+          <div class="chart-wrap" style="height:190px;"><canvas id="chartEscalations"></canvas></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Live Activity</h3><span>real-time</span></div>
+        <div class="feed" id="feedList2"></div>
+      </div>
+    </section>
+
+    <!-- ============ FINANCIAL ============ -->
+    <section class="view" id="view-financial">
+      <div class="grid-3">
+        <div class="card"><div class="kpi-label">Gross Written Premium</div><div class="kpi-value">R18.4M</div></div>
+        <div class="card"><div class="kpi-label">Net Underwriting Result</div><div class="kpi-value">R4.1M</div></div>
+        <div class="card"><div class="kpi-label">Combined Ratio</div><div class="kpi-value">88.6%</div></div>
+      </div>
+      <div class="panel" style="margin-top:16px;">
+        <div class="panel-head"><h3>YTD Performance Comparison</h3><span>2025 vs 2026</span></div>
+        <div class="chart-wrap" style="height:250px;"><canvas id="chartYTD"></canvas></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+const chartsAvailable = typeof Chart !== 'undefined';
+if(chartsAvailable){
+  Chart.defaults.color = '#5c5c59';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.borderColor = '#e8e8e6';
+} else {
+  console.warn('Chart.js did not load (CDN blocked?) — charts are skipped but the rest of the dashboard, tabs, tables and buttons stay fully interactive.');
+}
+const chartInstances = {};
+function safeChart(id, config){
+  if(!chartsAvailable) return;
+  try{ chartInstances[id] = new Chart(document.getElementById(id), config); }
+  catch(err){ console.error('Chart failed:', id, err); }
+}
+
+const sage='#1a1a1a', sageDark='#000000', amber='#65655f', red='#7a3530', blue='#4a4a47';
+function gridOpt(){return {color:'#e8e8e6', drawTicks:false};}
+
+/* ---------------- toast ---------------- */
+function showToast(msg){
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className='toast';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(8px)'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); }, 3200);
+}
+
+/* ---------------- NAV ---------------- */
+const titles = {
+  overview:['Executive Overview','Group-wide performance · Nova Insurance Group'],
+  policybook:['Policy Book','Active business policies and coverage detail'],
+  claims:['Claims Management','Processing, SLA adherence and case detail'],
+  underwriting:['Underwriting & Risk','Risk appetite, pipeline and renewal scoring'],
+  fraud:['Fraud Intelligence','AI-driven monitoring and investigation tracking'],
+  customer:['Customer Analytics','Satisfaction, retention and portfolio health'],
+  broker:['Broker Performance','Volume, quality and loss ratio by channel'],
+  operational:['Operational Monitoring','Team throughput, SLAs and live events'],
+  financial:['Financial Reporting','Consolidated underwriting and reserving results'],
+};
+function goToView(key){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelector(`.nav-item[data-view="${key}"]`).classList.add('active');
+  const viewEl = document.getElementById('view-'+key);
+  viewEl.classList.add('active');
+  document.getElementById('pageTitle').textContent = titles[key][0];
+  document.getElementById('pageSub').textContent = titles[key][1];
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Charts created while their tab was hidden measure 0x0 and never draw;
+  // force a resize now that the tab is visible.
+  requestAnimationFrame(()=>{
+    viewEl.querySelectorAll('canvas').forEach(cv=>{
+      const inst = chartInstances[cv.id];
+      if(inst) inst.resize();
+    });
+  });
+}
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', ()=>goToView(item.dataset.view));
+});
+
+/* ---------------- KPI cards (clickable -> jump to relevant view) ---------------- */
+const kpis = [
+  {label:'Total Premiums', value:'R18.4M', delta:'+8.2%', cls:'up', view:'financial', spark:[12,13,12.5,14,13.8,15,16,15.6,17,17.8,18,18.4]},
+  {label:'Claims Paid', value:'R7.8M', delta:'+3.1%', cls:'warn', view:'claims', spark:[6,6.4,6.1,6.8,7,6.9,7.2,7.5,7.3,7.6,7.7,7.8]},
+  {label:'Loss Ratio', value:'42.4%', delta:'-1.4%', cls:'up', view:'financial', spark:[46,45,45.5,44,44.5,43,43.5,42.8,43,42.6,42.5,42.4]},
+  {label:'Active Policies', value:'24,315', delta:'+2.3%', cls:'up', view:'policybook', spark:[22.1,22.4,22.6,23,23.1,23.4,23.6,23.8,24,24.1,24.2,24.3]},
+  {label:'New Policies', value:'542', delta:'+12%', cls:'up', view:'policybook', spark:[380,395,410,430,445,460,470,490,505,515,530,542]},
+  {label:'Fraud Alerts', value:'23', delta:'+4', cls:'down', view:'fraud', spark:[14,15,13,17,16,18,19,20,18,21,22,23]},
+  {label:'Customer Retention', value:'91%', delta:'+0.6%', cls:'up', view:'customer', spark:[88,88.4,88.9,89.2,89.5,89.8,90,90.2,90.5,90.7,90.9,91]},
+];
+const kpiGrid = document.getElementById('kpiGrid');
+kpis.forEach((k,i)=>{
+  const card = document.createElement('div');
+  card.className='card clickable';
+  card.onclick = ()=>goToView(k.view);
+  card.innerHTML = `
+    <div class="kpi-top">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-delta ${k.cls}">${k.delta}</div>
+    </div>
+    <div class="kpi-value">${k.value}</div>
+    <div class="kpi-spark"><canvas id="spark${i}"></canvas></div>
+  `;
+  kpiGrid.appendChild(card);
+});
+kpis.forEach((k,i)=>{
+  safeChart('spark'+i, {
+    type:'line',
+    data:{labels:k.spark.map((_,x)=>x), datasets:[{data:k.spark, borderColor: sage, borderWidth:2, pointRadius:0, tension:.4, fill:true, backgroundColor:'rgba(0,0,0,.06)'}]},
+    options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false}}}
+  });
+});
+
+/* ---------------- Trend chart (overview) ---------------- */
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const premiumSeries = [1.2,1.25,1.3,1.28,1.35,1.4,1.45,1.5,1.48,1.55,1.6,1.65].map(v=>v*11.2);
+const claimsSeries  = [0.5,0.55,0.58,0.6,0.62,0.6,0.65,0.68,0.66,0.7,0.72,0.75].map(v=>v*10.3);
+safeChart('chartTrend', {
+  type:'line',
+  data:{labels:months, datasets:[
+    {label:'Premiums', data:premiumSeries, borderColor:sage, backgroundColor:'rgba(0,0,0,.07)', fill:true, tension:.4, pointRadius:0, borderWidth:2.5},
+    {label:'Claims Paid', data:claimsSeries, borderColor:amber, backgroundColor:'rgba(217,127,44,.08)', fill:true, tension:.4, pointRadius:0, borderWidth:2.5},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{grid:gridOpt()}, y:{grid:gridOpt(), ticks:{callback:v=>'R'+v.toFixed(0)+'M'}}}}
+});
+
+/* ---------------- Donut ---------------- */
+safeChart('chartDonut', {
+  type:'doughnut',
+  data:{labels:['Motor','Home','Life','Travel'], datasets:[{data:[55,22,15,8], backgroundColor:[sage,blue,amber,red], borderColor:'#fff', borderWidth:3}]},
+  options:{responsive:true,maintainAspectRatio:false, cutout:'70%', plugins:{legend:{position:'bottom', labels:{boxWidth:8,boxHeight:8,padding:14,font:{size:11}}}}}
+});
+
+/* ---------------- Province grids ---------------- */
+const provinces = [
+  {n:'Gauteng', v:6.2, risk:'high'},
+  {n:'Western Cape', v:3.4, risk:'low'},
+  {n:'KwaZulu-Natal', v:5.1, risk:'med'},
+  {n:'Eastern Cape', v:4.0, risk:'med'},
+  {n:'Free State', v:2.6, risk:'low'},
+  {n:'Mpumalanga', v:3.8, risk:'med'},
+  {n:'Limpopo', v:2.9, risk:'low'},
+  {n:'North West', v:3.1, risk:'low'},
+  {n:'Northern Cape', v:1.8, risk:'low'},
+];
+function riskColor(r){return r==='high'?red:r==='med'?amber:sage;}
+function buildProvinceGrid(elId, valSuffix, transform){
+  const el = document.getElementById(elId);
+  provinces.forEach(p=>{
+    const val = transform ? transform(p) : p.v;
+    const div = document.createElement('div');
+    div.className='province';
+    div.innerHTML = `<div class="p-name">${p.n}</div><div class="p-val" style="color:${riskColor(p.risk)}">${val}${valSuffix}</div>`;
+    el.appendChild(div);
+  });
+}
+buildProvinceGrid('provinceGrid','');
+buildProvinceGrid('provinceFraudGrid','', p=>Math.round(p.v*11.3));
+
+/* ---------------- Live feed ---------------- */
+const feedEvents = [
+  {t:'New claim submitted', d:'CLM-1031 · Motor · R15,200', c:sage},
+  {t:'Claim approved', d:'CLM-1024 · Life · R32,000', c:sage},
+  {t:'High-value claim flagged', d:'CLM-1030 · R132,400 · fraud score 87', c:red},
+  {t:'New policy issued', d:'Home Insurance · Cape Town', c:blue},
+  {t:'SLA warning', d:'CLM-1017 approaching 3-day threshold', c:amber},
+  {t:'Broker submission received', d:'Highveld Risk Partners · 4 policies', c:blue},
+  {t:'Claim rejected', d:'CLM-1027 · insufficient documentation', c:red},
+  {t:'Renewal completed', d:'Policy #POL-88213 · Motor', c:sage},
+];
+function renderFeed(elId){
+  const el = document.getElementById(elId);
+  el.innerHTML='';
+  feedEvents.forEach((e,i)=>{
+    const mins = (i+1)*4;
+    const item = document.createElement('div');
+    item.className='feed-item';
+    item.innerHTML = `<div class="feed-dot" style="background:${e.c}"></div><div><b>${e.t}</b><span>${e.d} · ${mins}m ago</span></div>`;
+    el.appendChild(item);
+  });
+}
+renderFeed('feedList');
+renderFeed('feedList2');
+
+let feedCounter = 1031;
+setInterval(()=>{
+  const templates = [
+    ()=>({t:'New claim submitted', d:`CLM-${++feedCounter} · Motor · R${(Math.random()*80000+5000|0).toLocaleString()}`, c:sage}),
+    ()=>({t:'Claim approved', d:`CLM-${feedCounter} · Life · R${(Math.random()*40000+5000|0).toLocaleString()}`, c:sage}),
+    ()=>({t:'New policy issued', d:'Travel Insurance · Durban', c:blue}),
+    ()=>({t:'SLA warning', d:`CLM-${feedCounter-3} approaching threshold`, c:amber}),
+  ];
+  const ev = templates[Math.floor(Math.random()*templates.length)]();
+  ['feedList','feedList2'].forEach(id=>{
+    const el = document.getElementById(id);
+    const item = document.createElement('div');
+    item.className='feed-item';
+    item.style.opacity=0;
+    item.innerHTML = `<div class="feed-dot" style="background:${ev.c}"></div><div><b>${ev.t}</b><span>${ev.d} · just now</span></div>`;
+    el.prepend(item);
+    requestAnimationFrame(()=>{item.style.transition='opacity .5s';item.style.opacity=1;});
+    if(el.children.length>8) el.removeChild(el.lastChild);
+  });
+}, 6000);
+
+/* ---------------- POLICY BOOK ---------------- */
+const policies = [
+  {id:'p1', name:"Thabo's Auto Garage", addr:'12 Rivonia Rd, Sandton, Johannesburg', premium:'R1,245.00', effective:'14/02/24', status:'renew-soon', days:18,
+    cov:[{c:'Public Liability',limit:'R2,000,000',ded:'R5,000'},{c:'Property Damage',limit:'R1,500,000',ded:'R7,500'},{c:'Business Interruption',limit:'R800,000',ded:'R3,000'}]},
+  {id:'p2', name:'Cape Vineyard Estates', addr:'447 Wine Route, Stellenbosch, Western Cape', premium:'R3,860.00', effective:'23/04/24', status:'renew-far', days:130, open:true,
+    cov:[{c:'General Liability',limit:'R5,000,000',ded:'R10,000'},{c:'Property Cover',limit:'R12,000,000',ded:'R15,000'},{c:"Worker's Compensation",limit:'R1,000,000',ded:'R2,500'}]},
+  {id:'p3', name:'Durban Beachfront Hotel', addr:'34 Marine Parade, Durban, KwaZulu-Natal', premium:'R6,920.00', effective:'12/04/22', status:'renew-soon', days:22,
+    cov:[{c:'Property Cover',limit:'R28,000,000',ded:'R20,000'},{c:'Public Liability',limit:'R10,000,000',ded:'R10,000'},{c:'Loss of Income',limit:'R4,000,000',ded:'R5,000'}]},
+  {id:'p4', name:'Joburg Momo Kitchen', addr:'94 Bree Street, Johannesburg CBD', premium:'R845.00', effective:'09/03/24', status:'expired', days:0,
+    cov:[{c:'Public Liability',limit:'R1,000,000',ded:'R3,000'},{c:'Equipment Cover',limit:'R350,000',ded:'R1,500'}]},
+  {id:'p5', name:'Pretoria Print & Copy', addr:'56 Church Street, Pretoria', premium:'R560.00', effective:'29/06/24', status:'expired', days:0,
+    cov:[{c:'Equipment Cover',limit:'R280,000',ded:'R1,000'},{c:'Public Liability',limit:'R500,000',ded:'R2,000'}]},
+  {id:'p6', name:'Sandton Fitness Studio', addr:'8 Maude Street, Sandton, Johannesburg', premium:'R1,120.00', effective:'18/04/22', status:'expired', days:0,
+    cov:[{c:'Public Liability',limit:'R2,500,000',ded:'R5,000'},{c:'Equipment Cover',limit:'R620,000',ded:'R2,000'}]},
+  {id:'p7', name:'Garden Route Guesthouse', addr:'3 Knysna Lagoon Drive, Knysna', premium:'R980.00', effective:'23/03/22', status:'renew-soon', days:30,
+    cov:[{c:'Property Cover',limit:'R6,500,000',ded:'R8,000'},{c:'Public Liability',limit:'R3,000,000',ded:'R5,000'}]},
+];
+const statusMeta = {
+  'renew-soon':{label:d=>`Renews in ${d} days`, cls:'pending'},
+  'renew-far':{label:d=>`Renews in ${d} days`, cls:'approved'},
+  'expired':{label:()=>'Expired', cls:'rejected'},
+};
+function renderPolicyList(filter='all', search=''){
+  const el = document.getElementById('policyList');
+  el.innerHTML='';
+  const term = search.trim().toLowerCase();
+  const rows = policies.filter(p=>{
+    const matchesFilter = filter==='all' || p.status===filter;
+    const matchesSearch = !term || p.name.toLowerCase().includes(term) || p.addr.toLowerCase().includes(term);
+    return matchesFilter && matchesSearch;
+  });
+  document.getElementById('policyCount').textContent = rows.length + (rows.length===1?' policy':' policies');
+  rows.forEach(p=>{
+    const meta = statusMeta[p.status];
+    const row = document.createElement('div');
+    row.className = 'policy-row' + (p.open ? ' open':'');
+    const actionBtn = p.status==='expired'
+      ? `<button class="btn ghost-red sm" onclick="event.stopPropagation(); showToast('Renewal request started for ${p.name}.')">Renew Policy</button>`
+      : `<button class="btn sm" onclick="event.stopPropagation(); showToast('Opening full coverage details for ${p.name}.')">Coverage Details</button>`;
+    row.innerHTML = `
+      <div class="policy-head" onclick="this.parentElement.classList.toggle('open')">
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        <div><div class="p-name">${p.name}</div><div class="p-addr">${p.addr}</div></div>
+        <div class="p-cell">${p.premium}</div>
+        <div class="p-cell">${p.effective}</div>
+        <div><span class="status ${meta.cls}"><span class="dot" style="background:currentColor"></span>${meta.label(p.days)}</span></div>
+        <div>${actionBtn}</div>
+      </div>
+      <div class="policy-body">
+        <div>
+          <table class="cov-table">
+            <tr><th>Coverage</th><th class="mono">Limit</th><th class="mono">Deductible</th></tr>
+            ${p.cov.map(c=>`<tr><td>${c.c}</td><td class="mono">${c.limit}</td><td class="mono">${c.ded}</td></tr>`).join('')}
+          </table>
+        </div>
+        <div class="bill-card">
+          <p>Your Next Bill</p>
+          <div class="amt">${p.premium}</div>
+          <button class="btn primary" onclick="event.stopPropagation(); showToast('Invoice for ${p.name} sent to billing inbox.')">See Bill →</button>
+        </div>
+      </div>
+    `;
+    el.appendChild(row);
+  });
+}
+renderPolicyList();
+document.getElementById('policySearch').addEventListener('input', e=>{
+  const activeFilter = document.querySelector('#view-policybook .chip-filter.active').dataset.filter;
+  renderPolicyList(activeFilter, e.target.value);
+});
+document.querySelectorAll('#view-policybook .chip-filter').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('#view-policybook .chip-filter').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderPolicyList(chip.dataset.filter, document.getElementById('policySearch').value);
+  });
+});
+
+/* ---------------- CLAIMS TABLE ---------------- */
+const claims = [
+  {no:'CLM-1025', cust:'John Smith', prod:'Motor', amt:'R48,000', status:'approved'},
+  {no:'CLM-1026', cust:'Sarah Adams', prod:'Home', amt:'R11,500', status:'pending'},
+  {no:'CLM-1027', cust:'David Brown', prod:'Motor', amt:'R89,300', status:'rejected'},
+  {no:'CLM-1028', cust:'Michael Jones', prod:'Life', amt:'R24,700', status:'approved'},
+  {no:'CLM-1029', cust:'Naledi Khumalo', prod:'Travel', amt:'R6,200', status:'pending'},
+  {no:'CLM-1030', cust:'Pieter van Zyl', prod:'Motor', amt:'R132,400', status:'investigating'},
+  {no:'CLM-1031', cust:'Zanele Mthembu', prod:'Home', amt:'R18,900', status:'pending'},
+  {no:'CLM-1032', cust:'Werner Kruger', prod:'Motor', amt:'R5,400', status:'approved'},
+];
+function claimActionCell(c){
+  if(c.status==='pending'){
+    return `<button class="btn sm ghost-sage" onclick="event.stopPropagation(); setClaimStatus('${c.no}','approved')">Approve</button>
+            <button class="btn sm ghost-red" onclick="event.stopPropagation(); setClaimStatus('${c.no}','rejected')">Reject</button>`;
+  }
+  if(c.status==='investigating'){
+    return `<button class="btn sm ghost-red" onclick="event.stopPropagation(); setClaimStatus('${c.no}','rejected')">Confirm Fraud</button>`;
+  }
+  return `<span class="text-dim" style="font-size:11.5px;">No action needed</span>`;
+}
+function renderClaims(filter='all', search=''){
+  const table = document.getElementById('claimsTable');
+  table.innerHTML = '<tr><th>Claim No.</th><th>Customer</th><th>Product</th><th class="mono">Amount</th><th>Status</th><th>Action</th></tr>';
+  const term = search.trim().toLowerCase();
+  claims.filter(c=> (filter==='all'||c.status===filter) && (!term||c.cust.toLowerCase().includes(term)) ).forEach(c=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="mono">${c.no}</td><td>${c.cust}</td><td>${c.prod}</td><td class="mono">${c.amt}</td>
+      <td><span class="status ${c.status}"><span class="dot" style="background:currentColor"></span>${c.status.charAt(0).toUpperCase()+c.status.slice(1)}</span></td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap;">${claimActionCell(c)}</td>`;
+    table.appendChild(tr);
+  });
+}
+function setClaimStatus(no, status){
+  const c = claims.find(x=>x.no===no);
+  if(!c) return;
+  c.status = status;
+  showToast(`${no} marked as ${status}.`);
+  const activeFilter = document.querySelector('#view-claims .chip-filter.active').dataset.cfilter;
+  renderClaims(activeFilter, document.getElementById('claimSearch').value);
+}
+renderClaims();
+document.getElementById('claimSearch').addEventListener('input', e=>{
+  const activeFilter = document.querySelector('#view-claims .chip-filter.active').dataset.cfilter;
+  renderClaims(activeFilter, e.target.value);
+});
+document.querySelectorAll('#view-claims .chip-filter').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('#view-claims .chip-filter').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderClaims(chip.dataset.cfilter, document.getElementById('claimSearch').value);
+  });
+});
+
+/* ---------------- FRAUD TABLE ---------------- */
+const fraudClaims = [
+  {no:'CLM-1030', cust:'Pieter van Zyl', amt:'R132,400', score:87, status:'investigating'},
+  {no:'CLM-1027', cust:'David Brown', amt:'R89,300', score:74, status:'rejected'},
+  {no:'CLM-1019', cust:'Sipho Mahlangu', amt:'R21,000', score:58, status:'pending'},
+  {no:'CLM-1004', cust:'Karen Peters', amt:'R15,600', score:12, status:'approved'},
+];
+function renderFraud(){
+  const table = document.getElementById('fraudTable');
+  table.innerHTML = '<tr><th>Claim No.</th><th>Customer</th><th class="mono">Amount</th><th class="mono">Fraud Score</th><th>Status</th><th>Action</th></tr>';
+  fraudClaims.forEach(f=>{
+    const scoreColor = f.score>70?red:f.score>40?amber:sage;
+    const statusLabel = f.status==='investigating'?'Investigating':f.status==='pending'?'Review':f.status==='rejected'?'Rejected':'Cleared';
+    const action = f.status==='pending'
+      ? `<button class="btn sm ghost-red" onclick="event.stopPropagation(); setFraudStatus('${f.no}','investigating')">Investigate</button>`
+      : f.status==='investigating'
+      ? `<button class="btn sm ghost-red" onclick="event.stopPropagation(); setFraudStatus('${f.no}','rejected')">Confirm Fraud</button>`
+      : `<span class="text-dim" style="font-size:11.5px;">Closed</span>`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="mono">${f.no}</td><td>${f.cust}</td><td class="mono">${f.amt}</td><td class="mono" style="color:${scoreColor};font-weight:700;">${f.score}</td>
+      <td><span class="status ${f.status}">${statusLabel}</span></td><td>${action}</td>`;
+    table.appendChild(tr);
+  });
+}
+function setFraudStatus(no, status){
+  const f = fraudClaims.find(x=>x.no===no);
+  if(!f) return;
+  f.status = status;
+  if(status==='investigating'){
+    const n = document.getElementById('openCases');
+    n.textContent = parseInt(n.textContent)+1;
+  }
+  showToast(`${no} moved to ${status==='investigating'?'active investigation':'confirmed fraud'}.`);
+  renderFraud();
+}
+renderFraud();
+
+/* ---------------- Claims frequency/severity ---------------- */
+safeChart('chartFreqSev', {
+  type:'bar',
+  data:{labels:['Motor','Home','Life','Travel'], datasets:[
+    {label:'Frequency', data:[62,34,12,21], backgroundColor:sage, borderRadius:5, maxBarThickness:16},
+    {label:'Severity (R000)', data:[48,89,120,15], backgroundColor:blue, borderRadius:5, maxBarThickness:16}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:8,boxHeight:8,font:{size:10.5}}}}, scales:{x:{grid:{display:false}}, y:{grid:gridOpt()}}}
+});
+
+/* ---------------- Underwriting view chart ---------------- */
+safeChart('chartRisk', {
+  type:'doughnut',
+  data:{labels:['Low','Medium','High'], datasets:[{data:[62,28,10], backgroundColor:[sage,amber,red], borderColor:'#fff', borderWidth:3}]},
+  options:{responsive:true,maintainAspectRatio:false, cutout:'65%', plugins:{legend:{position:'bottom', labels:{boxWidth:8,boxHeight:8,padding:14,font:{size:11}}}}}
+});
+
+/* ---------------- Customer view charts ---------------- */
+safeChart('chartGauge', {
+  type:'doughnut',
+  data:{datasets:[{data:[94,6], backgroundColor:[sage,'#e6e6e4'], borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false, cutout:'78%', rotation:-90, circumference:180, plugins:{legend:{display:false},tooltip:{enabled:false}}}
+});
+safeChart('chartRetention', {
+  type:'line',
+  data:{labels:months, datasets:[{data:[86,86.5,87,87.6,88,88.4,89,89.5,90,90.4,90.7,91], borderColor:sage, backgroundColor:'rgba(0,0,0,.07)', fill:true, tension:.4, pointRadius:0, borderWidth:2.5}]},
+  options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:gridOpt(), ticks:{callback:v=>v+'%'}}}}
+});
+
+/* ---------------- Operational view chart ---------------- */
+safeChart('chartEscalations', {
+  type:'bar',
+  data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], datasets:[{data:[3,5,2,7,4,1,2], backgroundColor:amber, borderRadius:6, maxBarThickness:26}]},
+  options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}}, y:{grid:gridOpt(), ticks:{stepSize:2}}}}
+});
+
+/* ---------------- Financial view chart ---------------- */
+safeChart('chartYTD', {
+  type:'line',
+  data:{labels:months, datasets:[
+    {label:'2025', data:[10.2,10.5,10.8,11,11.3,11.6,11.9,12.2,12.4,12.7,13,13.3], borderColor:'#b0b0ab', borderDash:[5,4], pointRadius:0, borderWidth:2, fill:false},
+    {label:'2026', data:premiumSeries, borderColor:sage, backgroundColor:'rgba(0,0,0,.07)', fill:true, pointRadius:0, borderWidth:2.5, tension:.4},
+  ]},
+  options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:8,boxHeight:8,font:{size:11}}}}, scales:{x:{grid:{display:false}}, y:{grid:gridOpt(), ticks:{callback:v=>'R'+v.toFixed(0)+'M'}}}}
+});
+</script>
+</body>
+</html>
