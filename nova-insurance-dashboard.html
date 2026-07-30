@@ -291,7 +291,7 @@ td.mono,th.mono{font-family:var(--font-m);}
 
     <nav class="nav">
       <div class="nav-label">Portfolio</div>
-      <div class="nav-item" data-view="policybook">
+      <div class="nav-item active" data-view="policybook">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 4h12v16l-3-2-3 2-3-2-3 2z"/></svg>
         Policy Book
       </div>
@@ -307,7 +307,7 @@ td.mono,th.mono{font-family:var(--font-m);}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg>
         Fraud Intelligence
       </div>
-      <div class="nav-item active" data-view="overview">
+      <div class="nav-item" data-view="overview">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
         Executive Overview
       </div>
@@ -346,8 +346,8 @@ td.mono,th.mono{font-family:var(--font-m);}
 
     <div class="topbar">
       <div>
-        <h1 id="pageTitle">Executive Overview</h1>
-        <p id="pageSub">Group-wide performance · Nova Insurance Group</p>
+        <h1 id="pageTitle">Policy Book</h1>
+        <p id="pageSub">Active business policies and coverage detail</p>
       </div>
       <div class="topbar-right">
         <button class="bell-btn" onclick="showToast('3 new notifications: 1 SLA warning, 2 policy renewals due.')">
@@ -362,7 +362,7 @@ td.mono,th.mono{font-family:var(--font-m);}
     </div>
 
     <!-- ============ OVERVIEW ============ -->
-    <section class="view active" id="view-overview">
+    <section class="view" id="view-overview">
       <div class="kpi-grid" id="kpiGrid"></div>
 
       <div class="content-grid">
@@ -396,7 +396,7 @@ td.mono,th.mono{font-family:var(--font-m);}
     </section>
 
     <!-- ============ POLICY BOOK ============ -->
-    <section class="view" id="view-policybook">
+    <section class="view active" id="view-policybook">
       <div class="panel">
         <div class="panel-head">
           <h3>Your Business Policies</h3>
