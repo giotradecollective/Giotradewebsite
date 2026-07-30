@@ -434,7 +434,7 @@
     .news-masthead__tagline { font-size:0.66rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gs-gray); margin-top:6px; font-style:normal; font-weight:600; }
     .news-masthead__meta { text-align:right; font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--gs-gray); line-height:1.8; }
 
-    .news-featured { display:grid; grid-template-columns:1.15fr 1fr; gap:44px; margin-bottom:64px; align-items:start; }
+    .news-featured { display:grid; grid-template-columns:1fr; gap:44px; margin-bottom:64px; align-items:start; }
     .news-feat-img {
       background:#eceeef;
       background-image:url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663669545265/iIrnRmkWbrVIPGXp.png');
@@ -1324,6 +1324,99 @@
   </form>
   <div id="mc-subscribe-message" class="news-subscribe__message" style="display:none;"></div>
 </div>
+  </div>
+</section>
+
+<section class="section" id="technologies" style="background:var(--gs-white); color:var(--gs-ink); border-top:1px solid var(--gs-line);">
+  <style>
+    .tech-capabilities{list-style:none;margin-top:18px;}
+    .tech-capabilities li{font-size:0.86rem;color:var(--gs-gray);line-height:1.7;padding-left:20px;position:relative;margin-bottom:11px;}
+    .tech-capabilities li::before{content:'\2014';position:absolute;left:0;color:var(--gs-navy);font-weight:700;}
+    .tech-capabilities li b{color:var(--gs-ink);font-weight:700;}
+    .news-card__note{font-size:0.75rem;color:var(--gs-gray);font-weight:600;letter-spacing:0.02em;}
+
+    .news-card--featured{
+      background:var(--gs-navy); border-top:none; padding:32px 30px; border-radius:2px;
+      box-shadow:0 18px 40px rgba(12,35,64,0.18);
+    }
+    .news-card--featured:hover{transform:translateY(-4px);}
+    .news-card--featured .news-card__badge{
+      display:inline-block; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:700;
+      color:var(--gs-navy); background:#fff; padding:5px 11px; border-radius:2px; margin-bottom:16px;
+    }
+    .news-card--featured .news-card__cat{color:rgba(255,255,255,0.75);}
+    .news-card--featured .news-card__date{color:rgba(255,255,255,0.45);}
+    .news-card--featured .news-card__title{color:#fff;}
+    .news-card--featured:hover .news-card__title{color:#fff;text-decoration:none;}
+    .news-card--featured .news-card__excerpt{color:rgba(255,255,255,0.72);}
+    .news-card__cta-btn{
+      display:inline-flex; align-items:center; gap:9px; margin-top:4px;
+      font-size:0.74rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+      color:var(--gs-navy); background:#fff; padding:12px 20px; text-decoration:none; border-radius:2px;
+      transition:gap .25s, background .2s; width:fit-content;
+    }
+    .news-card__cta-btn:hover{gap:14px; background:#eef1f4;}
+  </style>
+  <div class="news-masthead">
+    <div class="news-masthead__left">
+      <div class="news-masthead__brand">GIOTRADE <span>TECHNOLOGIES</span><sup style="font-size:.55rem;font-weight:300;">&reg;</sup></div>
+      <div class="news-masthead__tagline">Intelligence. Innovation. Impact.</div>
+    </div>
+    <div class="news-masthead__meta">
+      <div>Technology & Innovation Division</div>
+      <div>Digital Solutions & Data Intelligence</div>
+    </div>
+  </div>
+
+  <div class="news-featured">
+    <div class="news-feat-body">
+      <div class="news-feat-issue">
+        <div class="news-feat-issue__badge">Innovation Hub</div>
+        <div class="news-feat-issue__date">Driving Digital Transformation</div>
+      </div>
+      <h2 class="news-feat-headline">Intelligent Solutions for a Digital World</h2>
+      <div class="news-feat-byline">Engineering the Future of Financial Technology</div>
+      <p class="news-feat-excerpt">
+        GIOTRADE Technologies is our dedicated innovation division, focused on delivering intelligent digital solutions, software engineering, and data-driven intelligence. We build the infrastructure that powers modern finance, from proprietary trading algorithms to secure client portals and advanced analytical tools.
+      </p>
+      <ul class="tech-capabilities">
+        <li><b>Software Engineering</b> &mdash; custom platforms, trading systems, and enterprise applications engineered for scale, security, and long-term reliability.</li>
+        <li><b>Dashboards & Business Intelligence</b> &mdash; executive reporting tools and real-time data visualisation that turn operational data into decisions.</li>
+        <li><b>Websites & Client Portals</b> &mdash; secure, branded digital storefronts and investor- or customer-facing web experiences.</li>
+        <li><b>Data & Automation</b> &mdash; analytics pipelines, machine learning models, and workflow automation that reduce manual effort across teams.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="news-grid">
+    <div class="news-card news-card--featured" onclick="window.open('/nova-insurance-dashboard.html','_blank')">
+      <div class="news-card__badge">Live Interactive Demo</div>
+      <div class="news-card__meta">
+        <div class="news-card__cat">Client Engagement</div>
+        <div class="news-card__date">National Insurer</div>
+      </div>
+      <h3 class="news-card__title">Policy, Claims &amp; Fraud Platform</h3>
+      <p class="news-card__excerpt">Delivered a full operations dashboard for a national insurance client &mdash; anchored by a searchable Policy Book, with integrated Claims Management, Fraud Intelligence, and live Operational Monitoring.</p>
+      <a class="news-card__cta-btn" href="/nova-insurance-dashboard.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open the Live Dashboard &rarr;</a>
+    </div>
+    <div class="news-card">
+      <div class="news-card__meta">
+        <div class="news-card__cat">Software Engineering</div>
+        <div class="news-card__date">Core Systems</div>
+      </div>
+      <h3 class="news-card__title">Proprietary Trading Infrastructure</h3>
+      <p class="news-card__excerpt">Developing high-frequency, low-latency execution systems and automated risk management frameworks for global markets, built on resilient, event-driven architecture designed for continuous uptime.</p>
+      <div class="news-card__note">In Production &middot; Internal Systems</div>
+    </div>
+    <div class="news-card">
+      <div class="news-card__meta">
+        <div class="news-card__cat">Data Intelligence</div>
+        <div class="news-card__date">AI & ML</div>
+      </div>
+      <h3 class="news-card__title">Advanced Market Analytics</h3>
+      <p class="news-card__excerpt">Leveraging machine learning and big data to identify market patterns, sentiment trends, and predictive investment signals that feed directly into portfolio and research tools used across the Group.</p>
+      <div class="news-card__note">In Production &middot; Internal Tooling</div>
+    </div>
   </div>
 </section>
 
