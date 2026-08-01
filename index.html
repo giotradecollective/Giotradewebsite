@@ -89,22 +89,20 @@
     "@context": "https://schema.org",
     "@type": "SiteNavigationElement",
     "name": [
-      "About",
-      "Services",
-      "Markets",
-      "The Group",
-      "News & Insights",
+      "About Us",
+      "Investment Solutions",
+      "Network",
+      "Technologies",
       "Investment Tools Store",
       "Edustore",
       "Contact",
       "Client Login"
     ],
     "url": [
-      "https://giotradegroup.co.za/#about",
-      "https://giotradegroup.co.za/#services",
-      "https://giotradegroup.co.za/#markets",
       "https://giotradegroup.co.za/#group",
+      "https://giotradegroup.co.za/#about",
       "https://giotradegroup.co.za/#news",
+      "https://giotradegroup.co.za/#technologies",
       "https://giotradegroup.co.za/",
       "https://edustore.giotradegroup.co.za",
       "https://giotradegroup.co.za/#contact",
@@ -730,11 +728,10 @@
 
   <nav>
     <ul class="nav__links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#markets">Markets</a></li>
-      <li><a href="#group">The Group</a></li>
-      <li><a href="#news">News &amp; Insights</a></li>
+      <li><a href="#group">About Us</a></li>
+      <li><a href="#about">Investment Solutions</a></li>
+      <li><a href="#news">Network</a></li>
+      <li><a href="#technologies">Technologies</a></li>
       <li><a href="#" onclick="openStoreModal(); return false;">Investment Tools Store</a></li>
       <li><a href="https://edustore.giotradegroup.co.za" target="_blank" rel="noopener">Edustore</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -747,11 +744,10 @@
 
   <div class="nav__mobile-panel" id="nav-mobile-panel">
     <button class="nav__mobile-close" aria-label="Close menu" onclick="closeMobileNav()">&#x2715;</button>
-    <a href="#about" onclick="closeMobileNav()">About</a>
-    <a href="#services" onclick="closeMobileNav()">Services</a>
-    <a href="#markets" onclick="closeMobileNav()">Markets</a>
-    <a href="#group" onclick="closeMobileNav()">The Group</a>
-    <a href="#news" onclick="closeMobileNav()">News &amp; Insights</a>
+    <a href="#group" onclick="closeMobileNav()">About Us</a>
+    <a href="#about" onclick="closeMobileNav()">Investment Solutions</a>
+    <a href="#news" onclick="closeMobileNav()">Network</a>
+    <a href="#technologies" onclick="closeMobileNav()">Technologies</a>
     <a href="#" onclick="closeMobileNav(); openStoreModal(); return false;">Investment Tools Store</a>
     <a href="https://edustore.giotradegroup.co.za" target="_blank" rel="noopener" onclick="closeMobileNav()">Edustore</a>
     <a href="#contact" onclick="closeMobileNav()">Contact</a>
@@ -771,6 +767,59 @@
   <div class="scroll-hint">
     <div class="scroll-hint__line"></div>
     <span class="scroll-hint__label">Scroll</span>
+  </div>
+</section>
+
+<section class="section section--alt" id="group">
+  <style>
+    .group-companies{display:flex;flex-direction:column;gap:0;margin-top:36px;}
+    .group-company{
+      display:grid;grid-template-columns:280px 1fr;gap:40px;padding:32px 0;
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .group-company__name{font-size:1.1rem;font-weight:400;color:var(--white);letter-spacing:0.01em;}
+    .group-company__name span{opacity:0.4;font-weight:300;}
+    .group-company__desc{font-size:0.88rem;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.55);}
+    .group-closing{
+      margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08);
+      max-width:760px;
+    }
+    .group-closing__title{font-size:1.1rem;font-weight:400;color:var(--white);margin-bottom:14px;}
+    .group-closing__body{font-size:0.88rem;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.55);}
+    @media (max-width:780px){
+      .group-company{grid-template-columns:1fr;gap:10px;}
+    }
+  </style>
+
+  <div class="section__label">The Group Behind Giotrade</div>
+  <h2 class="section__title" style="max-width:760px;">Building the future of finance, technology, and education.</h2>
+  <p class="section__body" style="max-width:700px;">GIOTRADE Group is a diversified global holding company bringing together businesses that shape the future of investing, financial intelligence, technology, and education.</p>
+  <p class="section__body" style="max-width:700px;margin-top:16px;">United by a shared commitment to innovation, excellence, and long-term value creation, our companies operate across complementary sectors, delivering specialised solutions while advancing a common vision: empowering individuals, businesses, and institutions to thrive in an increasingly complex world.</p>
+  <p class="section__body" style="max-width:700px;margin-top:16px;">From investment management and financial research to technology development and youth empowerment, every subsidiary is built on the principles of integrity, innovation, and measurable impact.</p>
+
+  <div class="group-companies">
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>Investment Solutions</span></div>
+      <div class="group-company__desc">Our investment management and financial advisory business, providing research-driven investment solutions, portfolio management, commodity risk management, and institutional-grade market intelligence for individuals, businesses, and institutional investors.</div>
+    </div>
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>Network</span></div>
+      <div class="group-company__desc">Our global financial media and knowledge platform dedicated to delivering market insights, economic commentary, investment research, educational content, and thought leadership that empowers investors to make informed financial decisions.</div>
+    </div>
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>Technologies</span></div>
+      <div class="group-company__desc">Our technology and innovation division, delivering intelligent digital solutions that help organisations innovate, scale, and compete in an increasingly connected world. We combine software engineering, digital strategy, cloud technologies, automation, artificial intelligence, and data intelligence to solve complex business challenges &mdash; from custom software, enterprise applications, and secure client portals to business intelligence dashboards, executive reporting platforms, and real-time data visualisation solutions. Every solution is engineered for performance, security, and long-term value, purpose-built to enhance user experience, streamline operations, and strengthen decision-making.</div>
+    </div>
+    <div class="group-company">
+      <div class="group-company__name">GIOTRADE <span>NexGen Programme</span></div>
+      <div class="group-company__desc">Our social impact initiative dedicated to empowering the next generation through financial literacy, entrepreneurship, investment education, mentorship, and skills development, creating opportunities that foster economic participation and long-term prosperity.</div>
+    </div>
+  </div>
+
+  <div class="group-closing">
+    <div class="group-closing__title">One Vision. Four Companies. Unlimited Possibilities.</div>
+    <p class="group-closing__body">Together, our businesses form an integrated ecosystem where finance, technology, research, and education work together to create lasting value.</p>
+    <p class="group-closing__body" style="margin-top:12px;">As markets evolve and industries transform, GIOTRADE Group remains committed to building businesses that not only adapt to change but help shape it. Through innovation, disciplined execution, and an unwavering pursuit of excellence, we create sustainable value for our clients, partners, communities, and future generations.</p>
   </div>
 </section>
 
@@ -1453,59 +1502,6 @@
   <h2 class="section__title" style="text-align:center;max-width:480px;">Ready to start your investment journey?</h2>
   <p class="section__body" style="text-align:center;margin-bottom:36px;">Our advisors are ready to discuss how we can tailor a strategy to your goals.</p>
   <a href="mailto:info@giotradegroup.co.za" class="btn-findout"><span>Contact Us</span></a>
-</section>
-
-<section class="section section--alt" id="group">
-  <style>
-    .group-companies{display:flex;flex-direction:column;gap:0;margin-top:36px;}
-    .group-company{
-      display:grid;grid-template-columns:280px 1fr;gap:40px;padding:32px 0;
-      border-top:1px solid rgba(255,255,255,0.08);
-    }
-    .group-company__name{font-size:1.1rem;font-weight:400;color:var(--white);letter-spacing:0.01em;}
-    .group-company__name span{opacity:0.4;font-weight:300;}
-    .group-company__desc{font-size:0.88rem;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.55);}
-    .group-closing{
-      margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08);
-      max-width:760px;
-    }
-    .group-closing__title{font-size:1.1rem;font-weight:400;color:var(--white);margin-bottom:14px;}
-    .group-closing__body{font-size:0.88rem;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.55);}
-    @media (max-width:780px){
-      .group-company{grid-template-columns:1fr;gap:10px;}
-    }
-  </style>
-
-  <div class="section__label">The Group Behind Giotrade</div>
-  <h2 class="section__title" style="max-width:760px;">Building the future of finance, technology, and education.</h2>
-  <p class="section__body" style="max-width:700px;">GIOTRADE Group is a diversified global holding company bringing together businesses that shape the future of investing, financial intelligence, technology, and education.</p>
-  <p class="section__body" style="max-width:700px;margin-top:16px;">United by a shared commitment to innovation, excellence, and long-term value creation, our companies operate across complementary sectors, delivering specialised solutions while advancing a common vision: empowering individuals, businesses, and institutions to thrive in an increasingly complex world.</p>
-  <p class="section__body" style="max-width:700px;margin-top:16px;">From investment management and financial research to technology development and youth empowerment, every subsidiary is built on the principles of integrity, innovation, and measurable impact.</p>
-
-  <div class="group-companies">
-    <div class="group-company">
-      <div class="group-company__name">GIOTRADE <span>Investment Solutions</span></div>
-      <div class="group-company__desc">Our investment management and financial advisory business, providing research-driven investment solutions, portfolio management, commodity risk management, and institutional-grade market intelligence for individuals, businesses, and institutional investors.</div>
-    </div>
-    <div class="group-company">
-      <div class="group-company__name">GIOTRADE <span>Network</span></div>
-      <div class="group-company__desc">Our global financial media and knowledge platform dedicated to delivering market insights, economic commentary, investment research, educational content, and thought leadership that empowers investors to make informed financial decisions.</div>
-    </div>
-    <div class="group-company">
-      <div class="group-company__name">GIOTRADE <span>Technologies</span></div>
-      <div class="group-company__desc">Our technology and innovation division, delivering intelligent digital solutions that help organisations innovate, scale, and compete in an increasingly connected world. We combine software engineering, digital strategy, cloud technologies, automation, artificial intelligence, and data intelligence to solve complex business challenges &mdash; from custom software, enterprise applications, and secure client portals to business intelligence dashboards, executive reporting platforms, and real-time data visualisation solutions. Every solution is engineered for performance, security, and long-term value, purpose-built to enhance user experience, streamline operations, and strengthen decision-making.</div>
-    </div>
-    <div class="group-company">
-      <div class="group-company__name">GIOTRADE <span>NexGen Programme</span></div>
-      <div class="group-company__desc">Our social impact initiative dedicated to empowering the next generation through financial literacy, entrepreneurship, investment education, mentorship, and skills development, creating opportunities that foster economic participation and long-term prosperity.</div>
-    </div>
-  </div>
-
-  <div class="group-closing">
-    <div class="group-closing__title">One Vision. Four Companies. Unlimited Possibilities.</div>
-    <p class="group-closing__body">Together, our businesses form an integrated ecosystem where finance, technology, research, and education work together to create lasting value.</p>
-    <p class="group-closing__body" style="margin-top:12px;">As markets evolve and industries transform, GIOTRADE Group remains committed to building businesses that not only adapt to change but help shape it. Through innovation, disciplined execution, and an unwavering pursuit of excellence, we create sustainable value for our clients, partners, communities, and future generations.</p>
-  </div>
 </section>
 
 <footer>
