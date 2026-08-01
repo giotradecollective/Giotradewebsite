@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="/favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/favicon.png"/>
+  <title>GIOTRADE Technologies | Software, Dashboards & Data Intelligence</title>
+  <meta name="description" content="GIOTRADE Technologies is our innovation division, engineering trading systems, client portals, business intelligence dashboards, and data-driven automation for modern finance.">
+  <meta name="keywords" content="Giotrade Technologies, fintech software, trading systems, business intelligence dashboards, data automation South Africa">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <link rel="canonical" href="https://giotradegroup.co.za/technologies.html"/>
+
+  <meta property="og:title" content="GIOTRADE Technologies | Software, Dashboards & Data Intelligence">
+  <meta property="og:description" content="GIOTRADE Technologies is our innovation division, engineering trading systems, client portals, business intelligence dashboards, and data-driven automation for modern finance.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://giotradegroup.co.za/technologies.html">
+  <meta property="og:image" content="https://giotradegroup.co.za/images/og-image.jpg">
+  <meta property="og:site_name" content="GIOTRADE Group">
+  <meta property="og:locale" content="en_ZA">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@giotradegroup">
+  <meta name="twitter:title" content="GIOTRADE Technologies | Software, Dashboards & Data Intelligence">
+  <meta name="twitter:description" content="GIOTRADE Technologies is our innovation division, engineering trading systems, client portals, business intelligence dashboards, and data-driven automation for modern finance.">
+  <meta name="twitter:image" content="https://giotradegroup.co.za/images/og-image.jpg">
+
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+  <nav class="nav--sub">
+    <a href="index.html" class="subpage-logo">GIOTRADE<sup>&reg;</sup></a>
+    <ul class="nav__links">
+      <li><a href="about-us.html">About Us</a></li>
+      <li><a href="investment-solutions.html">Investment Solutions</a></li>
+      <li><a href="network.html">Network</a></li>
+      <li><a href="technologies.html">Technologies</a></li>
+      <li><a href="#" onclick="openStoreModal(); return false;">Investment Tools Store</a></li>
+      <li><a href="https://edustore.giotradegroup.co.za" target="_blank" rel="noopener">Edustore</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="portal.html" class="nav__cta"><span>Client Login</span></a>
+    <button class="nav__burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav__mobile-panel" id="nav-mobile-panel">
+    <button class="nav__mobile-close" aria-label="Close menu" onclick="closeMobileNav()">&#x2715;</button>
+    <a href="about-us.html" onclick="closeMobileNav()">About Us</a>
+    <a href="investment-solutions.html" onclick="closeMobileNav()">Investment Solutions</a>
+    <a href="network.html" onclick="closeMobileNav()">Network</a>
+    <a href="technologies.html" onclick="closeMobileNav()">Technologies</a>
+    <a href="#" onclick="closeMobileNav(); openStoreModal(); return false;">Investment Tools Store</a>
+    <a href="https://edustore.giotradegroup.co.za" target="_blank" rel="noopener" onclick="closeMobileNav()">Edustore</a>
+    <a href="index.html#contact" onclick="closeMobileNav()">Contact</a>
+    <a href="portal.html" onclick="closeMobileNav()">Client Login</a>
+  </div>
+
+  <div class="page-breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Technologies</div>
+
+<section class="section" id="technologies" style="background:var(--gs-white); color:var(--gs-ink); border-top:1px solid var(--gs-line);">
+  <style>
+    .tech-capabilities{list-style:none;margin-top:18px;}
+    .tech-capabilities li{font-size:0.86rem;color:var(--gs-gray);line-height:1.7;padding-left:20px;position:relative;margin-bottom:11px;}
+    .tech-capabilities li::before{content:'\2014';position:absolute;left:0;color:var(--gs-navy);font-weight:700;}
+    .tech-capabilities li b{color:var(--gs-ink);font-weight:700;}
+    .news-card__note{font-size:0.75rem;color:var(--gs-gray);font-weight:600;letter-spacing:0.02em;}
+
+    .news-card--featured{
+      background:var(--gs-navy); border-top:none; padding:32px 30px; border-radius:2px;
+      box-shadow:0 18px 40px rgba(12,35,64,0.18);
+    }
+    .news-card--featured:hover{transform:translateY(-4px);}
+    .news-card--featured .news-card__badge{
+      display:inline-block; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:700;
+      color:var(--gs-navy); background:#fff; padding:5px 11px; border-radius:2px; margin-bottom:16px;
+    }
+    .news-card--featured .news-card__cat{color:rgba(255,255,255,0.75);}
+    .news-card--featured .news-card__date{color:rgba(255,255,255,0.45);}
+    .news-card--featured .news-card__title{color:#fff;}
+    .news-card--featured:hover .news-card__title{color:#fff;text-decoration:none;}
+    .news-card--featured .news-card__excerpt{color:rgba(255,255,255,0.72);}
+    .news-card__cta-btn{
+      display:inline-flex; align-items:center; gap:9px; margin-top:4px;
+      font-size:0.74rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+      color:var(--gs-navy); background:#fff; padding:12px 20px; text-decoration:none; border-radius:2px;
+      transition:gap .25s, background .2s; width:fit-content;
+    }
+    .news-card__cta-btn:hover{gap:14px; background:#eef1f4;}
+  </style>
+  <div class="news-masthead">
+    <div class="news-masthead__left">
+      <div class="news-masthead__brand">GIOTRADE <span>TECHNOLOGIES</span><sup style="font-size:.55rem;font-weight:300;">&reg;</sup></div>
+      <div class="news-masthead__tagline">Intelligence Systems. Measurable Impact.</div>
+    </div>
+    <div class="news-masthead__meta">
+      <div>Technology & Innovation Division</div>
+    </div>
+  </div>
+
+  <div class="news-featured">
+    <div class="news-feat-body">
+      <div class="news-feat-issue">
+        <div class="news-feat-issue__badge">Innovation Hub</div>
+        <div class="news-feat-issue__date">Driving Digital Transformation</div>
+      </div>
+      <h2 class="news-feat-headline">Intelligent Solutions for a Digital World</h2>
+      <div class="news-feat-byline">Engineering the Future of Financial Technology</div>
+      <p class="news-feat-excerpt">
+        GIOTRADE Technologies is our dedicated innovation division, focused on delivering intelligent digital solutions, software engineering, and data-driven intelligence. We build the infrastructure that powers modern finance, from proprietary trading algorithms to secure client portals and advanced analytical tools.
+      </p>
+      <ul class="tech-capabilities">
+        <li><b>Software Engineering</b> &mdash; custom platforms, trading systems, and enterprise applications engineered for scale, security, and long-term reliability.</li>
+        <li><b>Dashboards & Business Intelligence</b> &mdash; executive reporting tools and real-time data visualisation that turn operational data into decisions.</li>
+        <li><b>Websites & Client Portals</b> &mdash; secure, branded digital storefronts and investor- or customer-facing web experiences.</li>
+        <li><b>Data & Automation</b> &mdash; analytics pipelines, machine learning models, and workflow automation that reduce manual effort across teams.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="news-grid">
+      <div class="news-card" onclick="window.location.href='index.html#news'">
+        <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">31 July 2026</div><div class="news-card__issue">Issue 06</div></div>
+        <div class="news-card__title">From the Ceasefire to a New Oil Reality. Oil Pulls Back From the Highs — But the Risk Premium Remains</div>
+        <p class="news-card__excerpt">After falling sharply when the Strait of Hormuz reopened, oil surged again as renewed disruption revived the market's geopolitical risk premium. Although Brent and WTI have retreated from their July highs, uncertainty around critical shipping routes continues to shape prices and the outlook for consumers.</p>
+        <button class="news-card__link">Read</button>
+      </div>
+    <div class="news-card news-card--featured" onclick="window.open('/nova-insurance-dashboard.html','_blank')">
+      <div class="news-card__badge">Live Interactive Demo</div>
+      <div class="news-card__meta">
+        <div class="news-card__cat">Client Engagement</div>
+        <div class="news-card__date">National Insurer</div>
+      </div>
+      <h3 class="news-card__title">Policy, Claims &amp; Fraud Platform</h3>
+      <p class="news-card__excerpt">Delivered a full operations dashboard for a national insurance client &mdash; anchored by a searchable Policy Book, with integrated Claims Management, Fraud Intelligence, and live Operational Monitoring.</p>
+      <a class="news-card__cta-btn" href="/nova-insurance-dashboard.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open the Live Dashboard &rarr;</a>
+    </div>
+    <div class="news-card">
+      <div class="news-card__meta">
+        <div class="news-card__cat">Software Engineering</div>
+        <div class="news-card__date">Core Systems</div>
+      </div>
+      <h3 class="news-card__title">Proprietary Trading Infrastructure</h3>
+      <p class="news-card__excerpt">Developing high-frequency, low-latency execution systems and automated risk management frameworks for global markets, built on resilient, event-driven architecture designed for continuous uptime.</p>
+      <div class="news-card__note">In Production &middot; Internal Systems</div>
+    </div>
+    <div class="news-card">
+      <div class="news-card__meta">
+        <div class="news-card__cat">Data Intelligence</div>
+        <div class="news-card__date">AI & ML</div>
+      </div>
+      <h3 class="news-card__title">Advanced Market Analytics</h3>
+      <p class="news-card__excerpt">Leveraging machine learning and big data to identify market patterns, sentiment trends, and predictive investment signals that feed directly into portfolio and research tools used across the Group.</p>
+      <div class="news-card__note">In Production &middot; Internal Tooling</div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+    <div style="flex: 1; min-width: 300px;">
+      <div class="footer__wordmark">GIOTRADE<sup style="font-size:.55rem;vertical-align:super;font-weight:300;">&reg;</sup></div>
+      <div class="footer__tagline">One Vision. Four Companies. Unlimited Possibilities.</div>
+      <p class="footer__copy">&copy; 2026 GIOTRADE Group (Pty) Ltd (Reg. No. 2026/608936/07). All Rights Reserved.</p>
+      <p class="footer__copy" style="margin-top:8px;">22 Fredman Dr, Sandown, Sandton, 2196</p>
+      <p class="footer__copy" style="margin-top:4px;"><a href="tel:+27118232235" style="color:rgba(255,255,255,0.17);text-decoration:none;">T +27 11 823 2235</a></p>
+      <p class="footer__copy" style="margin-top:4px;"><a href="mailto:info@giotradegroup.co.za" style="color:rgba(255,255,255,0.17);text-decoration:none;">info@giotradegroup.co.za</a></p>
+
+      <div style="margin-top:24px;">
+        <div style="font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,255,255,0.28); margin-bottom:12px;">Follow us on</div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <a href="https://x.com/giotradegroup" target="_blank" rel="noopener" aria-label="Follow us on X" style="display:flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(255,255,255,0.14); border-radius:50%; transition:border-color .25s, background .25s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent';">
+            <svg width="14" height="14" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="rgba(255,255,255,0.7)"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/giotradegroup" target="_blank" rel="noopener" aria-label="Follow us on LinkedIn" style="display:flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid rgba(255,255,255,0.14); border-radius:50%; transition:border-color .25s, background .25s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.background='rgba(255,255,255,0.06)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.14)';this.style.background='transparent';">
+            <svg width="15" height="15" viewBox="0 0 448 512" fill="rgba(255,255,255,0.7)" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MIDDLE: GIOTRADE GROUP -->
+    <div style="flex: 1; min-width: 250px;">
+      <div style="font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 4px;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">GROUP</span></div>
+      <div style="font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.25); font-style: italic; margin-bottom: 24px;">Powering our subsidiaries</div>
+      
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Investment Solutions</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Network</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Technologies</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
+          <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">NexGen Programme</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: LEGAL -->
+    <div style="display: flex; gap: 60px; min-width: 300px;">
+      <ul class="footer__links">
+        <li><a href="#" onclick="document.getElementById('popia-modal').style.display='flex';return false;">Privacy Policy</a></li>
+        <li><a href="#" onclick="document.getElementById('tou-modal').style.display='flex';return false;">Terms of Use</a></li>
+        <li><a href="#">Disclaimer</a></li>
+      </ul>
+    </div>
+
+    <div style="width:100%;border-top:1px solid rgba(255,255,255,0.06);margin-top:20px;padding-top:24px;">
+      <p class="footer__copy" style="max-width:900px;line-height:1.7;font-size:0.62rem;color:rgba(255,255,255,0.13);">
+        <strong style="color:rgba(255,255,255,0.2);letter-spacing:0.05em;">DISCLAIMER:</strong> GIOTRADE Group (Pty) Ltd (Registration No. 2026/608936/07) is a diversified global holding company incorporated in the Republic of South Africa. Its subsidiary, GIOTRADE Investment Solutions LLC, is incorporated in Delaware, United States (File No. 6894721) and operates under the supervision of an authorised Financial Services Provider in accordance with the Financial Advisory and Intermediary Services Act, 2002 (FAIS Act) (FSP No. 47692). Information provided on this website is for general informational and educational purposes only and does not constitute financial, investment, legal or tax advice. All investments carry risk, including the possible loss of capital. Past performance is not indicative of future results. GIOTRADE Group (Pty) Ltd and its subsidiaries accept no liability for any direct or indirect loss or damage arising from reliance on information provided on this website.
+      </p>
+    </div>
+  </footer>
+
+<div id="popia-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('popia-modal').style.display='none'">&#x2715; Close</button>
+    <div class="modal-label">Legal &amp; Compliance</div>
+    <h2 class="modal-title">Protection of Personal Information Policy</h2>
+    <p class="modal-sub">Issued in accordance with the Protection of Personal Information Act, No. 4 of 2013 (POPIA)</p>
+    <div class="modal-divider"></div>
+    <div class="modal-section-title">1. Regulatory Commitment</div>
+    <div class="modal-body"><p>GIOTRADE Investment Solutions LLC (&ldquo;GIOTRADE&rdquo; or &ldquo;the Firm&rdquo;) is committed to the lawful, transparent, and responsible processing of personal information in full compliance with the Protection of Personal Information Act, No. 4 of 2013 (&ldquo;POPIA&rdquo; or &ldquo;the Act&rdquo;), as administered by the Information Regulator of South Africa.</p><p style="margin-top:12px;">As an investment management firm, GIOTRADE recognizes that the responsible handling of client and stakeholder information is fundamental to maintaining trust, ensuring regulatory compliance, and safeguarding client interests.</p></div>
+    <div class="modal-section-title">2. Scope of Application</div>
+    <div class="modal-body"><p>This Policy applies to all personal information processed by GIOTRADE in the course of:</p><ul><li>Investment management mandates and portfolio administration</li><li>Client onboarding, identity verification, and due diligence</li><li>Portfolio monitoring, performance reporting, and client communications</li><li>Internal risk management, compliance, and operational processes</li><li>Interactions with third-party service providers, regulators, and counterparties</li></ul></div>
+    <div class="modal-section-title">3. Definitions</div>
+    <div class="modal-body"><p><strong style="color:rgba(255,255,255,0.75);">&ldquo;Personal Information&rdquo;</strong> means information relating to an identifiable, living, natural person or an identifiable, existing juristic person, including but not limited to:</p><ul><li>Identity and biometric verification information</li><li>Contact details and correspondence records</li><li>Financial data, banking details, and source of funds declarations</li><li>Investment objectives, risk tolerance, and portfolio holdings</li><li>Transactional and account-related records</li><li>Employment, income, and economic profile information</li></ul><p style="margin-top:14px;"><strong style="color:rgba(255,255,255,0.75);">&ldquo;Processing&rdquo;</strong> means any operation or activity, automated or not, concerning personal information, including collection, receipt, recording, organization, storage, updating, distribution, or destruction.</p><p style="margin-top:10px;"><strong style="color:rgba(255,255,255,0.75);">&ldquo;Responsible Party&rdquo;</strong> means GIOTRADE Investment Solutions LLC, which determines the purpose and means of processing personal information.</p></div>
+    <div class="modal-section-title">4. Lawful Basis for Processing</div>
+    <div class="modal-body"><p>GIOTRADE processes personal information strictly within the lawful bases prescribed under POPIA, including:</p><ul><li>Contractual necessity: for the execution and administration of investment mandates</li><li>Legal and regulatory: obligations compliance, reporting, and record-keeping requirements</li><li>Legitimate interests: risk management, fraud prevention, and operational efficiency</li><li>Consent of the data subject: where required and where no other lawful basis applies</li></ul></div>
+    <div class="modal-section-title">5. FICA and Know Your Client (KYC) Compliance</div>
+    <div class="modal-body"><p>In accordance with the Financial Intelligence Centre Act, No. 38 of 2001 (&ldquo;FICA&rdquo;), GIOTRADE implements rigorous Know Your Client (KYC) and Anti-Money Laundering (AML) procedures as part of its client onboarding and ongoing due diligence obligations.</p><div class="modal-highlight">The Firm is legally obligated to report certain transactions or activities to the Financial Intelligence Centre (&ldquo;FIC&rdquo;) where required under FICA, including suspicious or unusual transactions. Clients are advised that such reporting may occur without prior notification where legally mandated.</div></div>
+    <div class="modal-section-title">6. Rights of Data Subjects</div>
+    <div class="modal-body"><p>In accordance with POPIA, data subjects have the following rights:</p><ul><li>The right to access personal information held by GIOTRADE</li><li>The right to request correction or deletion of inaccurate, irrelevant, or outdated information</li><li>The right to object to the processing of personal information</li><li>The right to withdraw consent where processing is based on consent</li><li>The right to lodge a complaint with the Information Regulator of South Africa</li></ul></div>
+    <div class="modal-section-title">7. Information Officer</div>
+    <div class="modal-body">
+      <div class="modal-contact-box">
+        <p><strong>Name:</strong> Sinothando Moyo</p>
+        <p><strong>Title:</strong> Information Officer</p>
+        <p><strong>Email:</strong> <a href="mailto:sinothandom.giotrade@outlook.com" style="color:rgba(255,255,255,0.6);text-decoration:none;">sinothandom.giotrade@outlook.com</a></p>
+        <p><strong>Telephone:</strong> 011 832 2235</p>
+      </div>
+    </div>
+    <div class="modal-section-title">8. Acceptance and Acknowledgment</div>
+    <div class="modal-body"><div class="modal-highlight">By engaging with GIOTRADE Investment Solutions LLC, entering into an investment management agreement, or otherwise providing personal information to the Firm, you acknowledge that you have read, understood, and expressly consent to the processing of your personal information in accordance with this Policy.</div></div>
+    <div class="modal-footer-note">Confidential Document | For Client Use Only &nbsp;|&nbsp; GIOTRADE Investment Solutions LLC &copy; 2026</div>
+  </div>
+</div>
+
+<!-- TERMS OF USE MODAL -->
+<div id="tou-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('tou-modal').style.display='none'">&#x2715; Close</button>
+    <div class="modal-label">Legal &amp; Compliance</div>
+    <h2 class="modal-title">Terms of Use</h2>
+    <p class="modal-sub">Effective Date: 14 May 2026 &nbsp;|&nbsp; GIOTRADE Investment Solutions LLC</p>
+    <div class="modal-divider"></div>
+    <div class="modal-body"><p>Welcome to GIOTRADE Investment Solutions LLC (&ldquo;GIOTRADE&rdquo;, &ldquo;Company&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). By accessing or using this website, you agree to comply with and be bound by the following Terms of Use. If you do not agree with these terms, please do not use this website.</p></div>
+    <div class="modal-section-title">1. Purpose of the Website</div>
+    <div class="modal-body"><p>This website is provided for informational, educational, research, media, and business communication purposes related to GIOTRADE Investment Solutions LLC and its associated services, market commentary, educational material, investment research, trading concepts, and media publications.</p><p style="margin-top:10px;">Nothing on this website constitutes financial advice, investment advice, portfolio management advice, legal advice, or a solicitation to buy or sell any financial instrument.</p></div>
+    <div class="modal-section-title">2. No Financial Advice</div>
+    <div class="modal-body"><p>All content published on this website, including but not limited to articles, market analysis, trading models, educational materials, videos, podcasts, charts, statistical research, social media content, and reports and publications, is intended strictly for educational and informational purposes only.</p><p style="margin-top:10px;">Users are solely responsible for any financial decisions they make based on information found on this website. Trading and investing involve substantial risk and may result in the loss of capital.</p><p style="margin-top:10px;">GIOTRADE Investment Solutions LLC does not guarantee profitability, future performance, investment success, or accuracy of market predictions. Past performance does not guarantee future results.</p></div>
+    <div class="modal-section-title">3. Risk Disclosure</div>
+    <div class="modal-body">
+      <div class="modal-highlight">Trading leveraged products, derivatives, commodities, foreign exchange, synthetic indices, cryptocurrencies, and other financial instruments carries a high level of risk and may not be suitable for all investors.</div>
+      <p style="margin-top:12px;">You acknowledge and agree that:</p>
+      <ul>
+        <li>You use the information on this website at your own risk</li>
+        <li>You are fully responsible for your own trading and investment decisions</li>
+        <li>GIOTRADE Investment Solutions LLC shall not be held liable for any direct or indirect losses arising from the use of this website or reliance on its content</li>
+      </ul>
+    </div>
+    <div class="modal-section-title">4. Intellectual Property</div>
+    <div class="modal-body"><p>All content on this website, including logos, branding, educational systems, trading models, research frameworks, written publications, graphics, videos, documents, and proprietary methodologies, are the intellectual property of GIOTRADE Investment Solutions LLC unless otherwise stated.</p><p style="margin-top:10px;">You may not copy, reproduce, distribute, republish, sell, modify, or exploit any content without prior written consent from GIOTRADE Investment Solutions LLC. Unauthorized use may result in legal action.</p></div>
+    <div class="modal-section-title">5. Educational Content Disclaimer</div>
+    <div class="modal-body"><p>Any trading models, concepts, or methodologies shared by GIOTRADE, including liquidity concepts, price delivery models, institutional repricing theories, statistical volatility frameworks, reversal structures, fractal analysis, and market behavior theories, are educational interpretations developed for market analysis purposes and should not be interpreted as guaranteed trading systems.</p><p style="margin-top:10px;">Markets are dynamic and outcomes may vary significantly.</p></div>
+    <div class="modal-section-title">6. Third-Party Platforms and Links</div>
+    <div class="modal-body"><p>This website may contain links to third-party websites, brokers, media platforms, software providers, or external services. GIOTRADE Investment Solutions LLC does not control third-party platforms, is not responsible for their content, and does not guarantee their security, reliability, or accuracy. Users access third-party services entirely at their own risk.</p></div>
+    <div class="modal-section-title">7. User Conduct</div>
+    <div class="modal-body"><p>By using this website, you agree not to misuse the website, attempt unauthorized access, distribute malicious software, engage in fraudulent activity, infringe intellectual property rights, or use the website for unlawful purposes. We reserve the right to restrict or terminate access to users who violate these terms.</p></div>
+    <div class="modal-section-title">8. Limitation of Liability</div>
+    <div class="modal-body">
+      <div class="modal-highlight">To the fullest extent permitted by law, GIOTRADE Investment Solutions LLC shall not be liable for financial losses, trading losses, business interruption, data loss, indirect damages, consequential damages, or any claims arising from the use of this website. All website content is provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo; without warranties of any kind.</div>
+    </div>
+    <div class="modal-section-title">9. Privacy</div>
+    <div class="modal-body"><p>By using this website, you acknowledge that certain technical information such as browser data, cookies, device information, and analytics data may be collected for operational, analytical, and security purposes. Users are responsible for reviewing the website&rsquo;s Privacy Policy where applicable.</p></div>
+    <div class="modal-section-title">10. Modifications</div>
+    <div class="modal-body"><p>GIOTRADE Investment Solutions LLC reserves the right to modify these Terms of Use, update website content, suspend services, or discontinue portions of the website at any time without prior notice. Continued use of the website after updates constitutes acceptance of the revised terms.</p></div>
+    <div class="modal-section-title">11. Governing Law</div>
+    <div class="modal-body"><p>These Terms of Use shall be governed and interpreted in accordance with the laws applicable within the Republic of South Africa, unless otherwise required by applicable international business regulations.</p></div>
+    <div class="modal-section-title">12. Contact Information</div>
+    <div class="modal-body">
+      <div class="modal-contact-box">
+        <p><strong>Company:</strong> GIOTRADE Investment Solutions LLC</p>
+        <p><strong>Website:</strong> <a href="https://giotradegroup.co.za" style="color:rgba(255,255,255,0.6);text-decoration:none;">www.giotradegroup.co.za</a></p>
+        <p><strong>Email:</strong> <a href="mailto:info@giotradegroup.co.za" style="color:rgba(255,255,255,0.6);text-decoration:none;">info@giotradegroup.co.za</a></p>
+        <p><strong>Telephone:</strong> +27 11 823 2235</p>
+      </div>
+    </div>
+    <div class="modal-body" style="margin-top:28px;">
+      <div class="modal-highlight">GIOTRADE Investment Solutions LLC is an educational and research-focused brand. Nothing on this website should be interpreted as a promise of returns, investment guarantee, or regulated financial advisory service unless explicitly stated otherwise under applicable licensing or regulatory frameworks.</div>
+    </div>
+    <div class="modal-footer-note">Confidential Document | For Client Use Only &nbsp;|&nbsp; GIOTRADE Investment Solutions LLC &copy; 2026</div>
+  </div>
+</div>
+
+<div id="store-modal-overlay">
+  <button id="store-modal-close" onclick="closeStoreModal()">&#x2715; Close</button>
+  <iframe id="store-modal-frame" src="store.html" title="Investment Tools Store"></iframe>
+</div>
+
+<div id="cookie-banner">
+  <div class="cookie-banner__inner">
+    <div class="cookie-banner__text">
+      <p>We use cookies to keep the site running smoothly and to understand how it's used. See our <a href="#" onclick="document.getElementById('popia-modal').style.display='flex';return false;">Privacy Policy</a> for details.</p>
+    </div>
+    <div class="cookie-banner__actions">
+      <button class="cookie-btn" onclick="giotradeCookieDecline()">Decline</button>
+      <button class="cookie-btn cookie-btn--accept" onclick="giotradeCookieAccept()">Accept</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="assets/site.js"></script>
+
+</body>
+</html>
