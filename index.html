@@ -208,15 +208,17 @@
       filter:drop-shadow(0 2px 10px rgba(0,0,0,0.35));
       pointer-events:none;
       opacity:0;
-      animation: badgePulseOut 6s ease-in-out 1 forwards;
+      animation: badgePulseOut 8s ease-in-out 1 forwards;
     }
     @keyframes badgePulseOut {
       0%   { opacity:0;    transform:scale(0.96); }
-      10%  { opacity:0.85; transform:scale(1); }
-      25%  { opacity:1;    transform:scale(1.035); }
-      40%  { opacity:0.85; transform:scale(1); }
-      55%  { opacity:1;    transform:scale(1.035); }
-      70%  { opacity:0.85; transform:scale(1); }
+      8%   { opacity:0.85; transform:scale(1); }
+      20%  { opacity:1;    transform:scale(1.03); }
+      32%  { opacity:0.85; transform:scale(1); }
+      44%  { opacity:1;    transform:scale(1.07); }
+      56%  { opacity:0.85; transform:scale(1); }
+      68%  { opacity:1;    transform:scale(1.12); }
+      80%  { opacity:0.85; transform:scale(1); }
       100% { opacity:0;    transform:scale(0.96); }
     }
     @media (max-width:700px) {
