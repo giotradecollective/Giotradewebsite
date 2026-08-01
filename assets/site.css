@@ -1,4 +1,4 @@
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
       --white: #ffffff;
       --off-white: rgba(255,255,255,0.82);
@@ -708,12 +708,7 @@
         filter: brightness(0.8); /* Slightly dimmed further if needed */
     }
     
-/* ---- subpage nav logo + page header (used on standalone pages) ---- */
-.subpage-logo{ font-size:1.05rem; font-weight:700; letter-spacing:0.2em; color:#fff; text-decoration:none; text-transform:uppercase; }
-.subpage-logo sup{ font-size:.55rem; font-weight:300; }
-@media (max-width:768px){
-  nav.nav--sub{ justify-content:space-between; }
-}
+/* ---- page header (used on standalone pages) ---- */
 .page-breadcrumb{ padding:18px 56px 0; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.35); }
 .page-breadcrumb a{ color:rgba(255,255,255,0.55); text-decoration:none; }
 .page-breadcrumb a:hover{ color:#fff; }
