@@ -93,11 +93,11 @@
       padding:28px 56px;
       flex-direction: row;
     }
-    .nav__links { display:flex; gap:30px; list-style:none; }
+    .nav__links { display:flex; gap:22px; list-style:none; }
     .nav__links a {
       text-decoration:none; color:var(--off-white);
-      font-size:0.73rem; font-weight:300; letter-spacing:0.2em; text-transform:uppercase;
-      transition:color .25s;
+      font-size:0.68rem; font-weight:300; letter-spacing:0.13em; text-transform:uppercase;
+      transition:color .25s; white-space:nowrap;
     }
     .nav__links a:hover { color:var(--white); }
 
