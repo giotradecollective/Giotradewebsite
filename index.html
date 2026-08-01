@@ -202,6 +202,17 @@
       z-index:1;
     }
 
+    .womens-month-badge {
+      position:absolute; top:24px; left:28px; z-index:11;
+      width:180px; height:auto;
+      opacity:0.92;
+      filter:drop-shadow(0 2px 10px rgba(0,0,0,0.35));
+      pointer-events:none;
+    }
+    @media (max-width:700px) {
+      .womens-month-badge { top:16px; left:16px; width:120px; }
+    }
+
     nav {
       position:relative; z-index:10;
       width:100%; display:flex; align-items:center; justify-content:space-between;
@@ -725,6 +736,8 @@
 <section class="hero">
   <div class="hero__bg"></div>
   <div class="hero__overlay"></div>
+
+  <img class="womens-month-badge" src="images/happy_womens_month.png" alt="Happy Women's Month">
 
   <nav>
     <ul class="nav__links">
