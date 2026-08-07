@@ -1357,17 +1357,23 @@
   <div class="news-featured">
     <div class="news-feat-content">
       <div class="news-feat-issue">
-        <div class="news-feat-issue__badge">Issue No. 09</div>
-        <div class="news-feat-issue__date">04 August 2026</div>
+        <div class="news-feat-issue__badge">Issue No. 10</div>
+        <div class="news-feat-issue__date">07 August 2026</div>
       </div>
-      <div class="news-feat-headline">Understanding South Africa's Electricity Tariffs: Who Really Decides What You Pay?</div>
+      <div class="news-feat-headline">Why Inflation Is Falling but Living Costs Still Feel High?</div>
       <div class="news-feat-byline">By Adrian K. Vale &nbsp;&middot;&nbsp; Economy</div>
-      <p class="news-feat-excerpt">Eskom doesn't set your electricity price on its own&mdash;here's who really decides, and why your municipality's tariff looks nothing like your neighbour's.</p>
-      <button class="news-feat-cta" onclick="openArticle('eskomtariffs')">Read Full Article</button>
+      <p class="news-feat-excerpt">Inflation is slowing, yet your grocery bill, electricity costs and municipal charges continue to rise. Discover the difference between inflation and the true cost of living&mdash;and why it matters to every South African.</p>
+      <button class="news-feat-cta" onclick="openArticle('inflationcost')">Read Full Article</button>
     </div>
   </div>
 
     <div class="news-grid">
+      <div class="news-card" onclick="openArticle('eskomtariffs')">
+        <div class="news-card__meta"><div class="news-card__cat">Economy</div><div class="news-card__date">04 August 2026</div><div class="news-card__issue">Issue 09</div></div>
+        <div class="news-card__title">Understanding South Africa's Electricity Tariffs: Who Really Decides What You Pay?</div>
+        <p class="news-card__excerpt">Eskom doesn't set your electricity price on its own&mdash;here's who really decides, and why your municipality's tariff looks nothing like your neighbour's.</p>
+        <button class="news-card__link">Read</button>
+      </div>
       <div class="news-card" onclick="openArticle('finfluencers')">
         <div class="news-card__meta"><div class="news-card__cat">Markets &amp; Investing</div><div class="news-card__date">03 August 2026</div><div class="news-card__issue">Issue 08</div></div>
         <div class="news-card__title">Should You Trust Financial Influencers? How Social Media Is Changing the Way Millions Learn About Investing</div>
@@ -1704,6 +1710,108 @@
 
 <script>
   const articles = {
+    inflationcost: {
+      issue: 'Issue No. 10',
+      date: '07 August 2026',
+      category: 'Economy',
+      headline: 'Why Inflation Is Falling but Living Costs Still Feel High?',
+      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Economy',
+      hideTags: true,
+      customFooter: `
+        <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network — Issue No. 10.</div>
+        <div style="font-family:monospace; margin-top:14px; border-top:1px solid rgba(0,0,0,0.06); padding-top:12px;">Powered by <b>GIOTRADE</b> Network®</div>
+      `,
+      body: `
+        <p><i>Inflation is slowing, yet your grocery bill, electricity costs and municipal charges continue to rise. If prices are not increasing as quickly, why does life still feel so expensive? Discover the difference between inflation and the true cost of living and why understanding it matters to every South African.</i></p>
+        <p><span class="dropcap">I</span>f you have recently heard that South Africa's inflation rate is falling, you may have wondered why your monthly expenses still seem just as high or even higher.</p>
+        <p>Many households continue to feel financial pressure despite reports that inflation has eased. Groceries remain expensive, electricity tariffs continue to increase, municipal charges are rising and transport costs still consume a significant portion of monthly budgets.</p>
+        <p>So, if inflation is falling, why does it not feel like life is getting cheaper?</p>
+        <p>The answer lies in understanding what inflation actually measures and what it does not.</p>
+        <h3>What Is Inflation?</h3>
+        <p>Inflation is the rate at which the general price level of goods and services increases over time.</p>
+        <p>A common misconception is that lower inflation means prices are falling.</p>
+        <p>In reality, lower inflation simply means prices are rising more slowly than before.</p>
+        <p>For example:</p>
+        <p><b>Year 1</b><br/>A product costs R100. Inflation: <b>8%</b>. The price increases to R108.</p>
+        <p><b>Year 2</b><br/>Inflation falls to <b>4%</b>. The product now costs approximately <b>R112.32</b>.</p>
+        <p>Notice that the price has not decreased. It has simply increased at a slower rate.</p>
+        <p>This is why inflation can fall while consumers continue paying more for everyday goods and services.</p>
+        <h3>Why Prices Rarely Fall</h3>
+        <p>Most businesses continue facing rising operating costs, including:</p>
+        <ul>
+          <li>Employee wages.</li>
+          <li>Electricity.</li>
+          <li>Transport.</li>
+          <li>Fuel.</li>
+          <li>Insurance.</li>
+          <li>Rent.</li>
+          <li>Maintenance.</li>
+          <li>Raw materials.</li>
+        </ul>
+        <p>Even when inflation slows, businesses still experience higher costs and often continue adjusting prices to remain profitable.</p>
+        <p>As a result, prices rarely return to previous levels unless there is a significant economic downturn or a period of deflation, which is relatively uncommon.</p>
+        <h3>Why South Africans Still Feel Financial Pressure</h3>
+        <p>Although inflation has moderated, several household expenses continue increasing faster than the overall inflation rate.</p>
+        <p><b>Electricity</b><br/>Electricity tariffs continue rising as Eskom and municipalities recover operating costs and invest in maintaining infrastructure. For many households, electricity has become one of the fastest growing monthly expenses.</p>
+        <p><b>Municipal Services</b><br/>Water, refuse removal, sanitation and other municipal charges continue increasing annually across many municipalities. These increases often occur regardless of the national inflation rate.</p>
+        <p><b>Food Prices</b><br/>While food inflation has slowed, many food items remain significantly more expensive than they were only a few years ago. Consumers are paying today's prices, not the prices that existed before inflation accelerated.</p>
+        <p><b>Transport Costs</b><br/>Fuel prices continue fluctuating due to global oil markets and exchange rate movements. Public transport, vehicle maintenance and insurance also continue placing pressure on household budgets.</p>
+        <h3>Inflation Is a Speedometer, Not an Odometer</h3>
+        <p>One of the easiest ways to understand inflation is by imagining a car.</p>
+        <p>If you are travelling at 120 km/h and slow down to 80 km/h, you are still moving forward. You have simply reduced your speed.</p>
+        <p>Inflation works in exactly the same way.</p>
+        <p>Lower inflation means prices continue moving upward, but at a slower pace than before.</p>
+        <p>Only deflation would cause prices to decline across the economy, and prolonged deflation can create its own economic challenges by discouraging spending and investment.</p>
+        <h3>Why This Matters for Interest Rates</h3>
+        <p>Inflation is closely monitored by the South African Reserve Bank (SARB) because one of its primary objectives is maintaining price stability.</p>
+        <p>When inflation begins to fall and remains within the Reserve Bank's target range, policymakers may have greater flexibility to reduce interest rates.</p>
+        <p>Lower interest rates can:</p>
+        <ul>
+          <li>Reduce borrowing costs.</li>
+          <li>Lower mortgage repayments.</li>
+          <li>Support business investment.</li>
+          <li>Encourage consumer spending.</li>
+        </ul>
+        <p>However, policymakers must carefully balance economic growth with keeping inflation under control.</p>
+        <h3>The Bigger Economic Picture</h3>
+        <p>Inflation does not exist in isolation.</p>
+        <p>It is influenced by several domestic and global factors, including:</p>
+        <ul>
+          <li>Exchange rates.</li>
+          <li>Fuel prices.</li>
+          <li>Electricity costs.</li>
+          <li>Global supply chains.</li>
+          <li>Commodity prices.</li>
+          <li>Weather conditions affecting agriculture.</li>
+          <li>Government policy.</li>
+          <li>Consumer demand.</li>
+        </ul>
+        <p>This means households may continue experiencing higher living costs even while the overall inflation rate declines.</p>
+        <h3>What Can Households Do?</h3>
+        <p>Although individuals cannot control inflation, they can make informed financial decisions.</p>
+        <p>Many households are responding by:</p>
+        <ul>
+          <li>Reviewing monthly budgets.</li>
+          <li>Reducing unnecessary spending.</li>
+          <li>Comparing prices before making purchases.</li>
+          <li>Improving energy efficiency.</li>
+          <li>Building emergency savings where possible.</li>
+          <li>Avoiding unnecessary debt during periods of financial pressure.</li>
+        </ul>
+        <p>Financial planning becomes even more important during periods of elevated living costs.</p>
+        <h3>Looking Ahead</h3>
+        <p>Economists will continue monitoring inflation, interest rates, employment and economic growth throughout the year.</p>
+        <p>If inflation remains contained, borrowing conditions may gradually improve.</p>
+        <p>However, structural challenges such as electricity costs, municipal tariffs and infrastructure constraints will continue influencing household budgets and business operating costs.</p>
+        <p>Understanding the difference between inflation and the overall cost of living helps consumers interpret economic headlines more accurately.</p>
+        <h3>GIOTRADE Network&reg; Insight</h3>
+        <p>One of the most common misconceptions in economics is believing that falling inflation means prices are falling.</p>
+        <p>In reality, inflation measures the pace at which prices increase, not the overall price level.</p>
+        <p>This distinction explains why many South Africans continue feeling financial pressure even as inflation declines.</p>
+        <p>Economic indicators tell part of the story, but household budgets tell another.</p>
+        <p>The more we understand how inflation works, the better equipped we are to make informed financial decisions, interpret economic news and plan for the future.</p>
+      `
+    },
     eskomtariffs: {
       issue: 'Issue No. 09',
       date: '04 August 2026',
