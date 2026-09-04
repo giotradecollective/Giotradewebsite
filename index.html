@@ -114,6 +114,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
     :root {
       --white: #ffffff;
       --off-white: rgba(255,255,255,0.82);
@@ -200,29 +201,6 @@
       position:absolute; inset:0;
       background:linear-gradient(170deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.05) 35%, rgba(0,0,0,0.60) 100%);
       z-index:1;
-    }
-
-    .womens-month-badge {
-      position:absolute; top:24px; left:28px; z-index:11;
-      width:180px; height:auto;
-      filter:drop-shadow(0 2px 10px rgba(0,0,0,0.35));
-      pointer-events:none;
-      opacity:0;
-      animation: badgePulseOut 8s ease-in-out 1 forwards;
-    }
-    @keyframes badgePulseOut {
-      0%   { opacity:0;    transform:scale(0.96); }
-      8%   { opacity:0.85; transform:scale(1); }
-      20%  { opacity:1;    transform:scale(1.03); }
-      32%  { opacity:0.85; transform:scale(1); }
-      44%  { opacity:1;    transform:scale(1.07); }
-      56%  { opacity:0.85; transform:scale(1); }
-      68%  { opacity:1;    transform:scale(1.12); }
-      80%  { opacity:0.85; transform:scale(1); }
-      100% { opacity:0;    transform:scale(0.96); }
-    }
-    @media (max-width:700px) {
-      .womens-month-badge { top:16px; left:16px; width:120px; }
     }
 
     nav {
@@ -750,7 +728,6 @@
   <div class="hero__bg"></div>
   <div class="hero__overlay"></div>
 
-  <img class="womens-month-badge" src="happy_womens_month_white.png" alt="Happy Women's Month">
 
   <nav>
     <ul class="nav__links">
@@ -836,7 +813,7 @@
       <div class="group-company__name">GIOTRADE <span>Technologies</span></div>
       <div class="group-company__desc">Our technology and innovation division, delivering intelligent digital solutions that help organisations innovate, scale, and compete in an increasingly connected world. We combine software engineering, digital strategy, cloud technologies, automation, artificial intelligence, and data intelligence to solve complex business challenges &mdash; from custom software, enterprise applications, and secure client portals to business intelligence dashboards, executive reporting platforms, and real-time data visualisation solutions. Every solution is engineered for performance, security, and long-term value, purpose-built to enhance user experience, streamline operations, and strengthen decision-making.</div>
     </div>
-    <div class="group-company">
+    <div class="group-company" id="nexgen">
       <div class="group-company__name">GIOTRADE <span>NexGen Programme</span></div>
       <div class="group-company__desc">Our social impact initiative dedicated to empowering the next generation through financial literacy, entrepreneurship, investment education, mentorship, and skills development, creating opportunities that foster economic participation and long-term prosperity.</div>
     </div>
@@ -1579,22 +1556,22 @@
       <div style="font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.25); font-style: italic; margin-bottom: 24px;">Powering our subsidiaries</div>
       
       <div style="display: flex; flex-direction: column; gap: 14px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="#about" style="display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.2s ease;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">
           <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
           <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Investment Solutions</span></div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
+        </a>
+        <a href="#news" style="display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.2s ease;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">
           <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
           <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Network</span></div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
+        </a>
+        <a href="#technologies" style="display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.2s ease;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">
           <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
           <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">Technologies</span></div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
+        </a>
+        <a href="#nexgen" style="display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.2s ease;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">
           <div style="width: 2px; height: 12px; background: rgba(255,255,255,0.1);"></div>
           <div style="font-size: 0.75rem; letter-spacing: 0.08em; color: #fff; font-weight: 300;">GIOTRADE <span style="color: rgba(255,255,255,0.2);">NexGen Programme</span></div>
-        </div>
+        </a>
       </div>
     </div>
 
