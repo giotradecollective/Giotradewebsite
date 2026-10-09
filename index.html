@@ -1334,17 +1334,23 @@
   <div class="news-featured">
     <div class="news-feat-content">
       <div class="news-feat-issue">
-        <div class="news-feat-issue__badge">Issue No. 11</div>
-        <div class="news-feat-issue__date">11 August 2026</div>
+        <div class="news-feat-issue__badge">Issue No. 12</div>
+        <div class="news-feat-issue__date">09 October 2026</div>
       </div>
-      <div class="news-feat-headline">Could the Next Global Crisis Be Food?</div>
-      <div class="news-feat-byline">By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities</div>
-      <p class="news-feat-excerpt">How El Ni&ntilde;o, geopolitical conflict, energy disruption and rising agricultural risks are putting the global food system to the test.</p>
-      <button class="news-feat-cta" onclick="openArticle('foodcrisis')">Read Full Article</button>
+      <div class="news-feat-headline">Is South Africa Failing by Accident, or Is Someone Profiting From the Failure?</div>
+      <div class="news-feat-byline">By <b>Ethan R. Hayes</b>, Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Economy</div>
+      <p class="news-feat-excerpt">The evidence does not point to a single hidden hand. It does show why South Africans are right to ask who is accountable, and who benefits, when public systems keep failing.</p>
+      <button class="news-feat-cta" onclick="openArticle('publicfailure')">Read Full Article</button>
     </div>
   </div>
 
     <div class="news-grid">
+      <div class="news-card" onclick="openArticle('foodcrisis')">
+        <div class="news-card__meta"><div class="news-card__cat">Commodities</div><div class="news-card__date">11 August 2026</div><div class="news-card__issue">Issue 11</div></div>
+        <div class="news-card__title">Could the Next Global Crisis Be Food?</div>
+        <p class="news-card__excerpt">How El Ni&ntilde;o, geopolitical conflict, energy disruption and rising agricultural risks are putting the global food system to the test.</p>
+        <button class="news-card__link">Read</button>
+      </div>
       <div class="news-card" onclick="openArticle('inflationcost')">
         <div class="news-card__meta"><div class="news-card__cat">Economy</div><div class="news-card__date">07 August 2026</div><div class="news-card__issue">Issue 10</div></div>
         <div class="news-card__title">Why Inflation Is Falling but Living Costs Still Feel High?</div>
@@ -1693,12 +1699,63 @@
 
 <script>
   const articles = {
+    publicfailure: {
+      issue: 'Issue No. 12',
+      date: '09 October 2026',
+      category: 'Economy',
+      headline: 'Is South Africa Failing by Accident, or Is Someone Profiting From the Failure?',
+      byline: 'By <b>Ethan R. Hayes</b>, Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Economy',
+      hideTags: true,
+      customFooter: `
+        <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. This article is commentary and analysis; references to allegations, investigations and referrals are not findings of wrongdoing against any person or entity. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice from an authorised financial services provider before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network &mdash; Issue No. 12.</div>
+        <div style="font-family:monospace; margin-top:14px; border-top:1px solid rgba(0,0,0,0.06); padding-top:12px;">Powered by <b>GIOTRADE</b> Network®</div>
+      `,
+      body: `
+        <p><i>The evidence does not point to a single hidden hand. It does show why South Africans are right to ask who is accountable, and who benefits, when public systems keep failing.</i></p>
+        <p><span class="dropcap">W</span>hen South Africans hear about corruption allegations, government investigations, struggling public institutions or another disappointing economic report, it can feel like politics happening somewhere far away. But the consequences reach the household budget, the small business trying to survive, the person searching for work and the investor deciding where to put their money.</p>
+        <p>South Africa's economy contracted by 0.2% quarter-on-quarter in the second quarter of 2026, after growing 0.4% in the first, according to Statistics South Africa. Over the same period the official unemployment rate rose from 32.7% to 33.6%, leaving about 8.5 million people unemployed.</p>
+        <p>So is the country failing by accident, or is someone profiting from the failure? Tested against the public evidence, the most defensible answer is that no single cause explains it, and that the public record does not point to a coordinated scheme. But the questions of who is accountable and who benefits are legitimate ones. This article sets out what the economic data shows, what the Eskom and Madlanga processes have and have not established, and what to watch next.</p>
+        <h3>Employment: The opportunities that never arrive</h3>
+        <p>The number of unemployed people rose by 345,000 to 8.5 million in the second quarter, while the number of employed people fell by 16,000 to 16.7 million. The official rate of 33.6% counts only people actively looking for work. On the broader measure, which includes people who want to work but have stopped searching, it was 43.8%.</p>
+        <p>No single factor explains this. Skills mismatches, slow growth, structural barriers and the cost of doing business all play a role. But a business facing unreliable infrastructure, high operating costs or uncertainty is less willing to hire, and a new enterprise that cannot secure finance may never grow enough to employ anyone. For job seekers the result is fewer openings and longer periods without income. The real cost is measured not only in money lost, but in opportunities that never materialise.</p>
+        <h3>Investment: Confidence has a financial value</h3>
+        <p>Investors weigh more than a company's results. They also consider the reliability of institutions, the quality of infrastructure and the predictability of regulation. When governance concerns persist, businesses may demand a higher return before committing capital, delay expansion or choose another market. Statistics South Africa's second-quarter data showed investment in fixed assets declining for a second consecutive quarter, and that reaches ordinary South Africans through jobs, pensions and business opportunities.</p>
+        <p>For individuals, the lesson is to separate the country's broader challenges from the condition of a particular investment. Poor governance can damage confidence without meaning that every investment will lose value. Fundamentals, valuations, diversification and risk management still matter.</p>
+        <h3>The wealth gap: One economy, two experiences</h3>
+        <p>Hardship is not shared equally. A household that spends most of its income on food, transport, electricity and housing has little room to absorb a shock, and one unexpected expense can mean debt. A household with savings, diversified investments or several sources of income can ride out the same conditions more easily, and can pay for private alternatives when public services fail. Financial resilience is unevenly distributed, and a stronger economy should widen access to work, investment and entrepreneurship rather than make security depend on what a person already owns.</p>
+        <h3>From economics to accountability</h3>
+        <p>Weak growth is not only a market story. It is also about how public money is managed, because every irregular payment or failed contract competes with the services and investment the economy needs. That is why the details of cases such as Eskom's diesel contracts matter.</p>
+        <h3>Eskom: What the findings say</h3>
+        <p>On 27 August 2026, Eskom said an independent investigation into its diesel procurement and storage contracts found no evidence that diesel it had paid for was missing. Eskom also said the investigation confirmed instances of non-adherence to its processes: about R3 billion was paid to three suppliers outside contractual terms in early 2025, and some emergency approvals did not comply with its delegation of authority. Separately, Eskom said it had identified about R38 billion in irregular expenditure on earlier diesel contracts, which ended in December 2024. It described that figure as expenditure incurred without the required approvals, not as a financial loss, and said both amounts had been reported to its auditors and to National Treasury.</p>
+        <p>Eskom's account has not gone unquestioned. The investigative group amaBhungane, which examined the contracts, has described the R3 billion as prepayments and has alleged that some suppliers appeared unable to deliver at the time. The suppliers have denied this, and some commentators have asked how independent a company-commissioned review can be. These claims are contested, and no wrongdoing has been established.</p>
+        <p>The distinction matters. A payment made outside contractual terms, or irregular expenditure, does not by itself prove that money was stolen. Equally, accounting for the fuel does not remove the need to understand why payment and approval rules were not followed. Eskom itself acknowledged that the recurrence of approval shortcomings across different contractual periods suggests that lessons from earlier transactions were not embedded in its controls.</p>
+        <h3>Who benefits, and who is responsible?</h3>
+        <p>Weak public services create commercial opportunities. Businesses providing backup power, private security, logistics or other alternatives may see stronger demand when public systems are unreliable. Companies that meet a genuine need often create jobs and help communities adapt. It is not suggested that any company benefiting from weak public services, or any supplier named in the Eskom matter, has acted improperly.</p>
+        <p>The legitimate concern is structural. Emergency procurement can be necessary when an institution faces an immediate threat, but urgency can also make ordinary oversight harder. Without transparent contracts, clear approvals and consequences for non-compliance, it can open the door to waste, conflicts of interest or preferential treatment. A well-governed system rewards businesses for solving problems and delivering value. A poorly governed one risks rewarding access and proximity to decision-makers instead.</p>
+        <p>Benefiting from a failing system is not the same as causing the failure or wanting it to continue. The evidence must establish who made the decisions, what rules applied, who received the benefit and whether misconduct occurred.</p>
+        <p>South Africa's experience with state capture shows why those questions matter. The Zondo Commission documented serious wrongdoing and weaknesses across parts of the public and private sectors, including failures involving procurement and accountability. The lesson is that oversight must be strong enough to expose improper relationships, follow the money and establish responsibility where the evidence supports it.</p>
+        <p>The Madlanga Commission is examining allegations of criminality, political interference and corruption in the criminal justice system. It submitted its second interim report to the President on 29 May 2026, and the Presidency said in August that the report's recommendations and referrals would feed into the work of a police special investigations task team. The interim reports have not been made public, and the final report is due to be submitted to the President on 16 November 2026. A commission's referral is not a finding of guilt. Its value lies in testing evidence, identifying failures and determining what action is justified.</p>
+        <h3>What to watch</h3>
+        <p>Rather than reading every headline as a verdict, readers can watch for the signals that turn allegation into established fact:</p>
+        <ul>
+          <li>Audit and Treasury follow-through. Eskom said it reported the R3 billion and R38 billion to its auditors and National Treasury. How those amounts are investigated, condoned or recovered will show whether controls actually tighten.</li>
+          <li>Disclosure. Whether the detailed findings of Eskom's investigation, including who approved the payments made outside contractual terms, are made public.</li>
+          <li>The Madlanga Commission's final report, due on 16 November 2026, and whether its recommendations lead to prosecutions or administrative action.</li>
+          <li>The next Statistics South Africa labour and GDP releases, for signs of whether weakness in jobs and investment is deepening or turning.</li>
+        </ul>
+        <p>For investors and business owners, a practical response is to factor governance risk into planning without treating every headline as a forecast: stress-test plans against slower growth and higher costs, keep portfolios diversified, and judge each investment on its own fundamentals.</p>
+        <h3>GIOTRADE Network&reg; Insight</h3>
+        <p>The cost of an irregular payment or a failed contract can sometimes be calculated. The broader cost is harder to see: the investment that never arrives, the business that cannot expand, the job that is never created, and the loss of trust when people believe the rules apply differently depending on who you know. Economic difficulty has many causes, and allegations must be tested before they are established. That is why the facts matter. South Africans should demand answers without deciding the verdict before the evidence has been assessed.</p>
+        <p>Behind every billion-rand headline is a question that matters to ordinary people: what does this mean for my money, my work and my future? The signals above are where the answer will start to show.</p>
+        <p style="font-size:0.78rem;color:#6b7680;margin-top:28px;">Sources: Statistics South Africa, Quarterly Labour Force Survey Q2 2026 (released 11 August 2026) and GDP Q2 2026 (released 8 September 2026); Eskom statement on its independent diesel investigation (27 August 2026); amaBhungane reporting on Eskom diesel contracts (August 2026); The Presidency, statement on the Second Interim Report of the Judicial Commission of Inquiry into Criminality, Political Interference and Corruption in the Criminal Justice System (6 August 2026).</p>
+      `
+    },
     foodcrisis: {
       issue: 'Issue No. 11',
       date: '11 August 2026',
       category: 'Commodities',
       headline: 'Could the Next Global Crisis Be Food?',
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Commodities',
       hideTags: true,
       customFooter: `
         <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network — Issue No. 11.</div>
@@ -1802,7 +1859,7 @@
       date: '07 August 2026',
       category: 'Economy',
       headline: 'Why Inflation Is Falling but Living Costs Still Feel High?',
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Economy',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Economy',
       hideTags: true,
       customFooter: `
         <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network — Issue No. 10.</div>
@@ -1904,7 +1961,7 @@
       date: '04 August 2026',
       category: 'Economy',
       headline: "Understanding South Africa's Electricity Tariffs: Who Really Decides What You Pay?",
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Economy',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Economy',
       hideTags: true,
       customFooter: `
         <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network — Issue No. 09.</div>
@@ -1992,7 +2049,7 @@
       date: '03 August 2026',
       category: 'Markets & Investing',
       headline: 'Should You Trust Financial Influencers? How Social Media Is Changing the Way Millions Learn About Investing',
-      byline: 'By Adrian K. Vale, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Markets &amp; Investing',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Markets &amp; Investing',
       hideTags: true,
       customFooter: `
         <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network — Issue No. 08.</div>
@@ -2040,7 +2097,7 @@
       date: '01 August 2026',
       category: 'Commodities',
       headline: 'When Oil Moves, Africa Feels It. How One Shipping Route Can Influence Fuel Prices, Food Costs and Inflation Across the Continent.',
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Commodities',
       hideTags: true,
       customFooter: `
         <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network — Issue No. 07.</div>
@@ -2069,7 +2126,7 @@
       date: 'May 2026',
       category: 'Commodities',
       headline: 'Why Sugar Could Become the Next Major Global Commodity Story',
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Commodities',
       body: `
         <p>Oil and inflation dominate the commodity headlines. Sugar rarely gets a mention, but the pieces are quietly falling into place for that to change.</p>
         <p>What used to be a straightforward food commodity now sits at the intersection of energy policy, climate risk, and trade politics, three forces that rarely work in sugar's favor at the same time.</p>
@@ -2090,7 +2147,7 @@
       date: 'April 2026',
       category: 'Commodities',
       headline: 'Should We Fear the Current Global Tension Around Oil?',
-      byline: 'By Ethan R. Hayes &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Ethan R. Hayes</b>, Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Commodities',
       body: `
         <p>Oil prices have been swinging hard as tensions build in key producing regions, and it's fair to wonder whether this is background noise or something that actually reaches your wallet.</p>
         <h3>Why Oil Still Runs the Show</h3>
@@ -2110,7 +2167,7 @@
       date: 'June 2026',
       category: 'Commodities',
       headline: 'Brazilian Mills Are Turning Away From Sugar: Here\'s What the Latest Harvest Data Shows',
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Commodities',
       body: `
         <p>We flagged sugar last issue as a commodity worth watching. The newest numbers make the case for us: Brazilian mills are pulling cane away from sugar and pouring it into ethanol instead, and the shift is bigger than most expected.</p>
         <h3>More Cane, Less Sugar</h3>
@@ -2137,7 +2194,7 @@
       date: '31 July 2026',
       category: 'Commodities',
       headline: "From the Ceasefire to a New Oil Reality. Oil Pulls Back From the Highs — But the Risk Premium Remains",
-      byline: 'By <b>Kago R. Modiega</b> &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Kago R. Modiega</b>, Research Analyst &nbsp;&middot;&nbsp; Commodities',
       hideTags: true,
       customFooter: `
         <div style="margin-bottom:10px;">GIOTRADE Network is a publication of Giotrade Group, provided for informational purposes only. Nothing in this article constitutes financial, investment, or tax advice, nor should it be construed as a recommendation by Giotrade Investment Solutions or any other Giotrade Group entity. Recipients should seek independent advice before making investment decisions. &copy; 2026 Giotrade Group. All rights reserved. GIOTRADE Network — Issue No. 06.</div>
@@ -2168,7 +2225,7 @@
       date: 'July 2026',
       category: 'Commodities',
       headline: "Oil's Ceasefire Didn't Hold: Prices Are Back Near $100",
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Commodities',
       body: `
         <p>Our last issue tracked oil tensions squeezing markets and household costs. Since then the market has whipsawed twice: a truce briefly calmed things down, then a fresh round of fighting sent prices right back up.</p>
         <h3>Truce, Then Crisis, In Five Weeks</h3>
@@ -2190,7 +2247,7 @@
       date: 'May 2026',
       category: 'Commodities',
       headline: 'Global Oil Tensions Continue to Pressure Markets and Household Costs',
-      byline: 'By Adrian K. Vale &nbsp;&middot;&nbsp; Commodities',
+      byline: 'By <b>Adrian K. Vale</b>, Senior Markets &amp; Investment Analyst &nbsp;&middot;&nbsp; Commodities',
       body: `
         <p>Oil markets are still on edge. Tensions around major producing regions haven't let up, and the uncertainty is starting to bleed into everyday costs.</p>
         <h3>What's Keeping Prices Elevated</h3>
