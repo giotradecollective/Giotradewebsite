@@ -69,6 +69,7 @@
   .field input::placeholder{color:rgba(255,255,255,0.22);}
   .field input:focus{border-color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.06);}
 
+  #turnstile-widget{margin:0 0 24px;min-height:65px;}
   .field-row{display:flex;align-items:center;justify-content:space-between;margin:-6px 0 30px;}
   .remember{display:flex;align-items:center;gap:10px;font-size:0.76rem;color:var(--dim);}
   .remember input{accent-color:#fff;width:14px;height:14px;}
@@ -162,6 +163,8 @@
           <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
         </div>
 
+        <div id="turnstile-widget"></div>
+
         <button type="submit" class="btn-login" id="login-btn"><span>Log In</span></button>
       </form>
 
@@ -198,20 +201,68 @@
     if (session) window.location.href = 'dashboard.html';
   })();
 
+  // ── Cloudflare Turnstile ──────────────────────────────────────────
+  // Site key is public. The secret key lives only in Supabase (Authentication > Attack Protection).
+  const TURNSTILE_SITE_KEY = 'YOUR_TURNSTILE_SITE_KEY';
+  let turnstileToken = null;
+  let turnstileWidgetId = null;
+
+  function showMessage(text, isError) {
+    messageBox.textContent = text;
+    messageBox.classList.toggle('is-error', !!isError);
+    messageBox.style.display = 'block';
+  }
+
+  // Called by the Turnstile script once it has loaded (see script tag at the bottom).
+  window.onTurnstileLoad = function () {
+    turnstileWidgetId = turnstile.render('#turnstile-widget', {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: 'dark',
+      size: 'flexible',
+      callback: function (token) { turnstileToken = token; },
+      'expired-callback': function () { turnstileToken = null; },
+      'timeout-callback': function () { turnstileToken = null; },
+      'error-callback': function () {
+        turnstileToken = null;
+        showMessage('Security check could not load. Refresh the page and try again.', true);
+      }
+    });
+  };
+
+  function resetTurnstile() {
+    turnstileToken = null;
+    if (window.turnstile && turnstileWidgetId !== null) turnstile.reset(turnstileWidgetId);
+  }
+
   document.getElementById('portal-login-form').addEventListener('submit', async function (e) {
     e.preventDefault();
     const btn = document.getElementById('login-btn');
-    btn.disabled = true;
 
     const email = document.getElementById('portal-email').value.trim();
     const password = document.getElementById('portal-password').value;
 
-    const { error } = await loginWithPassword(email, password);
+    if (!turnstileToken) {
+      showMessage('Please complete the security check before logging in.', true);
+      return;
+    }
+
+    btn.disabled = true;
+
+    // Turnstile tokens are single-use and are verified by Supabase on its server.
+    const { error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password,
+      options: { captchaToken: turnstileToken }
+    });
 
     if (error) {
-      messageBox.textContent = 'Incorrect email or password. Please try again.';
-      messageBox.classList.add('is-error');
-      messageBox.style.display = 'block';
+      // A token can only be used once, so always get a fresh one after an attempt.
+      resetTurnstile();
+      if (/captcha/i.test(error.message || '')) {
+        showMessage('Security check failed. Please try again.', true);
+      } else {
+        showMessage('Incorrect email or password. Please try again.', true);
+      }
       btn.disabled = false;
       return;
     }
@@ -219,6 +270,7 @@
     window.location.href = 'dashboard.html';
   });
 </script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" async defer></script>
 
 </body>
 </html>
