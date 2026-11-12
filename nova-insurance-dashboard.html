@@ -229,6 +229,10 @@ td{border-bottom:1px solid #e6e6e6;}
 .site-foot .back-link{grid-column:3;justify-self:end;font-size:12.5px;color:#8f8c86;text-decoration:underline;}
 .site-foot .back-link:hover{color:#f3f0ea;}
 @media(max-width:880px){.site-foot{grid-template-columns:1fr;justify-items:center;padding:22px 20px;gap:10px;}.site-foot .powered-by,.site-foot .back-link{grid-column:1;justify-self:center;}.site-foot .powered-by{font-size:14px;}}
+
+/* ---- fix: action buttons keep readable text on hover/press ---- */
+.btn:hover,.btn.ghost-red:hover,.btn.ghost-sage:hover{background:#000;color:#fff;border-bottom-color:#000;}
+.btn:active,.btn:focus-visible{background:#000;color:#fff;}
 </style>
 </head>
 <body>
