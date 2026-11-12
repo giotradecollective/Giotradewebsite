@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agriculture &amp; Food Performance Dashboard | GIOTRADE Technologies</title>
+<meta name="description" content="Interactive demo: see how commodity price moves change feed cost, margin and break-even across farms and feedlots. Built by GIOTRADE Technologies.">
+<link rel="icon" href="/favicon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--k:#000;--w:#fff;--g1:#f4f4f4;--g2:#d9d9d9;--g3:#8c8c8c;--g4:#555}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Barlow',sans-serif;color:var(--k);background:var(--w);line-height:1.5}
+h1,h2,h3{font-family:'Source Serif 4',serif;font-weight:600;margin:0;letter-spacing:-.01em}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--k);outline-offset:3px}
+.top{background:var(--k);color:var(--w)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:14px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.14em;font-size:.85rem;text-decoration:none}
+.brand span{font-weight:300;opacity:.7}
+.back{font-size:.85rem;opacity:.8;text-decoration:none}.back:hover{opacity:1}
+.head{padding:40px 0 24px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
+.head h1{font-size:clamp(1.7rem,3.2vw,2.5rem);max-width:18em}
+.head p{color:var(--g4);max-width:38em;margin:10px 0 0}
+.tag{border:1px solid var(--k);padding:6px 12px;font-size:.78rem;font-weight:600}
+.panel{border:1px solid var(--g2);padding:22px}
+.ctrl{display:grid;grid-template-columns:1.1fr repeat(3,1fr);gap:22px;background:var(--g1);border:1px solid var(--g2);padding:22px;margin-bottom:22px}
+.ctrl label{display:block;font-size:.82rem;font-weight:600;margin-bottom:8px}
+.ctrl output{float:right;font-variant-numeric:tabular-nums}
+select{width:100%;padding:10px;border:1px solid var(--k);background:var(--w);font:inherit;border-radius:0}
+input[type=range]{width:100%;accent-color:#000}
+.chk{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:.82rem;font-weight:400}
+.chk input{width:16px;height:16px;accent-color:#000}
+.rst{margin-top:10px;background:none;border:0;font:inherit;font-size:.8rem;text-decoration:underline;cursor:pointer;padding:0}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--k);margin-bottom:22px}
+.kpi{padding:18px 20px;border-right:1px solid var(--g2)}.kpi:last-child{border-right:0}
+.kpi small{display:block;font-size:.76rem;color:var(--g4);margin-bottom:6px}
+.kpi b{font-family:'Source Serif 4',serif;font-size:1.6rem;font-weight:600;display:block;font-variant-numeric:tabular-nums}
+.kpi span{font-size:.78rem;font-weight:600}
+.row{display:grid;grid-template-columns:1.6fr 1fr;gap:22px;margin-bottom:22px}
+.panel h2{font-size:1.15rem;margin-bottom:4px}
+.panel .sub{font-size:.82rem;color:var(--g4);margin-bottom:16px}
+.leg{display:flex;gap:18px;font-size:.78rem;margin-bottom:6px}
+.leg i{display:inline-block;width:22px;border-top:3px solid var(--k);vertical-align:middle;margin-right:6px}
+.leg i.d{border-top:3px dashed var(--g3)}
+svg{width:100%;height:auto;display:block}
+.wf{display:grid;gap:10px}
+.wf div{display:grid;grid-template-columns:128px 1fr 76px;gap:10px;align-items:center;font-size:.85rem}
+.wf .t{height:14px;background:var(--g1);position:relative}
+.wf .t u{position:absolute;top:0;bottom:0;background:var(--k);text-decoration:none}
+.wf .t u.n{background:var(--g3)}
+.wf .t::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1px solid var(--g3)}
+.wf b{text-align:right;font-variant-numeric:tabular-nums}
+.wf .tot{border-top:1px solid var(--k);padding-top:10px;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:right;padding:11px 10px;border-bottom:1px solid var(--g2);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{font-size:.76rem;font-weight:600;color:var(--g4);border-bottom:1px solid var(--k)}
+.scroll{overflow-x:auto}
+.mix{display:flex;height:22px;margin:6px 0 10px;border:1px solid var(--k)}
+.mix span{display:block;height:100%}
+.ml{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem}
+.ml i{display:inline-block;width:10px;height:10px;margin-right:6px;border:1px solid var(--k)}
+.note{font-size:.8rem;color:var(--g4);margin:24px 0 8px}
+.cta{background:var(--k);color:var(--w);padding:44px 0;margin-top:36px}
+.cta .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.cta h2{font-size:1.6rem;max-width:20em}
+.cta a{background:var(--w);color:var(--k);padding:14px 26px;font-weight:600;text-decoration:none;font-size:.9rem}
+.cta a:hover{background:var(--g2)}
+@media(max-width:960px){.ctrl{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr}.kpi{border-bottom:1px solid var(--g2)}.row{grid-template-columns:1fr}}
+@media(max-width:560px){.ctrl,.kpis{grid-template-columns:1fr}.wf div{grid-template-columns:100px 1fr 70px}.wrap{padding:0 16px}}
+
+/* ---- formal ledger design (matches Nova) ---- */
+.top{background:#fff;color:#000;border-bottom:1px solid #000;box-shadow:0 3px 0 #000;margin-bottom:3px}
+.top .wrap{padding-block:16px}
+.brand{font-weight:700;letter-spacing:.16em;font-size:.85rem}.brand span{font-weight:400;opacity:.75}
+.back{opacity:1;font-size:.85rem;text-decoration:underline}
+.head{padding:36px 0 22px;margin-bottom:28px;border-bottom:1px solid var(--g2)}
+.head h1{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:600;line-height:1.15}
+.head p{font-size:14.5px;margin-top:6px}
+.tag{border:1px solid #000;background:#fff;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px}
+.panel,.ctrl,.kpis{border:0;background:none}
+.panel{border-top:2px solid #000;padding:14px 0 0}
+.panel h2{font-size:1.25rem;font-weight:600}
+.row{gap:44px;margin-bottom:30px}
+.ctrl{border-top:2px solid #000;padding:16px 0 0;gap:32px;margin-bottom:30px}
+.ctrl label{font-size:13px;color:var(--g4)}
+.ctrl output{color:#000;font-weight:700}
+select{border:0;border-bottom:2px solid #000;padding:8px 0}
+.chk{color:#000}
+.rst{font-weight:600}
+.kpis{border-top:2px solid #000;margin-bottom:30px}
+.kpi{border-right:1px solid var(--g2);padding:16px 20px 12px}
+.kpi:first-child{padding-left:0}.kpi:last-child{border-right:0}
+.kpi b{font-size:2.3rem;font-weight:600;line-height:1.1;margin-top:6px}
+.kpi small{color:var(--g4)}
+th{border-bottom:1px solid #000}
+td{border-bottom:1px solid #e6e6e6}
+.wf .t{height:6px;background:#d9d9d9}
+.wf .t::after{top:-4px;bottom:-4px}
+.mix{border:0;height:10px}
+.cta{background:#000}
+.cta a{border-radius:0}
+@media(max-width:960px){.kpi{border-right:0;border-bottom:1px solid var(--g2);padding-left:0}.row{gap:0}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <a class="brand" href="technologies.html">GIOTRADE <span>TECHNOLOGIES</span></a>
+  <a class="back" href="technologies.html">Back to Technologies</a>
+</div></div>
+
+<main class="wrap">
+  <div class="head">
+    <div>
+      <h1>Feedlot and farm performance, with commodity risk built in.</h1>
+      <p>Move the price sliders and see what happens to feed cost, margin and break-even across three sites, before the market moves.</p>
+    </div>
+    <div class="tag">Illustrative sample data</div>
+  </div>
+
+  <section class="ctrl" aria-label="Scenario controls">
+    <div>
+      <label for="site">Site</label>
+      <select id="site"></select>
+      <label class="chk"><input type="checkbox" id="hedge" checked> Apply existing maize hedge cover</label>
+      <button class="rst" id="rst" type="button">Reset scenario</button>
+    </div>
+    <div><label for="c">Maize price <output id="co"></output></label><input id="c" type="range" min="-30" max="40" value="0" step="1"></div>
+    <div><label for="s">Soya meal price <output id="so"></output></label><input id="s" type="range" min="-30" max="40" value="0" step="1"></div>
+    <div><label for="k">Live cattle price <output id="ko"></output></label><input id="k" type="range" min="-20" max="20" value="0" step="1"></div>
+  </section>
+
+  <section class="kpis" aria-live="polite">
+    <div class="kpi"><small>Annual revenue</small><b id="k1"></b><span id="d1"></span></div>
+    <div class="kpi"><small>Annual feed cost</small><b id="k2"></b><span id="d2"></span></div>
+    <div class="kpi"><small>Gross margin</small><b id="k3"></b><span id="d3"></span></div>
+    <div class="kpi"><small>Margin %</small><b id="k4"></b><span id="d4"></span></div>
+    <div class="kpi"><small>Break-even live price</small><b id="k5"></b><span id="d5"></span></div>
+  </section>
+
+  <div class="row">
+    <section class="panel">
+      <h2>Monthly gross margin</h2>
+      <p class="sub">Baseline against your scenario, in rand millions.</p>
+      <div class="leg"><span><i></i>Scenario</span><span><i class="d"></i>Baseline</span></div>
+      <svg id="chart" viewBox="0 0 640 250" role="img" aria-label="Monthly gross margin, baseline versus scenario"></svg>
+    </section>
+    <section class="panel">
+      <h2>What moved the margin</h2>
+      <p class="sub">Annual effect of each price change, in rand.</p>
+      <div class="wf" id="wf"></div>
+    </section>
+  </div>
+
+  <div class="row">
+    <section class="panel">
+      <h2>Performance by site</h2>
+      <p class="sub">Updates with the scenario above.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>Site</th><th>Heads sold / yr</th><th>Feed cost / head</th><th>Margin</th><th>Margin %</th><th>Change</th><th>Maize hedged</th></tr></thead>
+        <tbody id="tb"></tbody>
+      </table></div>
+    </section>
+    <section class="panel">
+      <h2>Where the money goes</h2>
+      <p class="sub">Share of annual cost under this scenario.</p>
+      <div class="mix" id="mix"></div>
+      <div class="ml" id="ml"></div>
+    </section>
+  </div>
+
+  <p class="note">All figures are generated sample data to show the kind of view GIOTRADE Technologies builds. They are not real client numbers. Hedge cover is modelled as the share of maize cost already locked at today&rsquo;s price.</p>
+</main>
+
+<div class="cta"><div class="wrap">
+  <h2>Want this built around your farm, feedlot or food business?</h2>
+  <a href="mailto:info@giotradegroup.co.za?subject=Agriculture%20dashboard%20enquiry">Talk to the Technologies team</a>
+</div></div>
+
+<script>
+(function(){
+  var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var VOL=[.92,.9,.96,1,1.04,1.06,1.08,1.06,1.02,1,.98,.98];
+  // h: heads sold per month, w: kg per head, p: R per kg live, m: baseline margin, cov: maize hedged, mz/sy/rg/vt: cost shares
+  var SITES=[
+    {n:'Highveld Feedlot',h:420,w:480,p:41,m:.16,cov:.40,mz:.40,sy:.14,rg:.12,vt:.05},
+    {n:'Free State Farm',h:260,w:455,p:40,m:.21,cov:.25,mz:.34,sy:.10,rg:.20,vt:.06},
+    {n:'Limpopo Ranch',h:180,w:430,p:39,m:.24,cov:.50,mz:.28,sy:.08,rg:.24,vt:.07}
+  ];
+  var $=function(i){return document.getElementById(i)};
+  var sel=$('site'); sel.innerHTML='<option value="-1">All sites</option>'+SITES.map(function(s,i){return '<option value="'+i+'">'+s.n+'</option>'}).join('');
+  function R(v){var a=Math.abs(v),s=v<0?'-':'';return a>=1e6?s+'R '+(a/1e6).toFixed(2)+'m':a>=1e3?s+'R '+Math.round(a/1e3)+'k':s+'R '+Math.round(a)}
+  function pc(v,d){return (v>0?'+':v<0?'':'')+v.toFixed(d==null?1:d)+'%'}
+  function D(v){if(Math.abs(v)<.5)v=0;return (v>0?'+':'')+R(v)}
+  function calc(s,c,sy,k,hedge){
+    var o={rev0:0,rev1:0,cost0:0,cost1:0,feed0:0,feed1:0,kg:0,heads:0,mzD:0,syD:0,kD:0,mz:0,sy:0,rg:0,vt:0,ot:0,m0:Array(12).fill(0),m1:Array(12).fill(0)};
+    var eff=hedge?c*(1-s.cov):c;
+    for(var i=0;i<12;i++){
+      var kg=s.h*VOL[i]*s.w, rev=kg*s.p, cost=rev*(1-s.m);
+      var mz=cost*s.mz, so=cost*s.sy, rg=cost*s.rg, vt=cost*s.vt, ot=cost-mz-so-rg-vt;
+      var mz1=mz*(1+eff), so1=so*(1+sy), rev1=rev*(1+k), cost1=mz1+so1+rg+vt+ot;
+      o.rev0+=rev;o.rev1+=rev1;o.cost0+=cost;o.cost1+=cost1;o.feed0+=mz+so+rg;o.feed1+=mz1+so1+rg;o.kg+=kg;o.heads+=s.h*VOL[i];
+      o.mzD+=mz1-mz;o.syD+=so1-so;o.kD+=rev1-rev;o.mz+=mz1;o.sy+=so1;o.rg+=rg;o.vt+=vt;o.ot+=ot;
+      o.m0[i]=rev-cost;o.m1[i]=rev1-cost1;
+    }
+    return o;
+  }
+  function sum(a,b){for(var k in b){if(Array.isArray(b[k])){a[k]=a[k]||Array(12).fill(0);for(var i=0;i<12;i++)a[k][i]+=b[k][i]}else a[k]=(a[k]||0)+b[k]}return a}
+  function run(){
+    var c=+$('c').value,s=+$('s').value,k=+$('k').value,h=$('hedge').checked,si=+sel.value;
+    $('co').textContent=pc(c,0);$('so').textContent=pc(s,0);$('ko').textContent=pc(k,0);
+    var list=si<0?SITES:[SITES[si]],T={};
+    var per=SITES.map(function(x){return calc(x,c/100,s/100,k/100,h)});
+    list.forEach(function(x){sum(T,calc(x,c/100,s/100,k/100,h))});
+    var m0=T.rev0-T.cost0,m1=T.rev1-T.cost1,p0=m0/T.rev0*100,p1=m1/T.rev1*100;
+    var be0=T.cost0/T.kg,be1=T.cost1/T.kg;
+    function set(i,v,d,u){$('k'+i).textContent=v;$('d'+i).textContent=d}
+    set(1,R(T.rev1),D(T.rev1-T.rev0)+' vs baseline');
+    set(2,R(T.feed1),D(T.feed1-T.feed0)+' vs baseline');
+    set(3,R(m1),D(m1-m0)+' vs baseline');
+    set(4,p1.toFixed(1)+'%',(Math.abs(p1-p0)<.05?'0.0':(p1-p0>0?'+':'')+(p1-p0).toFixed(1))+' pts vs baseline');
+    set(5,'R '+be1.toFixed(2)+'/kg',(Math.abs(be1-be0)<.005?'0.00':(be1-be0>0?'+':'')+(be1-be0).toFixed(2))+' vs baseline');
+    chart(T.m0,T.m1);
+    // waterfall
+    var rows=[['Baseline margin',m0,0],['Maize cost',-T.mzD,1],['Soya meal cost',-T.syD,1],['Cattle price',T.kD,1]];
+    var mx=Math.max(Math.abs(T.mzD),Math.abs(T.syD),Math.abs(T.kD),1);
+    $('wf').innerHTML=rows.slice(1).map(function(r){var w=Math.min(50,Math.abs(r[1])/mx*50),l=r[1]<0?50-w:50;
+      return '<div><span>'+r[0]+'</span><span class="t"><u class="'+(r[1]<0?'n':'')+'" style="left:'+l+'%;width:'+w+'%"></u></span><b>'+(r[1]>0?'+':'')+R(r[1])+'</b></div>'}).join('')
+      +'<div class="tot"><span>Scenario margin</span><span></span><b>'+R(m1)+'</b></div>';
+    // mix
+    var parts=[['Maize',T.mz,'#000'],['Soya meal',T.sy,'#555'],['Roughage',T.rg,'#8c8c8c'],['Vet and health',T.vt,'#d9d9d9'],['Labour and overheads',T.ot,'#fff']];
+    $('mix').innerHTML=parts.map(function(p){return '<span title="'+p[0]+'" style="width:'+(p[1]/T.cost1*100)+'%;background:'+p[2]+'"></span>'}).join('');
+    $('ml').innerHTML=parts.map(function(p){return '<span><i style="background:'+p[2]+'"></i>'+p[0]+' '+(p[1]/T.cost1*100).toFixed(0)+'%</span>'}).join('');
+    // table
+    $('tb').innerHTML=SITES.map(function(x,i){var o=per[i],mm=o.rev1-o.cost1,mp=mm/o.rev1*100,bp=(o.rev0-o.cost0)/o.rev0*100,d=mp-bp;
+      return '<tr'+(si===i?' style="background:#f4f4f4;font-weight:600"':'')+'><td>'+x.n+'</td><td>'+Math.round(o.heads).toLocaleString('en-ZA')+'</td><td>R '+Math.round(o.feed1/o.heads).toLocaleString('en-ZA')+'</td><td>'+R(mm)+'</td><td>'+mp.toFixed(1)+'%</td><td>'+(Math.abs(d)<.05?'0.0':(d>0?'+':'')+d.toFixed(1))+' pts</td><td>'+Math.round(x.cov*100)+'%</td></tr>'}).join('');
+  }
+  function chart(a,b){
+    var W=640,H=250,L=44,Rr=10,Tp=12,Bt=28,all=a.concat(b).concat([0]),mn=Math.min.apply(null,all),mx=Math.max.apply(null,all);
+    if(mx-mn<1)mx=mn+1;var pad=(mx-mn)*.1;mn-=pad;mx+=pad;
+    var X=function(i){return L+i*(W-L-Rr)/11},Y=function(v){return Tp+(mx-v)/(mx-mn)*(H-Tp-Bt)};
+    var g='';for(var t=0;t<=4;t++){var v=mn+(mx-mn)*t/4,y=Y(v);g+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y+'" y2="'+y+'" stroke="#d9d9d9"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="#555">'+(v/1e6).toFixed(1)+'</text>'}
+    if(mn<0&&mx>0)g+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="#000"/>';
+    MO.forEach(function(m,i){g+='<text x="'+X(i)+'" y="'+(H-8)+'" text-anchor="middle" font-size="11" fill="#555">'+m+'</text>'});
+    var pl=function(d,st){return '<polyline fill="none" '+st+' points="'+d.map(function(v,i){return X(i).toFixed(1)+','+Y(v).toFixed(1)}).join(' ')+'"/>'};
+    $('chart').innerHTML=g+pl(a,'stroke="#8c8c8c" stroke-width="2" stroke-dasharray="6 4"')+pl(b,'stroke="#000" stroke-width="3"')
+      +b.map(function(v,i){return '<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3.5" fill="#000"><title>'+MO[i]+': '+R(v)+'</title></circle>'}).join('');
+  }
+  ['c','s','k','hedge'].forEach(function(i){$(i).addEventListener('input',run)});
+  sel.addEventListener('change',run);
+  $('rst').addEventListener('click',function(){$('c').value=0;$('s').value=0;$('k').value=0;$('hedge').checked=true;sel.value=-1;run()});
+  run();
+})();
+</script>
+</body>
+</html>
