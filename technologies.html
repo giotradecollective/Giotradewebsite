@@ -84,194 +84,175 @@
 
 <section class="gt" id="technologies">
 <style>
-.gt{--n:#000;--ink:#000;--gr:#555;--ln:#d9d9d9;--tint:#f4f4f4;background:#fff;color:var(--ink);font-family:'Barlow',sans-serif;border-top:1px solid var(--ln)}
+.gt{--k:#000;--g:#555;--m:#8c8c8c;--r:#d9d9d9;--t:#f4f4f4;background:#fff;color:var(--k);font-family:'Barlow',sans-serif;line-height:1.6}
 .gt *{box-sizing:border-box}
-.gt-w{max-width:1160px;margin:0 auto;padding:0 28px}
-.gt h1,.gt h2,.gt h3{font-family:'Source Serif 4',serif;font-weight:600;line-height:1.12;margin:0;color:var(--n);letter-spacing:-.01em}
-.gt p{margin:0;line-height:1.7;color:var(--gr)}
-.gt-hero{padding:84px 0 72px;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
-.gt-hero h1{font-size:clamp(2.2rem,4.6vw,3.6rem);margin-bottom:22px}
-.gt-hero .lead{font-size:1.12rem;max-width:34em;color:var(--ink);margin-bottom:12px}
-.gt-hero .sub{max-width:34em;margin-bottom:32px}
-.gt-btns{display:flex;gap:14px;flex-wrap:wrap}
-.gt-btn{display:inline-block;padding:14px 26px;font-weight:600;font-size:.9rem;text-decoration:none;border:1px solid var(--n);border-radius:2px;transition:background .2s,color .2s}
-.gt-btn--p{background:var(--n);color:#fff}.gt-btn--p:hover{background:#262626}
-.gt-btn--s{color:var(--n);background:transparent}.gt-btn--s:hover{background:var(--tint)}
-.gt-btn:focus-visible,.gt a:focus-visible{outline:2px solid #000;outline-offset:3px}
-/* dashboard mock: the memorable element */
-.gt-dash{background:var(--n);border-radius:4px;padding:22px;color:#fff;box-shadow:0 24px 50px rgba(0,0,0,.25)}
-.gt-dash__bar{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.55);margin-bottom:16px}
-.gt-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.gt-kpi{background:rgba(255,255,255,.07);padding:12px;border-radius:3px}
-.gt-kpi small{display:block;font-size:.66rem;color:rgba(255,255,255,.55);margin-bottom:4px}
-.gt-kpi b{font-size:1.15rem;font-weight:600}
-.gt-kpi i{font-style:normal;font-size:.7rem;margin-left:6px;color:#fff}.gt-kpi i.d{color:#a6a6a6}
-.gt-chart{background:rgba(255,255,255,.07);border-radius:3px;padding:14px}
-.gt-chart svg{width:100%;height:auto;display:block}
-.gt-chart p{font-size:.68rem;color:rgba(255,255,255,.55);margin-top:8px}
-.gt-dash__note{font-size:.66rem;color:rgba(255,255,255,.4);margin-top:12px}
-.gt-band{background:var(--tint);border-block:1px solid var(--ln)}
-.gt-band .gt-w{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;padding-block:30px}
-.gt-band b{display:block;color:var(--n);font-size:.95rem;margin-bottom:4px}
-.gt-band span{font-size:.82rem;color:var(--gr);line-height:1.5}
-.gt-sec{padding:84px 0}
-.gt-sec h2{font-size:clamp(1.7rem,3vw,2.4rem);max-width:20em;margin-bottom:16px}
-.gt-sec .intro{max-width:40em;margin-bottom:44px}
-.gt-caps{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--ln)}
-.gt-cap{padding:30px 32px;border-right:1px solid var(--ln);border-bottom:1px solid var(--ln)}
-.gt-cap:nth-child(2n){border-right:0}.gt-cap:nth-child(n+3){border-bottom:0}
-.gt-cap h3{font-size:1.2rem;margin-bottom:10px}
-.gt-cap p{font-size:.92rem}
-.gt-flow{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
-.gt-src{display:grid;gap:10px}
-.gt-src div{display:flex;justify-content:space-between;padding:14px 18px;border:1px solid var(--ln);border-left:3px solid var(--n);background:#fff;font-size:.9rem}
-.gt-src span{color:var(--gr)}
-.gt-src .out{background:var(--n);color:#fff;border-color:var(--n)}.gt-src .out span{color:rgba(255,255,255,.7)}
-.gt-flow h2{margin-bottom:16px}
-.gt-ex{margin-top:22px;padding:18px 22px;border-left:3px solid var(--n);background:var(--tint)}
-.gt-ex p{font-size:.9rem}
-.gt-case{background:var(--n);color:#fff;padding:84px 0}
-.gt-case h2{color:#fff;font-size:clamp(1.7rem,3vw,2.4rem);margin-bottom:14px}
-.gt-case__intro{color:rgba(255,255,255,.75);max-width:38em;margin-bottom:40px}
-.gt-pcards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.gt-pcard{border:1px solid rgba(255,255,255,.35);padding:32px;display:flex;flex-direction:column}
-.gt-pcard__tag{align-self:flex-start;background:#fff;color:#000;font-size:.78rem;font-weight:600;padding:4px 10px;margin-bottom:18px}
-.gt-pcard h3{color:#fff;font-size:1.45rem;margin-bottom:12px}
-.gt-pcard p{color:rgba(255,255,255,.75);font-size:.95rem}
-.gt-pcard ul{list-style:none;padding:0;margin:22px 0 28px;border-top:1px solid rgba(255,255,255,.2)}
-.gt-pcard li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.2);font-size:.9rem}
-.gt-pcard .gt-btn{margin-top:auto;align-self:flex-start;background:#fff;color:#000;border-color:#fff}
-.gt-pcard .gt-btn:hover{background:#e6e6e6}
-.gt-prod{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-.gt-prod div{padding:28px 30px;border:1px solid var(--ln);border-top:3px solid var(--n)}
-.gt-prod h3{font-size:1.15rem;margin-bottom:10px}.gt-prod p{font-size:.9rem}
-.gt-prod em{display:block;margin-top:14px;font-style:normal;font-size:.78rem;font-weight:600;color:var(--n)}
-.gt-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
-.gt-steps div{border-top:2px solid var(--n);padding-top:18px}
-.gt-steps div::before{counter-increment:s;content:counter(s);display:block;font-family:'Source Serif 4',serif;font-size:1.6rem;color:var(--n);margin-bottom:6px}
-.gt-steps h3{font-size:1.05rem;margin-bottom:8px}.gt-steps p{font-size:.88rem}
-.gt-cta{background:var(--tint);border-top:1px solid var(--ln);padding:84px 0;text-align:center}
-.gt-cta h2{font-size:clamp(1.8rem,3.2vw,2.6rem);max-width:17em;margin:0 auto 16px}
-.gt-cta p{max-width:34em;margin:0 auto 32px}
-.gt-cta .gt-btns{justify-content:center}
-/* contact band: plain flat background, full width (no inherited site backgrounds) */
-#get-in-touch.gt-cta{background:var(--tint,#f4f4f4) none;background-image:none;width:100%;max-width:none;margin:0;box-shadow:none;border-radius:0;display:block}
-#get-in-touch.gt-cta::before,#get-in-touch.gt-cta::after,#get-in-touch.gt-cta .gt-w::before,#get-in-touch.gt-cta .gt-w::after{content:none;display:none;background:none}
-#get-in-touch.gt-cta .gt-w{background:none;background-image:none;box-shadow:none}
-@media(max-width:900px){.gt-hero,.gt-flow,.gt-pcards{grid-template-columns:1fr;gap:40px}.gt-hero{padding:56px 0}.gt-band .gt-w{grid-template-columns:1fr 1fr}.gt-steps{grid-template-columns:1fr 1fr}.gt-sec,.gt-case,.gt-cta{padding:60px 0}}
-@media(max-width:640px){.gt-caps,.gt-prod{grid-template-columns:1fr}.gt-cap{border-right:0!important;border-bottom:1px solid var(--ln)!important}.gt-cap:last-child{border-bottom:0!important}.gt-band .gt-w,.gt-steps{grid-template-columns:1fr}.gt-kpis{grid-template-columns:1fr 1fr 1fr}.gt-w{padding:0 20px}}
+.gt h1,.gt h2,.gt h3{font-family:'Source Serif 4',serif;font-weight:600;color:var(--k);margin:0;letter-spacing:-.01em}
+.gt p{margin:0;color:var(--g)}
+.gt-w{max-width:1200px;margin:0 auto;padding:0 40px}
+.gt a:focus-visible,.gt-btn:focus-visible{outline:2px solid #000;outline-offset:3px}
+.gt-hero{padding:88px 0 40px;border-bottom:1px solid var(--k);box-shadow:0 3px 0 #fff,0 4px 0 var(--k)}
+.gt-hero h1{font-size:clamp(2.5rem,6vw,4.9rem);line-height:1.04;letter-spacing:-.02em;max-width:13em;margin-bottom:28px}
+.gt-hero__row{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:end;margin-bottom:56px}
+.gt-hero__row p{font-size:1.1rem;color:var(--k);max-width:32em}
+.gt-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.gt-btn{display:inline-block;padding:14px 26px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid #000;transition:background .2s,color .2s}
+.gt-btn--p{background:#000;color:#fff}.gt-btn--p:hover{background:#333}
+.gt-btn--s{background:#fff;color:#000}.gt-btn--s:hover{background:var(--t)}
+.gt-conv{overflow-x:auto;padding-bottom:20px}
+.gt-conv svg{display:block;width:100%;min-width:640px;height:auto}
+.gt-conv text{font-family:'Barlow',sans-serif;font-size:15px;fill:var(--g)}
+.gt-conv .big{font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;fill:#000}
+.gt-conv path,.gt-conv line{fill:none;stroke:#000;stroke-width:1.5}
+.gt-conv .thick{stroke-width:6}
+.gt-conv .dr{stroke-dasharray:1;stroke-dashoffset:1;animation:gtd 1.5s cubic-bezier(.6,0,.2,1) forwards}
+.gt-conv .d2{animation-delay:.25s}.gt-conv .d3{animation-delay:.5s}.gt-conv .d4{animation-delay:1.3s;animation-duration:1s}
+.gt-conv .fd{opacity:0;animation:gtf .8s 1.9s forwards}
+@keyframes gtd{to{stroke-dashoffset:0}}@keyframes gtf{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.gt-conv .dr{animation:none;stroke-dashoffset:0}.gt-conv .fd{animation:none;opacity:1}}
+
+.gt-s{display:grid;grid-template-columns:250px 1fr;gap:56px;padding:68px 0;border-top:2px solid #000}
+.gt-s__h{align-self:start;position:sticky;top:96px}
+.gt-s__h h2{font-size:1.5rem;line-height:1.2;margin-bottom:10px}
+.gt-s__h p{font-size:.9rem}
+.gt-row{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;padding:24px 0;border-bottom:1px solid var(--r)}
+.gt-row:first-child{padding-top:0}.gt-row:last-child{border-bottom:0;padding-bottom:0}
+.gt-row h3{font-size:1.3rem;line-height:1.25}.gt-row p{font-size:.97rem}
+.gt-prod{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:center;padding:34px 0;border-bottom:1px solid var(--r)}
+.gt-prod:first-child{padding-top:0}.gt-prod:last-child{border-bottom:0;padding-bottom:0}
+.gt-tag{display:inline-block;border:1px solid #000;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;margin-bottom:14px}
+.gt-prod h3{font-size:1.75rem;line-height:1.15;margin-bottom:12px}
+.gt-prod p{font-size:.97rem;margin-bottom:20px}
+.gt-link{font-weight:600;font-size:.95rem;color:#000;text-decoration:none;border-bottom:2px solid #000;padding-bottom:2px}
+.gt-link:hover{background:#000;color:#fff;padding:2px 8px;margin:0 -8px}
+.gt-mini{border:1px solid #000;background:var(--t);padding:18px}
+.gt-mini small{display:block;font-size:12px;color:var(--g);margin-bottom:10px}
+.gt-mini .mr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--r);font-size:.9rem;color:#000}
+.gt-mini .mr:last-child{border-bottom:0}
+.gt-mini i{font-style:normal;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border:1px solid #000}
+.gt-mini .a{background:#000;color:#fff}.gt-mini .p{background:#fff}.gt-mini .x{background:var(--r);border-color:var(--r)}
+.gt-mini svg{display:block;width:100%;height:auto}
+.gt-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.gt-step{position:relative;padding:22px 22px 0 0;border-top:1px solid #000}
+.gt-step::before{content:"";position:absolute;top:-6px;left:0;width:11px;height:11px;background:#000}
+.gt-step h3{font-size:1.15rem;margin-bottom:8px}.gt-step p{font-size:.9rem}
+.gt-two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.gt-two h3{font-size:1.25rem;margin-bottom:10px}.gt-two p{font-size:.95rem}
+.gt-two em{display:inline-block;margin-top:14px;font-style:normal;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:1px solid #000;padding:3px 10px;color:#000}
+.gt-cta{display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:center;padding:84px 0;border-top:3px double #000}
+.gt-cta h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;margin-bottom:16px;max-width:15em}
+.gt-cta p{max-width:30em}
+.gt-cta .gt-btns{flex-direction:column;align-items:stretch}.gt-cta .gt-btn{text-align:center}
+#get-in-touch.gt-ct{background:#fff none;background-image:none;width:100%;max-width:none;margin:0;box-shadow:none;border-radius:0;display:block;padding:0}
+#get-in-touch.gt-ct::before,#get-in-touch.gt-ct::after,#get-in-touch.gt-ct .gt-w::before,#get-in-touch.gt-ct .gt-w::after{content:none;display:none;background:none}
+#get-in-touch.gt-ct .gt-w{background:none;background-image:none;box-shadow:none}
+@media(max-width:960px){.gt-w{padding:0 22px}.gt-hero{padding:56px 0 28px}.gt-hero__row,.gt-s,.gt-prod,.gt-cta,.gt-row{grid-template-columns:1fr;gap:22px}.gt-s{padding:48px 0;gap:26px}.gt-s__h{position:static}.gt-btns{justify-content:flex-start}.gt-steps{grid-template-columns:1fr 1fr;row-gap:34px}.gt-two{grid-template-columns:1fr}.gt-cta{padding:56px 0}}
+@media(max-width:560px){.gt-steps{grid-template-columns:1fr}}
 </style>
 
-<div class="gt-w gt-hero">
-  <div>
-    <h1>Software and dashboards that show you where your business really stands.</h1>
-    <p class="lead">GIOTRADE Technologies builds custom platforms, business intelligence and automation for organisations that want to make decisions from their data, not their spreadsheets.</p>
-    <p class="sub">We connect your financial, operational and market data in one place, then build the tools your team uses every day.</p>
-    <div class="gt-btns">
-      <a class="gt-btn gt-btn--p" href="#products">Explore our products</a>
-      <a class="gt-btn gt-btn--s" href="mailto:info@giotradegroup.co.za?subject=Technologies%20enquiry">Discuss your project</a>
+<div class="gt-w">
+  <div class="gt-hero">
+    <h1>Your data, in one view you can decide from.</h1>
+    <div class="gt-hero__row">
+      <p>GIOTRADE Technologies builds custom software, dashboards and automation for organisations that run on financial and operational data.</p>
+      <div class="gt-btns">
+        <a class="gt-btn gt-btn--p" href="#products">Explore our products</a>
+        <a class="gt-btn gt-btn--s" href="mailto:info@giotradegroup.co.za?subject=Technologies%20enquiry">Discuss your project</a>
+      </div>
+    </div>
+    <div class="gt-conv">
+      <svg viewBox="0 0 1000 250" role="img" aria-label="Accounting, operations and market data converging into one view">
+        <circle cx="170" cy="40" r="4" fill="#000"/><circle cx="170" cy="125" r="4" fill="#000"/><circle cx="170" cy="210" r="4" fill="#000"/>
+        <text x="0" y="45">Accounting</text><text x="0" y="130">Operations</text><text x="0" y="215">Market data</text>
+        <path class="dr" pathLength="1" d="M170 40C400 40 380 125 560 125"/>
+        <path class="dr d2" pathLength="1" d="M170 125H560"/>
+        <path class="dr d3" pathLength="1" d="M170 210C400 210 380 125 560 125"/>
+        <path class="dr d4 thick" pathLength="1" d="M560 125H845"/>
+        <text class="big fd" x="866" y="126">One view</text><text class="fd" x="866" y="150">of the business</text>
+      </svg>
     </div>
   </div>
-  <div class="gt-dash" role="img" aria-label="Illustration of a dashboard combining feed costs, corn prices and margin">
-    <div class="gt-dash__bar"><span>Cost exposure overview</span><span>Illustrative</span></div>
-    <div class="gt-kpis">
-      <div class="gt-kpi"><small>Feed cost</small><b>R 1.84m</b><i class="d">+6%</i></div>
-      <div class="gt-kpi"><small>Corn price</small><b>R 4,120/t</b><i class="d">+4%</i></div>
-      <div class="gt-kpi"><small>Gross margin</small><b>18.2%</b><i class="d">-1.7</i></div>
+
+  <div class="gt-s">
+    <div class="gt-s__h"><h2>What we build</h2><p>Four capabilities. Use one alone or combine them into a full platform.</p></div>
+    <div>
+      <div class="gt-row"><h3>Software engineering and digital platforms</h3><p>Custom software, enterprise applications, trading systems and integrated platforms built for performance, security and scale.</p></div>
+      <div class="gt-row"><h3>Business intelligence and analytics</h3><p>Interactive dashboards that connect financial, operational and market data so you can track performance, analyse profitability and forecast.</p></div>
+      <div class="gt-row"><h3>Websites and client portals</h3><p>Professional websites and secure client portals that give your customers a clear, tailored digital experience.</p></div>
+      <div class="gt-row"><h3>Data engineering, automation and AI</h3><p>Connected data systems and intelligent automation that cut manual work, improve visibility and surface insight you would otherwise miss.</p></div>
     </div>
-    <div class="gt-chart">
-      <svg viewBox="0 0 400 130" aria-hidden="true"><g stroke="rgba(255,255,255,.12)"><line x1="0" y1="30" x2="400" y2="30"/><line x1="0" y1="70" x2="400" y2="70"/><line x1="0" y1="110" x2="400" y2="110"/></g>
-        <polyline fill="none" stroke="#fff" stroke-width="2.5" points="0,92 50,86 100,88 150,72 200,66 250,54 300,58 350,40 400,34"/>
-        <polyline fill="none" stroke="#8c8c8c" stroke-width="2.5" stroke-dasharray="5 4" points="0,40 50,44 100,42 150,50 200,56 250,66 300,70 350,82 400,88"/></svg>
-      <p>Corn price (solid) against projected margin (dashed)</p>
+  </div>
+
+  <div class="gt-s" id="products">
+    <div class="gt-s__h"><h2>Explore some of our products</h2><p>Open a working platform and use it.</p></div>
+    <div>
+      <article class="gt-prod">
+        <div>
+          <span class="gt-tag">Insurance</span>
+          <h3>Policy, claims and fraud platform</h3>
+          <p>A full operations dashboard for a national insurer. A searchable Policy Book sits at the centre, joined to claims management, fraud intelligence and live operational monitoring.</p>
+          <a class="gt-link" href="/nova-insurance-dashboard.html" target="_blank" rel="noopener">Open the live dashboard</a>
+        </div>
+        <div class="gt-mini" aria-hidden="true"><small>Claims</small>
+          <div class="mr"><span>Motor claim</span><i class="a">Approved</i></div>
+          <div class="mr"><span>Home claim</span><i class="p">Pending</i></div>
+          <div class="mr"><span>Travel claim</span><i class="x">Rejected</i></div>
+        </div>
+      </article>
+      <article class="gt-prod">
+        <div>
+          <span class="gt-tag">Agriculture and food</span>
+          <h3>Farm and feedlot performance dashboard</h3>
+          <p>Move maize, soya meal and cattle prices and watch feed cost, margin and break-even change across sites, with existing hedge cover built in. Runs on sample data.</p>
+          <a class="gt-link" href="/agri-food-dashboard.html" target="_blank" rel="noopener">Try the interactive demo</a>
+        </div>
+        <div class="gt-mini" aria-hidden="true"><small>Monthly gross margin</small>
+          <svg viewBox="0 0 300 110"><g stroke="#d9d9d9"><line x1="0" y1="20" x2="300" y2="20"/><line x1="0" y1="55" x2="300" y2="55"/><line x1="0" y1="90" x2="300" y2="90"/></g>
+          <polyline fill="none" stroke="#8c8c8c" stroke-width="2" stroke-dasharray="5 4" points="0,40 50,38 100,36 150,34 200,32 250,30 300,28"/>
+          <polyline fill="none" stroke="#000" stroke-width="3" points="0,42 50,46 100,52 150,60 200,66 250,78 300,86"/></svg>
+        </div>
+      </article>
     </div>
-    <div class="gt-dash__note">Sample data to show the kind of view we build. Not client data.</div>
+  </div>
+
+  <div class="gt-s">
+    <div class="gt-s__h"><h2>From disconnected data to one clear view</h2></div>
+    <div class="gt-two">
+      <div><p>Most businesses already have the data. It sits in accounting packages, operations files and market feeds that never meet. We bring them together so you can track costs, monitor margins, spot trends and model how changing market conditions could affect profit.</p></div>
+      <div><h3>Example</h3><p>An agricultural client combines feed expenses, accounting records, profit margins and corn prices in one dashboard, then forecasts how a price move would hit the bottom line.</p></div>
+    </div>
+  </div>
+
+  <div class="gt-s">
+    <div class="gt-s__h"><h2>Proven on our own systems first</h2><p>The engineering that serves clients runs the Group&rsquo;s own operations.</p></div>
+    <div class="gt-two">
+      <div><h3>Proprietary trading infrastructure</h3><p>Low-latency execution systems and automated risk management for global markets, on resilient event-driven architecture built for continuous uptime.</p><em>In production, internal systems</em></div>
+      <div><h3>Advanced market analytics</h3><p>Machine learning and big data that find market patterns, sentiment trends and predictive signals for portfolio and research tools across the Group.</p><em>In production, internal tooling</em></div>
+    </div>
+  </div>
+
+  <div class="gt-s">
+    <div class="gt-s__h"><h2>How a project runs</h2><p>From first conversation to a platform your team uses.</p></div>
+    <div class="gt-steps">
+      <div class="gt-step"><h3>Understand</h3><p>We learn how your business runs and which decisions need better data.</p></div>
+      <div class="gt-step"><h3>Connect</h3><p>We bring your financial, operational and market data together.</p></div>
+      <div class="gt-step"><h3>Build</h3><p>We deliver the dashboards, portals or software your team needs.</p></div>
+      <div class="gt-step"><h3>Improve</h3><p>We refine the platform as your business and markets change.</p></div>
+    </div>
   </div>
 </div>
-
-<div class="gt-band"><div class="gt-w">
-  <div><b>Built for your business</b><span>Custom software, not off-the-shelf templates.</span></div>
-  <div><b>Finance-grade engineering</b><span>Made by the group that runs trading systems.</span></div>
-  <div><b>Secure by design</b><span>Client portals and platforms built for sensitive data.</span></div>
-  <div><b>Live and working</b><span>Open working platforms in your browser.</span></div>
-</div></div>
-
-<div class="gt-sec"><div class="gt-w">
-  <h2>What we build</h2>
-  <p class="intro">Four capabilities, one team. Use one on its own or combine them into a full platform.</p>
-  <div class="gt-caps">
-    <div class="gt-cap"><h3>Software engineering and digital platforms</h3><p>Custom software, enterprise applications, trading systems and integrated platforms built for performance, security and scale.</p></div>
-    <div class="gt-cap"><h3>Business intelligence and analytics</h3><p>Interactive dashboards that connect financial, operational and market data so you can track performance, analyse profitability and forecast.</p></div>
-    <div class="gt-cap"><h3>Websites and client portals</h3><p>Professional websites and secure client portals that give your customers a clear, tailored digital experience.</p></div>
-    <div class="gt-cap"><h3>Data engineering, automation and AI</h3><p>Connected data systems and intelligent automation that cut manual work, improve visibility and surface insight you would otherwise miss.</p></div>
-  </div>
-</div></div>
-
-<div class="gt-sec" style="background:var(--tint);border-block:1px solid var(--ln)"><div class="gt-w">
-  <h2 style="margin-bottom:32px">From disconnected data to one clear view.</h2>
-  <div class="gt-flow">
-    <div>
-      <p>Most businesses already have the data. It sits in accounting packages, operations files and market feeds that never meet. We bring them together so you can track costs, monitor margins, spot trends and model how changing market conditions could affect profit.</p>
-      <div class="gt-ex"><p><b style="color:var(--n)">Example:</b> an agricultural client combines feed expenses, accounting records, profit margins and corn prices in one dashboard, then forecasts how a price move would hit the bottom line.</p></div>
-    </div>
-    <div class="gt-src" aria-label="Data sources combined into one dashboard">
-      <div>Accounting records<span>Finance</span></div>
-      <div>Feed and operating costs<span>Operations</span></div>
-      <div>Commodity prices<span>Market</span></div>
-      <div class="out">One dashboard<span>Decisions</span></div>
-    </div>
-  </div>
-</div></div>
-
-<div class="gt-case" id="products"><div class="gt-w">
-  <h2>Explore some of our products.</h2>
-  <p class="gt-case__intro">Open a working platform and use it. Each one shows the kind of tool we build for clients.</p>
-  <div class="gt-pcards">
-    <article class="gt-pcard">
-      <div class="gt-pcard__tag">Insurance</div>
-      <h3>Policy, claims and fraud platform</h3>
-      <p>A full operations dashboard for a national insurer. A searchable Policy Book sits at the centre, joined to claims management, fraud intelligence and live operational monitoring.</p>
-      <ul><li>Policy Book</li><li>Claims management</li><li>Fraud intelligence</li><li>Operational monitoring</li></ul>
-      <a class="gt-btn" href="/nova-insurance-dashboard.html" target="_blank" rel="noopener">Open the live dashboard</a>
-    </article>
-    <article class="gt-pcard">
-      <div class="gt-pcard__tag">Agriculture and food</div>
-      <h3>Farm and feedlot performance dashboard</h3>
-      <p>Move maize, soya meal and cattle prices and watch feed cost, margin and break-even change across sites, with existing hedge cover built in. Runs on sample data.</p>
-      <ul><li>Commodity price scenarios</li><li>Margin and break-even</li><li>Site-by-site comparison</li><li>Hedge cover</li></ul>
-      <a class="gt-btn" href="/agri-food-dashboard.html" target="_blank" rel="noopener">Try the interactive demo</a>
-    </article>
-  </div>
-</div></div>
-
-<div class="gt-sec"><div class="gt-w">
-  <h2>Proven on our own systems first.</h2>
-  <p class="intro">The same engineering that serves our clients runs the Group&rsquo;s own trading and research operations.</p>
-  <div class="gt-prod">
-    <div><h3>Proprietary trading infrastructure</h3><p>Low-latency execution systems and automated risk management for global markets, on resilient event-driven architecture built for continuous uptime.</p><em>In production, internal systems</em></div>
-    <div><h3>Advanced market analytics</h3><p>Machine learning and big data that find market patterns, sentiment trends and predictive signals for portfolio and research tools across the Group.</p><em>In production, internal tooling</em></div>
-  </div>
-</div></div>
-
-<div class="gt-sec" style="padding-top:0"><div class="gt-w">
-  <h2>How a project runs</h2>
-  <p class="intro">A simple path from first conversation to a platform your team uses.</p>
-  <div class="gt-steps">
-    <div><h3>Understand</h3><p>We learn how your business runs and which decisions need better data.</p></div>
-    <div><h3>Connect</h3><p>We bring your financial, operational and market data together.</p></div>
-    <div><h3>Build</h3><p>We deliver the dashboards, portals or software your team needs.</p></div>
-    <div><h3>Improve</h3><p>We refine the platform as your business and markets change.</p></div>
-  </div>
-</div></div>
 </section>
 
-<section class="gt gt-cta" id="get-in-touch">
+<section class="gt gt-ct" id="get-in-touch">
   <div class="gt-w">
-    <h2>Tell us what you want to see in your data.</h2>
-    <p>Send a short note about your business and the decisions you want to make easier. We will reply with how we could build it.</p>
-    <div class="gt-btns">
-      <a class="gt-btn gt-btn--p" href="mailto:info@giotradegroup.co.za?subject=Technologies%20enquiry">Email the Technologies team</a>
-      <a class="gt-btn gt-btn--s" href="tel:+27118232235">Call +27 11 823 2235</a>
+    <div class="gt-cta">
+      <div>
+        <h2>Tell us what you want to see in your data.</h2>
+        <p>Send a short note about your business and the decisions you want to make easier. We will reply with how we could build it.</p>
+      </div>
+      <div class="gt-btns">
+        <a class="gt-btn gt-btn--p" href="mailto:info@giotradegroup.co.za?subject=Technologies%20enquiry">Email the Technologies team</a>
+        <a class="gt-btn gt-btn--s" href="tel:+27118232235">Call +27 11 823 2235</a>
+      </div>
     </div>
   </div>
 </section>
