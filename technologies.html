@@ -7,7 +7,7 @@
   <link rel="icon" href="/favicon.ico"/>
 <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png"/>
 <link rel="apple-touch-icon" href="/favicon.png"/>
-  <title>Technologies | GIOTRADE Group</title>
+  <title>GIOTRADE Technologies | Custom Software, Dashboards &amp; Business Intelligence</title>
   <meta name="description" content="GIOTRADE Technologies builds digital platforms that help organisations understand their data, improve operations, and make smarter business decisions.">
   <meta name="keywords" content="Giotrade Group, Giotrade Investment Solutions, Giotrade Network, Giotrade Technologies, Giotrade NexGen, investment management, financial services, South Africa, holding company">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -82,128 +82,192 @@
   </div>
 </section>
 
-<section class="section" id="technologies" style="background:var(--gs-white); color:var(--gs-ink); border-top:1px solid var(--gs-line);">
-  <style>
-    .tech-capabilities{list-style:none;margin-top:18px;}
-    .tech-capabilities li{font-size:0.86rem;color:var(--gs-gray);line-height:1.7;margin-bottom:11px;}
-    .tech-capabilities li b{color:var(--gs-ink);font-weight:700;}
-    .tech-approach{margin-top:48px;padding-top:44px;border-top:1px solid var(--gs-line);}
-    .tech-example{margin-top:22px;padding:18px 22px;border-left:3px solid var(--gs-navy);background:rgba(12,35,64,0.04);}
-    .tech-example__label{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:var(--gs-navy);margin-bottom:8px;}
-    .tech-example p{font-size:0.86rem;color:var(--gs-gray);line-height:1.75;margin:0;}
-    .news-card__note{font-size:0.75rem;color:var(--gs-gray);font-weight:600;letter-spacing:0.02em;}
+<section class="gt" id="technologies">
+<style>
+.gt{--n:#000;--ink:#000;--gr:#555;--ln:#d9d9d9;--tint:#f4f4f4;background:#fff;color:var(--ink);font-family:'Barlow',sans-serif;border-top:1px solid var(--ln)}
+.gt *{box-sizing:border-box}
+.gt-w{max-width:1160px;margin:0 auto;padding:0 28px}
+.gt h1,.gt h2,.gt h3{font-family:'Source Serif 4',serif;font-weight:600;line-height:1.12;margin:0;color:var(--n);letter-spacing:-.01em}
+.gt p{margin:0;line-height:1.7;color:var(--gr)}
+.gt-hero{padding:84px 0 72px;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.gt-hero h1{font-size:clamp(2.2rem,4.6vw,3.6rem);margin-bottom:22px}
+.gt-hero .lead{font-size:1.12rem;max-width:34em;color:var(--ink);margin-bottom:12px}
+.gt-hero .sub{max-width:34em;margin-bottom:32px}
+.gt-btns{display:flex;gap:14px;flex-wrap:wrap}
+.gt-btn{display:inline-block;padding:14px 26px;font-weight:600;font-size:.9rem;text-decoration:none;border:1px solid var(--n);border-radius:2px;transition:background .2s,color .2s}
+.gt-btn--p{background:var(--n);color:#fff}.gt-btn--p:hover{background:#262626}
+.gt-btn--s{color:var(--n);background:transparent}.gt-btn--s:hover{background:var(--tint)}
+.gt-btn:focus-visible,.gt a:focus-visible{outline:2px solid #000;outline-offset:3px}
+/* dashboard mock: the memorable element */
+.gt-dash{background:var(--n);border-radius:4px;padding:22px;color:#fff;box-shadow:0 24px 50px rgba(0,0,0,.25)}
+.gt-dash__bar{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.55);margin-bottom:16px}
+.gt-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.gt-kpi{background:rgba(255,255,255,.07);padding:12px;border-radius:3px}
+.gt-kpi small{display:block;font-size:.66rem;color:rgba(255,255,255,.55);margin-bottom:4px}
+.gt-kpi b{font-size:1.15rem;font-weight:600}
+.gt-kpi i{font-style:normal;font-size:.7rem;margin-left:6px;color:#fff}.gt-kpi i.d{color:#a6a6a6}
+.gt-chart{background:rgba(255,255,255,.07);border-radius:3px;padding:14px}
+.gt-chart svg{width:100%;height:auto;display:block}
+.gt-chart p{font-size:.68rem;color:rgba(255,255,255,.55);margin-top:8px}
+.gt-dash__note{font-size:.66rem;color:rgba(255,255,255,.4);margin-top:12px}
+.gt-band{background:var(--tint);border-block:1px solid var(--ln)}
+.gt-band .gt-w{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;padding-block:30px}
+.gt-band b{display:block;color:var(--n);font-size:.95rem;margin-bottom:4px}
+.gt-band span{font-size:.82rem;color:var(--gr);line-height:1.5}
+.gt-sec{padding:84px 0}
+.gt-sec h2{font-size:clamp(1.7rem,3vw,2.4rem);max-width:20em;margin-bottom:16px}
+.gt-sec .intro{max-width:40em;margin-bottom:44px}
+.gt-caps{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--ln)}
+.gt-cap{padding:30px 32px;border-right:1px solid var(--ln);border-bottom:1px solid var(--ln)}
+.gt-cap:nth-child(2n){border-right:0}.gt-cap:nth-child(n+3){border-bottom:0}
+.gt-cap h3{font-size:1.2rem;margin-bottom:10px}
+.gt-cap p{font-size:.92rem}
+.gt-flow{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+.gt-src{display:grid;gap:10px}
+.gt-src div{display:flex;justify-content:space-between;padding:14px 18px;border:1px solid var(--ln);border-left:3px solid var(--n);background:#fff;font-size:.9rem}
+.gt-src span{color:var(--gr)}
+.gt-src .out{background:var(--n);color:#fff;border-color:var(--n)}.gt-src .out span{color:rgba(255,255,255,.7)}
+.gt-flow h2{margin-bottom:16px}
+.gt-ex{margin-top:22px;padding:18px 22px;border-left:3px solid var(--n);background:var(--tint)}
+.gt-ex p{font-size:.9rem}
+.gt-case{background:var(--n);color:#fff;padding:84px 0}
+.gt-case h2{color:#fff;font-size:clamp(1.7rem,3vw,2.4rem);margin-bottom:14px}
+.gt-case__intro{color:rgba(255,255,255,.75);max-width:38em;margin-bottom:40px}
+.gt-pcards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.gt-pcard{border:1px solid rgba(255,255,255,.35);padding:32px;display:flex;flex-direction:column}
+.gt-pcard__tag{align-self:flex-start;background:#fff;color:#000;font-size:.78rem;font-weight:600;padding:4px 10px;margin-bottom:18px}
+.gt-pcard h3{color:#fff;font-size:1.45rem;margin-bottom:12px}
+.gt-pcard p{color:rgba(255,255,255,.75);font-size:.95rem}
+.gt-pcard ul{list-style:none;padding:0;margin:22px 0 28px;border-top:1px solid rgba(255,255,255,.2)}
+.gt-pcard li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.2);font-size:.9rem}
+.gt-pcard .gt-btn{margin-top:auto;align-self:flex-start;background:#fff;color:#000;border-color:#fff}
+.gt-pcard .gt-btn:hover{background:#e6e6e6}
+.gt-prod{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.gt-prod div{padding:28px 30px;border:1px solid var(--ln);border-top:3px solid var(--n)}
+.gt-prod h3{font-size:1.15rem;margin-bottom:10px}.gt-prod p{font-size:.9rem}
+.gt-prod em{display:block;margin-top:14px;font-style:normal;font-size:.78rem;font-weight:600;color:var(--n)}
+.gt-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
+.gt-steps div{border-top:2px solid var(--n);padding-top:18px}
+.gt-steps div::before{counter-increment:s;content:counter(s);display:block;font-family:'Source Serif 4',serif;font-size:1.6rem;color:var(--n);margin-bottom:6px}
+.gt-steps h3{font-size:1.05rem;margin-bottom:8px}.gt-steps p{font-size:.88rem}
+.gt-cta{background:var(--tint);border-top:1px solid var(--ln);padding:84px 0;text-align:center}
+.gt-cta h2{font-size:clamp(1.8rem,3.2vw,2.6rem);max-width:17em;margin:0 auto 16px}
+.gt-cta p{max-width:34em;margin:0 auto 32px}
+.gt-cta .gt-btns{justify-content:center}
+@media(max-width:900px){.gt-hero,.gt-flow,.gt-pcards{grid-template-columns:1fr;gap:40px}.gt-hero{padding:56px 0}.gt-band .gt-w{grid-template-columns:1fr 1fr}.gt-steps{grid-template-columns:1fr 1fr}.gt-sec,.gt-case,.gt-cta{padding:60px 0}}
+@media(max-width:640px){.gt-caps,.gt-prod{grid-template-columns:1fr}.gt-cap{border-right:0!important;border-bottom:1px solid var(--ln)!important}.gt-cap:last-child{border-bottom:0!important}.gt-band .gt-w,.gt-steps{grid-template-columns:1fr}.gt-kpis{grid-template-columns:1fr 1fr 1fr}.gt-w{padding:0 20px}}
+</style>
 
-    .news-card--featured{
-      background:var(--gs-navy); border-top:none; padding:32px 30px; border-radius:2px;
-      box-shadow:0 18px 40px rgba(12,35,64,0.18);
-    }
-    .news-card--featured:hover{transform:translateY(-4px);}
-    .news-card--featured .news-card__badge{
-      display:inline-block; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; font-weight:700;
-      color:var(--gs-navy); background:#fff; padding:5px 11px; border-radius:2px; margin-bottom:16px;
-    }
-    .news-card--featured .news-card__cat{color:rgba(255,255,255,0.75);}
-    .news-card--featured .news-card__date{color:rgba(255,255,255,0.45);}
-    .news-card--featured .news-card__title{color:#fff;}
-    .news-card--featured:hover .news-card__title{color:#fff;text-decoration:none;}
-    .news-card--featured .news-card__excerpt{color:rgba(255,255,255,0.72);}
-    .news-card__cta-btn{
-      display:inline-flex; align-items:center; gap:9px; margin-top:4px;
-      font-size:0.74rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
-      color:var(--gs-navy); background:#fff; padding:12px 20px; text-decoration:none; border-radius:2px;
-      transition:gap .25s, background .2s; width:fit-content;
-    }
-    .news-card__cta-btn:hover{gap:14px; background:#eef1f4;}
-  </style>
-  <div class="news-masthead">
-    <div class="news-masthead__left">
-      <div class="news-masthead__brand">GIOTRADE <span>TECHNOLOGIES</span><sup style="font-size:.55rem;font-weight:300;">&reg;</sup></div>
-      <div class="news-masthead__tagline">Intelligence Systems. Measurable Impact.</div>
-    </div>
-    <div class="news-masthead__meta">
-      <div>Technology & Innovation Division</div>
+<div class="gt-w gt-hero">
+  <div>
+    <h1>Software and dashboards that show you where your business really stands.</h1>
+    <p class="lead">GIOTRADE Technologies builds custom platforms, business intelligence and automation for organisations that want to make decisions from their data, not their spreadsheets.</p>
+    <p class="sub">We connect your financial, operational and market data in one place, then build the tools your team uses every day.</p>
+    <div class="gt-btns">
+      <a class="gt-btn gt-btn--p" href="#products">Explore our products</a>
+      <a class="gt-btn gt-btn--s" href="mailto:info@giotradegroup.co.za?subject=Technologies%20enquiry">Discuss your project</a>
     </div>
   </div>
-
-  <div class="news-featured">
-    <div class="news-feat-content">
-      <div class="news-feat-issue">
-        <div class="news-feat-issue__badge">Digital Solutions</div>
-        <div class="news-feat-issue__date">Built Around Your Business</div>
-      </div>
-      <h2 class="news-feat-headline">Technology That Turns Data Into Decisions.</h2>
-      <div class="news-feat-byline">Engineering Intelligent Digital Solutions</div>
-      <p class="news-feat-excerpt" style="font-weight:600;color:var(--gs-ink);">
-        We build intelligent digital solutions that help businesses operate smarter, understand performance, and make better-informed decisions.
-      </p>
-      <p class="news-feat-excerpt">
-        GIOTRADE Technologies is the group&rsquo;s technology and innovation division, delivering intelligent software, business intelligence, and data-driven digital solutions. We help organisations integrate complex data, streamline operations, and transform information into actionable insights through custom-built platforms, interactive dashboards, automation, and advanced analytics.
-      </p>
-      <ul class="tech-capabilities">
-        <li><b>Software Engineering &amp; Digital Platforms</b> &mdash; custom software, enterprise applications, trading systems, and integrated digital platforms built for performance, security, and scalability.</li>
-        <li><b>Business Intelligence &amp; Analytics</b> &mdash; interactive dashboards and reporting tools that connect financial, operational, and market data to monitor performance, analyse profitability, and support forecasting.</li>
-        <li><b>Websites &amp; Client Portals</b> &mdash; professional websites, secure client portals, and customer-facing digital experiences tailored to each organisation&rsquo;s needs.</li>
-        <li><b>Data Engineering, Automation &amp; AI</b> &mdash; integrated data systems, intelligent automation, and AI-powered solutions that reduce manual work, improve visibility, and uncover valuable business insights.</li>
-      </ul>
+  <div class="gt-dash" role="img" aria-label="Illustration of a dashboard combining feed costs, corn prices and margin">
+    <div class="gt-dash__bar"><span>Cost exposure overview</span><span>Illustrative</span></div>
+    <div class="gt-kpis">
+      <div class="gt-kpi"><small>Feed cost</small><b>R 1.84m</b><i class="d">+6%</i></div>
+      <div class="gt-kpi"><small>Corn price</small><b>R 4,120/t</b><i class="d">+4%</i></div>
+      <div class="gt-kpi"><small>Gross margin</small><b>18.2%</b><i class="d">-1.7</i></div>
     </div>
+    <div class="gt-chart">
+      <svg viewBox="0 0 400 130" aria-hidden="true"><g stroke="rgba(255,255,255,.12)"><line x1="0" y1="30" x2="400" y2="30"/><line x1="0" y1="70" x2="400" y2="70"/><line x1="0" y1="110" x2="400" y2="110"/></g>
+        <polyline fill="none" stroke="#fff" stroke-width="2.5" points="0,92 50,86 100,88 150,72 200,66 250,54 300,58 350,40 400,34"/>
+        <polyline fill="none" stroke="#8c8c8c" stroke-width="2.5" stroke-dasharray="5 4" points="0,40 50,44 100,42 150,50 200,56 250,66 300,70 350,82 400,88"/></svg>
+      <p>Corn price (solid) against projected margin (dashed)</p>
+    </div>
+    <div class="gt-dash__note">Sample data to show the kind of view we build. Not client data.</div>
   </div>
+</div>
 
-  <div class="news-featured tech-approach">
-    <div class="news-feat-content">
-      <div class="news-feat-issue">
-        <div class="news-feat-issue__badge">Our Approach</div>
-        <div class="news-feat-issue__date">Business Intelligence</div>
-      </div>
-      <h2 class="news-feat-headline">From Disconnected Data to Business Intelligence.</h2>
-      <p class="news-feat-excerpt">
-        We bring financial records, operational metrics, and external market data together in a unified view of business performance.
-      </p>
-      <p class="news-feat-excerpt">
-        Our dashboards help organisations track costs, monitor margins, analyse trends, and model how changing market conditions may affect profitability, enabling more informed strategic and financial decisions.
-      </p>
-      <div class="tech-example">
-        <div class="tech-example__label">Example</div>
-        <p>An agricultural client could combine feed expenses, accounting records, profit margins, and corn prices in one dashboard to assess cost exposure and forecast the potential impact of changing commodity prices.</p>
-      </div>
-    </div>
-  </div>
+<div class="gt-band"><div class="gt-w">
+  <div><b>Built for your business</b><span>Custom software, not off-the-shelf templates.</span></div>
+  <div><b>Finance-grade engineering</b><span>Made by the group that runs trading systems.</span></div>
+  <div><b>Secure by design</b><span>Client portals and platforms built for sensitive data.</span></div>
+  <div><b>Live and working</b><span>Open working platforms in your browser.</span></div>
+</div></div>
 
-  <div class="news-grid">
-    <div class="news-card news-card--featured" onclick="window.open('/nova-insurance-dashboard.html','_blank')">
-      <div class="news-card__badge">Live Interactive Demo</div>
-      <div class="news-card__meta">
-        <div class="news-card__cat">Client Engagement</div>
-        <div class="news-card__date">National Insurer</div>
-      </div>
-      <h3 class="news-card__title">Policy, Claims &amp; Fraud Platform</h3>
-      <p class="news-card__excerpt">Delivered a full operations dashboard for a national insurance client &mdash; anchored by a searchable Policy Book, with integrated Claims Management, Fraud Intelligence, and live Operational Monitoring.</p>
-      <a class="news-card__cta-btn" href="/nova-insurance-dashboard.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open the Live Dashboard &rarr;</a>
-    </div>
-    <div class="news-card">
-      <div class="news-card__meta">
-        <div class="news-card__cat">Software Engineering</div>
-        <div class="news-card__date">Core Systems</div>
-      </div>
-      <h3 class="news-card__title">Proprietary Trading Infrastructure</h3>
-      <p class="news-card__excerpt">Developing high-frequency, low-latency execution systems and automated risk management frameworks for global markets, built on resilient, event-driven architecture designed for continuous uptime.</p>
-      <div class="news-card__note">In Production &middot; Internal Systems</div>
-    </div>
-    <div class="news-card">
-      <div class="news-card__meta">
-        <div class="news-card__cat">Data Intelligence</div>
-        <div class="news-card__date">AI & ML</div>
-      </div>
-      <h3 class="news-card__title">Advanced Market Analytics</h3>
-      <p class="news-card__excerpt">Leveraging machine learning and big data to identify market patterns, sentiment trends, and predictive investment signals that feed directly into portfolio and research tools used across the Group.</p>
-      <div class="news-card__note">In Production &middot; Internal Tooling</div>
-    </div>
+<div class="gt-sec"><div class="gt-w">
+  <h2>What we build</h2>
+  <p class="intro">Four capabilities, one team. Use one on its own or combine them into a full platform.</p>
+  <div class="gt-caps">
+    <div class="gt-cap"><h3>Software engineering and digital platforms</h3><p>Custom software, enterprise applications, trading systems and integrated platforms built for performance, security and scale.</p></div>
+    <div class="gt-cap"><h3>Business intelligence and analytics</h3><p>Interactive dashboards that connect financial, operational and market data so you can track performance, analyse profitability and forecast.</p></div>
+    <div class="gt-cap"><h3>Websites and client portals</h3><p>Professional websites and secure client portals that give your customers a clear, tailored digital experience.</p></div>
+    <div class="gt-cap"><h3>Data engineering, automation and AI</h3><p>Connected data systems and intelligent automation that cut manual work, improve visibility and surface insight you would otherwise miss.</p></div>
   </div>
+</div></div>
+
+<div class="gt-sec" style="background:var(--tint);border-block:1px solid var(--ln)"><div class="gt-w gt-flow">
+  <div>
+    <h2>From disconnected data to one clear view.</h2>
+    <p>Most businesses already have the data. It sits in accounting packages, operations files and market feeds that never meet. We bring them together so you can track costs, monitor margins, spot trends and model how changing market conditions could affect profit.</p>
+    <div class="gt-ex"><p><b style="color:var(--n)">Example:</b> an agricultural client combines feed expenses, accounting records, profit margins and corn prices in one dashboard, then forecasts how a price move would hit the bottom line.</p></div>
+  </div>
+  <div class="gt-src" aria-label="Data sources combined into one dashboard">
+    <div>Accounting records<span>Finance</span></div>
+    <div>Feed and operating costs<span>Operations</span></div>
+    <div>Commodity prices<span>Market</span></div>
+    <div class="out">One dashboard<span>Decisions</span></div>
+  </div>
+</div></div>
+
+<div class="gt-case" id="products"><div class="gt-w">
+  <h2>Explore some of our products.</h2>
+  <p class="gt-case__intro">Open a working platform and use it. Each one shows the kind of tool we build for clients.</p>
+  <div class="gt-pcards">
+    <article class="gt-pcard">
+      <div class="gt-pcard__tag">Insurance</div>
+      <h3>Policy, claims and fraud platform</h3>
+      <p>A full operations dashboard for a national insurer. A searchable Policy Book sits at the centre, joined to claims management, fraud intelligence and live operational monitoring.</p>
+      <ul><li>Policy Book</li><li>Claims management</li><li>Fraud intelligence</li><li>Operational monitoring</li></ul>
+      <a class="gt-btn" href="/nova-insurance-dashboard.html" target="_blank" rel="noopener">Open the live dashboard</a>
+    </article>
+    <article class="gt-pcard">
+      <div class="gt-pcard__tag">Agriculture and food</div>
+      <h3>Farm and feedlot performance dashboard</h3>
+      <p>Move maize, soya meal and cattle prices and watch feed cost, margin and break-even change across sites, with existing hedge cover built in. Runs on sample data.</p>
+      <ul><li>Commodity price scenarios</li><li>Margin and break-even</li><li>Site-by-site comparison</li><li>Hedge cover</li></ul>
+      <a class="gt-btn" href="/agri-food-dashboard.html" target="_blank" rel="noopener">Try the interactive demo</a>
+    </article>
+  </div>
+</div></div>
+
+<div class="gt-sec"><div class="gt-w">
+  <h2>Proven on our own systems first.</h2>
+  <p class="intro">The same engineering that serves our clients runs the Group&rsquo;s own trading and research operations.</p>
+  <div class="gt-prod">
+    <div><h3>Proprietary trading infrastructure</h3><p>Low-latency execution systems and automated risk management for global markets, on resilient event-driven architecture built for continuous uptime.</p><em>In production, internal systems</em></div>
+    <div><h3>Advanced market analytics</h3><p>Machine learning and big data that find market patterns, sentiment trends and predictive signals for portfolio and research tools across the Group.</p><em>In production, internal tooling</em></div>
+  </div>
+</div></div>
+
+<div class="gt-sec" style="padding-top:0"><div class="gt-w">
+  <h2>How a project runs</h2>
+  <p class="intro">A simple path from first conversation to a platform your team uses.</p>
+  <div class="gt-steps">
+    <div><h3>Understand</h3><p>We learn how your business runs and which decisions need better data.</p></div>
+    <div><h3>Connect</h3><p>We bring your financial, operational and market data together.</p></div>
+    <div><h3>Build</h3><p>We deliver the dashboards, portals or software your team needs.</p></div>
+    <div><h3>Improve</h3><p>We refine the platform as your business and markets change.</p></div>
+  </div>
+</div></div>
 </section>
-<section class="section" id="contact" style="text-align:center;display:flex;flex-direction:column;align-items:center;">
-  <div class="section__label">Get In Touch</div>
-  <h2 class="section__title" style="text-align:center;max-width:480px;">Ready to start your investment journey?</h2>
-  <p class="section__body" style="text-align:center;margin-bottom:36px;">Our advisors are ready to discuss how we can tailor a strategy to your goals.</p>
-  <a href="mailto:info@giotradegroup.co.za" class="btn-findout"><span>Contact Us</span></a>
+
+<section class="gt gt-cta" id="contact">
+  <div class="gt-w">
+    <h2>Tell us what you want to see in your data.</h2>
+    <p>Send a short note about your business and the decisions you want to make easier. We will reply with how we could build it.</p>
+    <div class="gt-btns">
+      <a class="gt-btn gt-btn--p" href="mailto:info@giotradegroup.co.za?subject=Technologies%20enquiry">Email the Technologies team</a>
+      <a class="gt-btn gt-btn--s" href="tel:+27118232235">Call +27 11 823 2235</a>
+    </div>
+  </div>
 </section>
 <footer>
     <div style="flex: 1; min-width: 300px;">
