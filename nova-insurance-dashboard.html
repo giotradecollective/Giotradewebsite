@@ -13,7 +13,7 @@
 --font-d:'Instrument Serif',serif;--font-b:'Barlow',sans-serif;--font-m:'Barlow',sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:#fff;color:#000;font-family:var(--font-b);line-height:1.5;min-height:100vh;padding-bottom:44px;font-variant-numeric:tabular-nums;}
+body{background:#fff;color:#000;font-family:var(--font-b);line-height:1.5;min-height:100vh;padding-bottom:0;font-variant-numeric:tabular-nums;}
 button{cursor:pointer;font-family:inherit;}
 :focus-visible{outline:2px solid #000;outline-offset:3px;}
 ::-webkit-scrollbar{width:8px;height:8px;}::-webkit-scrollbar-thumb{background:#bbb;}
@@ -140,7 +140,7 @@ tr:nth-child(even) .status{transform:rotate(2deg);}
 .bill-card button{width:100%;background:#000;color:#fff;border:0;padding:10px;}
 .bill-card button:hover{background:#333;margin:0;padding:10px;}
 
-.toast-wrap{position:fixed;bottom:60px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:999;}
+.toast-wrap{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:999;}
 .toast{background:#000;color:#fff;padding:12px 18px;font-size:14px;font-weight:600;border:2px solid #fff;outline:1px solid #000;animation:toastIn .25s ease;}
 @keyframes toastIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
@@ -213,6 +213,22 @@ td{border-bottom:1px solid #e6e6e6;}
 .bill-card button:hover{background:#d9d9d9;}
 .toast{border:1px solid #fff;outline:0;}
 @media(max-width:880px){.topbar{padding:22px 0 16px;}}
+
+/* ---- footer: Powered by line ---- */
+.site-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 40px;border-top:1px solid #000;background:#fff;font-family:'Barlow',sans-serif;}
+.site-foot .powered-by{position:static;background:none;border:0;padding:0;font-size:13px;letter-spacing:.04em;color:#555;}
+.site-foot .powered-by strong{color:#000;}
+.site-foot .back-link{position:static;padding:0;font-size:13px;color:#000;text-decoration:underline;}
+@media(max-width:880px){.site-foot{padding:16px 20px;}}
+
+/* ---- footer in the GIOTRADE "Powered by" style ---- */
+.site-foot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding:26px 40px;background:#141210;border-top:0;color:#8f8c86;}
+.site-foot .powered-by{grid-column:2;text-align:center;font-family:'Barlow',sans-serif;font-size:15px;font-weight:400;letter-spacing:.06em;color:#8f8c86;white-space:nowrap;}
+.site-foot .powered-by strong{color:#f3f0ea;font-weight:700;letter-spacing:.05em;margin:0 2px 0 6px;}
+.site-foot .powered-by .tech{color:#b9b6b0;text-transform:uppercase;font-weight:400;letter-spacing:.06em;}
+.site-foot .back-link{grid-column:3;justify-self:end;font-size:12.5px;color:#8f8c86;text-decoration:underline;}
+.site-foot .back-link:hover{color:#f3f0ea;}
+@media(max-width:880px){.site-foot{grid-template-columns:1fr;justify-items:center;padding:22px 20px;gap:10px;}.site-foot .powered-by,.site-foot .back-link{grid-column:1;justify-self:center;}.site-foot .powered-by{font-size:14px;}}
 </style>
 </head>
 <body>
@@ -274,9 +290,6 @@ td{border-bottom:1px solid #e6e6e6;}
       <p>Talk to our support desk — we typically reply within the hour.</p>
       <button onclick="showToast('Support request sent — we\'ll be in touch shortly.')">Contact Support →</button>
     </div>
-
-    <a class="back-link" href="technologies.html">Back to Technologies</a>
-    <div class="powered-by">Powered by <strong>GIOTRADE</strong> Technologies<sup style="font-size:.6em;font-weight:400;">&reg;</sup></div>
   </aside>
   <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileNav(false)"></div>
 
@@ -459,6 +472,11 @@ td{border-bottom:1px solid #e6e6e6;}
 
   </div>
 </div>
+
+<footer class="site-foot">
+  <div class="powered-by">Powered by <strong>GIOTRADE</strong> <span class="tech">Technologies&reg;</span></div>
+  <a class="back-link" href="technologies.html">Back to Technologies</a>
+</footer>
 
 <div class="toast-wrap" id="toastWrap"></div>
 
