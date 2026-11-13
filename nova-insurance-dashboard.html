@@ -150,7 +150,7 @@ tr:nth-child(even) .status{transform:rotate(2deg);}
   .policy-head > :nth-child(5),.policy-head > :nth-child(6){display:none;}
 }
 .hamburger-btn{display:none;}
-@media(max-width:880px){
+@media(max-width:1100px){
   .hamburger-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid #000;background:#fff;flex:none;margin-right:6px;}
   .hamburger-btn svg{width:18px;height:18px;}
   .sidebar{position:fixed;top:0;left:0;bottom:0;width:270px;flex-direction:column;gap:0;padding:20px 18px;border-bottom:0;border-right:3px double #000;transform:translateX(-100%);transition:transform .25s ease;overflow-y:auto;}
@@ -233,6 +233,34 @@ td{border-bottom:1px solid #e6e6e6;}
 /* ---- fix: action buttons keep readable text on hover/press ---- */
 .btn:hover,.btn.ghost-red:hover,.btn.ghost-sage:hover{background:#000;color:#fff;border-bottom-color:#000;}
 .btn:active,.btn:focus-visible{background:#000;color:#fff;}
+
+/* ---- mobile fit ---- */
+html,body{overflow-x:hidden;max-width:100%}
+.main,.content-grid>*,.two-col>*,.panel,.card{min-width:0}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl-scroll table{min-width:540px}
+@media(max-width:880px){.policy-row.open .policy-body{grid-template-columns:1fr;gap:20px}}
+@media(max-width:640px){
+  .main{padding:0 16px 28px}
+  .topbar{gap:8px;padding:18px 0 14px;margin-bottom:20px}
+  .topbar h1{font-size:1.5rem}
+  .topbar p{font-size:13px;margin-top:4px}
+  .topbar-right{gap:6px}.user-block{display:none}
+  .hamburger-btn{margin-right:2px}
+  .toolbar{gap:6px 18px}.search-box{flex:1 1 100%}
+  .kpi-grid{grid-template-columns:1fr}
+  .kpi-grid .card,.grid-3 .card{border-right:0;border-bottom:1px solid #d9d9d9;padding:14px 0}
+  .kpi-value{font-size:2.1rem}
+  .panel{margin-bottom:26px}.panel-head h3{font-size:1.15rem}
+  .policy-head{grid-template-columns:22px 1fr 1fr;row-gap:8px;padding:14px 12px}
+  .policy-head>:nth-child(2){grid-column:2/4}
+  .policy-head>:nth-child(3){grid-column:2}.policy-head>:nth-child(4){grid-column:3}
+  .policy-head>:nth-child(5),.policy-head>:nth-child(6){display:block;grid-column:2/4}
+  .policy-body{padding:16px 12px}
+  .bill-card .amt{font-size:1.8rem}
+  .toast-wrap{left:16px;right:16px;bottom:16px}
+  .site-foot{padding:20px 16px}.site-foot .powered-by{white-space:normal;font-size:13.5px}
+}
 </style>
 </head>
 <body>
@@ -830,6 +858,9 @@ safeChart('chartYTD', {
   ]},
   options:{responsive:true,maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:8,boxHeight:8,font:{size:11}}}}, scales:{x:{grid:{display:false}}, y:{grid:gridOpt(), ticks:{callback:v=>'R'+v.toFixed(0)+'M'}}}}
 });
+</script>
+<script>
+document.querySelectorAll('table').forEach(function(tb){if(tb.parentElement&&tb.parentElement.classList.contains('tbl-scroll'))return;var w=document.createElement('div');w.className='tbl-scroll';tb.parentNode.insertBefore(w,tb);w.appendChild(tb);});
 </script>
 </body>
 </html>
