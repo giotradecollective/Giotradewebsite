@@ -261,6 +261,17 @@ html,body{overflow-x:hidden;max-width:100%}
   .toast-wrap{left:16px;right:16px;bottom:16px}
   .site-foot{padding:20px 16px}.site-foot .powered-by{white-space:normal;font-size:13.5px}
 }
+
+/* ---- fix: open policy panel (coverage table + bill box) must fit the screen ---- */
+.policy-body>*{min-width:0}
+.policy-row,.policy-row .tbl-scroll{max-width:100%}
+.tbl-scroll .cov-table{min-width:0;width:100%}
+@media(max-width:880px){.policy-row.open .policy-body{grid-template-columns:minmax(0,1fr)}.bill-card{width:100%}}
+@media(max-width:640px){
+  .policy-head{grid-template-columns:22px minmax(0,1fr) minmax(0,1fr)}
+  .cov-table{font-size:13px}.cov-table th,.cov-table td{padding-right:6px}
+  .bill-card{padding:18px 14px}
+}
 </style>
 </head>
 <body>
