@@ -84,7 +84,7 @@
 
 <section class="gt" id="technologies">
 <style>
-.gt{--k:#000;--g:#555;--m:#8c8c8c;--r:#d9d9d9;--t:#f4f4f4;background:#fff;color:var(--k);font-family:'Barlow',sans-serif;line-height:1.6}
+.gt{overflow-x:clip;--k:#000;--g:#555;--m:#8c8c8c;--r:#d9d9d9;--t:#f4f4f4;background:#fff;color:var(--k);font-family:'Barlow',sans-serif;line-height:1.6}
 .gt *{box-sizing:border-box}
 .gt h1,.gt h2,.gt h3{font-family:'Source Serif 4',serif;font-weight:600;color:var(--k);margin:0;letter-spacing:-.01em}
 .gt p{margin:0;color:var(--g)}
@@ -98,8 +98,9 @@
 .gt-btn{display:inline-block;padding:14px 26px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid #000;transition:background .2s,color .2s}
 .gt-btn--p{background:#000;color:#fff}.gt-btn--p:hover{background:#333}
 .gt-btn--s{background:#fff;color:#000}.gt-btn--s:hover{background:var(--t)}
-.gt-conv{overflow-x:auto;padding-bottom:20px}
-.gt-conv svg{display:block;width:100%;min-width:640px;height:auto}
+.gt-conv{padding-bottom:20px}
+.gt-conv svg{display:block;width:100%;height:auto}
+.gt-conv--m{display:none}
 .gt-conv text{font-family:'Barlow',sans-serif;font-size:15px;fill:var(--g)}
 .gt-conv .big{font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;fill:#000}
 .gt-conv path,.gt-conv line{fill:none;stroke:#000;stroke-width:1.5}
@@ -146,6 +147,7 @@
 #get-in-touch.gt-ct::before,#get-in-touch.gt-ct::after,#get-in-touch.gt-ct .gt-w::before,#get-in-touch.gt-ct .gt-w::after{content:none;display:none;background:none}
 #get-in-touch.gt-ct .gt-w{background:none;background-image:none;box-shadow:none}
 @media(max-width:960px){.gt-w{padding:0 22px}.gt-hero{padding:56px 0 28px}.gt-hero__row,.gt-s,.gt-prod,.gt-cta,.gt-row{grid-template-columns:1fr;gap:22px}.gt-s{padding:48px 0;gap:26px}.gt-s__h{position:static}.gt-btns{justify-content:flex-start}.gt-steps{grid-template-columns:1fr 1fr;row-gap:34px}.gt-two{grid-template-columns:1fr}.gt-cta{padding:56px 0}}
+@media(max-width:640px){.gt-conv--d{display:none}.gt-conv--m{display:block}.gt-conv--m svg{max-width:380px}.gt-conv--m .big{font-size:28px}.gt-hero h1{font-size:2.35rem}.gt-hero__row{margin-bottom:34px}.gt-btns{flex-direction:column;align-items:stretch}.gt-btn{text-align:center}.gt-row,.gt-prod{gap:16px}.gt-prod h3{font-size:1.45rem}.gt-two{gap:28px}.gt-cta h2{font-size:1.9rem}.gt-mini{padding:14px}}
 @media(max-width:560px){.gt-steps{grid-template-columns:1fr}}
 </style>
 
@@ -159,7 +161,7 @@
         <a class="gt-btn gt-btn--s" href="mailto:info@giotradegroup.co.za?subject=Technologies%20enquiry">Discuss your project</a>
       </div>
     </div>
-    <div class="gt-conv">
+    <div class="gt-conv gt-conv--d">
       <svg viewBox="0 0 1000 250" role="img" aria-label="Accounting, operations and market data converging into one view">
         <circle cx="170" cy="40" r="4" fill="#000"/><circle cx="170" cy="125" r="4" fill="#000"/><circle cx="170" cy="210" r="4" fill="#000"/>
         <text x="0" y="45">Accounting</text><text x="0" y="130">Operations</text><text x="0" y="215">Market data</text>
@@ -168,6 +170,17 @@
         <path class="dr d3" pathLength="1" d="M170 210C400 210 380 125 560 125"/>
         <path class="dr d4 thick" pathLength="1" d="M560 125H845"/>
         <text class="big fd" x="866" y="126">One view</text><text class="fd" x="866" y="150">of the business</text>
+      </svg>
+    </div>
+    <div class="gt-conv gt-conv--m">
+      <svg viewBox="0 0 320 290" role="img" aria-label="Accounting, operations and market data converging into one view">
+        <circle cx="112" cy="25" r="4" fill="#000"/><circle cx="112" cy="100" r="4" fill="#000"/><circle cx="112" cy="175" r="4" fill="#000"/>
+        <text x="0" y="30">Accounting</text><text x="0" y="105">Operations</text><text x="0" y="180">Market data</text>
+        <path class="dr" pathLength="1" d="M112 25C170 25 160 100 215 100"/>
+        <path class="dr d2" pathLength="1" d="M112 100H215"/>
+        <path class="dr d3" pathLength="1" d="M112 175C170 175 160 100 215 100"/>
+        <path class="dr d4 thick" pathLength="1" d="M215 100H318"/>
+        <text class="big fd" x="0" y="250">One view</text><text class="fd" x="0" y="274">of the business</text>
       </svg>
     </div>
   </div>
