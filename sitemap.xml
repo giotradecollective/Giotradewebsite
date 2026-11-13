@@ -2,11 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://giotradegroup.co.za/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-11-13</lastmod>
+  </url>
+  <url>
+    <loc>https://giotradegroup.co.za/about-us.html</loc>
+    <lastmod>2026-11-13</lastmod>
+  </url>
+  <url>
+    <loc>https://giotradegroup.co.za/investment-solutions.html</loc>
+    <lastmod>2026-11-13</lastmod>
+  </url>
+  <url>
+    <loc>https://giotradegroup.co.za/network.html</loc>
+    <lastmod>2026-11-13</lastmod>
+  </url>
+  <url>
+    <loc>https://giotradegroup.co.za/technologies.html</loc>
+    <lastmod>2026-11-13</lastmod>
+  </url>
+  <url>
+    <loc>https://giotradegroup.co.za/nexgen.html</loc>
+    <lastmod>2026-11-13</lastmod>
   </url>
   <url>
     <loc>https://giotradegroup.co.za/news/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-14</lastmod>
+  </url>
+  <url>
+    <loc>https://giotradegroup.co.za/news/next-opportunity-on-wall-street-us-stocks.html</loc>
+    <lastmod>2026-10-14</lastmod>
   </url>
   <url>
     <loc>https://giotradegroup.co.za/news/south-africa-failing-by-accident-or-profiting-from-failure.html</loc>
@@ -55,21 +79,5 @@
   <url>
     <loc>https://giotradegroup.co.za/news/should-we-fear-the-current-global-tension-around-oil.html</loc>
     <lastmod>2026-04-01</lastmod>
-  </url>
-  <url>
-    <loc>https://giotradegroup.co.za/investment-solutions.html</loc>
-  </url>
-  <url>
-    <loc>https://giotradegroup.co.za/network.html</loc>
-  </url>
-  <url>
-    <loc>https://giotradegroup.co.za/technologies.html</loc>
-  </url>
-  <url>
-    <loc>https://giotradegroup.co.za/nexgen.html</loc>
-  </url>
-  <url>
-    <loc>https://giotradegroup.co.za/news/next-opportunity-on-wall-street-us-stocks.html</loc>
-    <lastmod>2026-10-14</lastmod>
   </url>
 </urlset>
