@@ -144,7 +144,7 @@
 
   <nav>
     <ul class="nav__links">
-      <li><a href="#group">About Us</a></li>
+      <li><a href="about-us.html">About Us</a></li>
       <li><a href="investment-solutions.html">Investment Solutions</a></li>
       <li><a href="network.html">Network</a></li>
       <li><a href="technologies.html">Technologies</a></li>
@@ -160,7 +160,7 @@
 
   <div class="nav__mobile-panel" id="nav-mobile-panel">
     <button class="nav__mobile-close" aria-label="Close menu" onclick="closeMobileNav()">&#x2715;</button>
-    <a href="#group" onclick="closeMobileNav()">About Us</a>
+    <a href="about-us.html" onclick="closeMobileNav()">About Us</a>
     <a href="investment-solutions.html" onclick="closeMobileNav()">Investment Solutions</a>
     <a href="network.html" onclick="closeMobileNav()">Network</a>
     <a href="technologies.html" onclick="closeMobileNav()">Technologies</a>
@@ -270,7 +270,7 @@
   <p class="section__body" style="text-align:center;margin-bottom:36px;">Our advisors are ready to discuss how we can tailor a strategy to your goals.</p>
   <a href="mailto:info@giotradegroup.co.za" class="btn-findout"><span>Contact Us</span></a>
 </section>
-<footer>
+<footer><div data-nosnippet style="display:contents">
     <div style="flex: 1; min-width: 300px;">
       <div class="footer__wordmark">GIOTRADE<sup style="font-size:.55rem;vertical-align:super;font-weight:300;">&reg;</sup></div>
       <div class="footer__tagline">One Vision. Four Companies. Unlimited Possibilities.</div>
@@ -335,10 +335,10 @@
         <strong style="color:rgba(255,255,255,0.2);letter-spacing:0.05em;">DISCLAIMER:</strong> GIOTRADE Group (Pty) Ltd (Registration No. 2026/608936/07) is a diversified global holding company incorporated in the Republic of South Africa. Its subsidiary, GIOTRADE Investment Solutions LLC, is incorporated in Delaware, United States (File No. 6894721) and operates under the supervision of an authorised Financial Services Provider in accordance with the Financial Advisory and Intermediary Services Act, 2002 (FAIS Act) (FSP No. 47692). Information provided on this website is for general informational and educational purposes only and does not constitute financial, investment, legal or tax advice. All investments carry risk, including the possible loss of capital. Past performance is not indicative of future results. GIOTRADE Group (Pty) Ltd and its subsidiaries accept no liability for any direct or indirect loss or damage arising from reliance on information provided on this website.
       </p>
     </div>
-  </footer>
+  </div></footer>
 
 <!-- POPIA / PRIVACY POLICY MODAL -->
-<div id="popia-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
+<div id="popia-modal" class="modal-overlay" data-nosnippet onclick="if(event.target===this)this.style.display='none'">
   <div class="modal-box">
     <button class="modal-close" onclick="document.getElementById('popia-modal').style.display='none'">&#x2715; Close</button>
     <div class="modal-label">Legal &amp; Compliance</div>
@@ -373,7 +373,7 @@
 </div>
 
 <!-- TERMS OF USE MODAL -->
-<div id="tou-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
+<div id="tou-modal" class="modal-overlay" data-nosnippet onclick="if(event.target===this)this.style.display='none'">
   <div class="modal-box">
     <button class="modal-close" onclick="document.getElementById('tou-modal').style.display='none'">&#x2715; Close</button>
     <div class="modal-label">Legal &amp; Compliance</div>
