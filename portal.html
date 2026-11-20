@@ -84,6 +84,11 @@
   .btn-login span{position:relative;z-index:1;}
   .btn-login:disabled{opacity:0.5;cursor:not-allowed;}
 
+  #bio-section{display:none;margin-top:8px;}
+  #bio-section .divider-row{margin:24px 0;}
+  .btn-bio{display:flex;align-items:center;justify-content:center;gap:12px;}
+  .btn-bio svg{width:18px;height:18px;position:relative;z-index:1;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;}
+
   .form-foot{margin-top:28px;font-size:0.72rem;color:var(--faint);line-height:1.7;text-align:center;}
 
   .divider-row{display:flex;align-items:center;gap:16px;margin:32px 0;}
@@ -169,6 +174,14 @@
         <button type="submit" class="btn-login" id="login-btn"><span>Log In</span></button>
       </form>
 
+      <div id="bio-section">
+        <div class="divider-row"><div class="line"></div><span>or</span><div class="line"></div></div>
+        <button type="button" class="btn-login btn-bio" id="bio-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a7 7 0 0 0-7 7v2M12 7a3 3 0 0 0-3 3v3a8 8 0 0 0 1.5 4.7M12 10v3a12 12 0 0 0 2 6.5M19 10v1.5a15 15 0 0 1-1 5M15 10v3a8 8 0 0 1-.6 3"/></svg>
+          <span id="bio-label">Sign in with biometrics</span>
+        </button>
+      </div>
+
       <div class="divider-row"><div class="line"></div><span>New here</span><div class="line"></div></div>
 
       <div class="tier-note">
@@ -183,6 +196,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
+<script src="js/biometric.js"></script>
 <script>
   const messageBox = document.getElementById('portal-message');
   const params = new URLSearchParams(window.location.search);
@@ -201,6 +216,35 @@
     const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) window.location.href = 'dashboard.html';
   })();
+
+  // ── Biometric login (fingerprint / face) ─────────────────────────
+  // The phone decides which biometric to ask for: Android offers fingerprint
+  // or face unlock (whatever is enrolled), iOS offers Face ID / Touch ID.
+  (async () => {
+    if (!(await Biometric.available())) return;
+    const ua = navigator.userAgent;
+    const label = /iPhone|iPad|iPod/.test(ua) ? 'Sign in with Face ID'
+                : /Android/.test(ua) ? 'Sign in with fingerprint or face'
+                : 'Sign in with biometrics';
+    document.getElementById('bio-label').textContent = label;
+    document.getElementById('bio-section').style.display = 'block';
+  })();
+
+  document.getElementById('bio-btn').addEventListener('click', async function () {
+    const btn = this;
+    btn.disabled = true;
+    try {
+      await Biometric.login();
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      if (err && err.name === 'NotAllowedError') {
+        showMessage('Biometric sign-in was cancelled or no biometric login is set up on this device. Log in with your password, then enable it from your dashboard.', true);
+      } else {
+        showMessage('Biometric sign-in failed. Please use your email and password.', true);
+      }
+      btn.disabled = false;
+    }
+  });
 
   // ── Cloudflare Turnstile ──────────────────────────────────────────
   // Site key is public. The secret key lives only in Supabase (Authentication > Attack Protection).
