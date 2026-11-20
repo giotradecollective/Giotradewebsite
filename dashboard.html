@@ -702,6 +702,12 @@ a:focus-visible{
 
     <p class="fx-note" id="fx-note">Rates update automatically. For reference only — actual transaction rates may differ.</p>
   </div>
+
+  <div class="sidebar-card" id="bio-card" style="display:none;">
+    <h3>Biometric Login</h3>
+    <p class="sidebar-card__sub" id="bio-sub">Sign in faster with your fingerprint or face on this device.</p>
+    <button type="button" class="fx-swap" id="bio-enable-btn">Enable biometric login</button>
+  </div>
 </div>
 
 </div>
@@ -712,6 +718,8 @@ a:focus-visible{
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
+<script src="js/biometric.js"></script>
 
 <script>
 /* ── Balance visibility (hide/show) ──────────────────────────────
@@ -976,6 +984,35 @@ document.getElementById("logout-btn").addEventListener("click", async function (
     );
     if (confirmed) logout();
 });
+
+/* ── Biometric login enrolment ── */
+(async function () {
+  if (!(await Biometric.available())) return;
+  const ua = navigator.userAgent;
+  const what = /iPhone|iPad|iPod/.test(ua) ? 'Face ID' : /Android/.test(ua) ? 'fingerprint or face unlock' : 'biometrics';
+  document.getElementById('bio-sub').textContent = 'Sign in faster with ' + what + ' on this device.';
+  document.getElementById('bio-card').style.display = 'block';
+  const btn = document.getElementById('bio-enable-btn');
+  btn.addEventListener('click', async function () {
+    btn.disabled = true;
+    try {
+      await Biometric.enroll();
+      btn.textContent = 'Biometric login enabled';
+      window.showToast('Biometric login is now enabled on this device.', 'success');
+    } catch (err) {
+      btn.disabled = false;
+      if (err && err.name === 'InvalidStateError') {
+        btn.textContent = 'Biometric login enabled';
+        btn.disabled = true;
+        window.showToast('Biometric login is already set up on this device.', 'info');
+      } else if (err && err.name === 'NotAllowedError') {
+        window.showToast('Biometric setup was cancelled.', 'error');
+      } else {
+        window.showToast('Could not enable biometric login. Please try again.', 'error');
+      }
+    }
+  });
+})();
 
 /* ── Currency Converter widget ──
    Uses a free, keyless exchange-rate API. If it's unreachable (e.g. no
