@@ -1,0 +1,36 @@
+// Biometric (passkey) helper. Needs supabaseClient (js/supabase-client.js)
+// and the SimpleWebAuthn browser bundle loaded before this file.
+const Biometric = (() => {
+  async function call(body) {
+    const { data, error } = await supabaseClient.functions.invoke('super-task', { body });
+    if (error) throw error;
+    if (data && data.error) throw new Error(data.error);
+    return data;
+  }
+
+  async function available() {
+    if (!window.PublicKeyCredential || !window.SimpleWebAuthnBrowser) return false;
+    try { return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(); }
+    catch (e) { return false; }
+  }
+
+  // Call while the user is logged in (from the dashboard button).
+  async function enroll() {
+    const { options, challengeId } = await call({ action: 'register-options' });
+    const response = await SimpleWebAuthnBrowser.startRegistration(options);
+    const ua = navigator.userAgent;
+    const deviceName = /iPhone|iPad|iPod/.test(ua) ? 'iPhone' : /Android/.test(ua) ? 'Android phone' : 'This device';
+    await call({ action: 'register-verify', challengeId, response, deviceName });
+  }
+
+  // Used on the login page. No email needed: the phone offers the saved passkey.
+  async function login() {
+    const { options, challengeId } = await call({ action: 'login-options' });
+    const response = await SimpleWebAuthnBrowser.startAuthentication(options);
+    const { token_hash } = await call({ action: 'login-verify', challengeId, response });
+    const { error } = await supabaseClient.auth.verifyOtp({ token_hash, type: 'magiclink' });
+    if (error) throw error;
+  }
+
+  return { available, enroll, login };
+})();
