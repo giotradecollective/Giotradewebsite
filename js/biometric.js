@@ -9,12 +9,15 @@ const Biometric = (() => {
   }
 
   async function available() {
-    if (!window.PublicKeyCredential || !window.SimpleWebAuthnBrowser) return false;
-    try { return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(); }
-    catch (e) { return false; }
+    if (!window.PublicKeyCredential) return false;
+    try { if (await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()) return true; }
+    catch (e) {}
+    // Some phones report "false" even though fingerprint/face works, so always
+    // offer the button on Android and iOS and let the phone decide on tap.
+    return /Android|iPhone|iPad|iPod/.test(navigator.userAgent);
   }
 
-  // Call while the user is logged in (from the dashboard button).
+  // Call while the user is logged in (e.g. from a button on dashboard.html).
   async function enroll() {
     const { options, challengeId } = await call({ action: 'register-options' });
     const response = await SimpleWebAuthnBrowser.startRegistration(options);
