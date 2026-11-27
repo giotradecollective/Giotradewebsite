@@ -196,6 +196,25 @@
     display:block;
   }
 
+
+  /* ── Portfolio growth chart ── */
+  .growth{ margin-bottom:40px; display:none; }
+  .growth.is-visible{ display:block; }
+  .growth__head{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:14px; margin-bottom:18px; }
+  .growth__head h3{ font-weight:400; font-size:.95rem; margin-bottom:6px; }
+  .growth__sub{ color:rgba(255,255,255,.4); font-size:.75rem; line-height:1.6; }
+  .growth__tabs{ display:flex; gap:0; border:1px solid rgba(255,255,255,.14); }
+  .growth__tab{ background:transparent; border:none; color:rgba(255,255,255,.5); font-family:inherit; font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; padding:8px 14px; cursor:pointer; transition:background .2s,color .2s; }
+  .growth__tab + .growth__tab{ border-left:1px solid rgba(255,255,255,.14); }
+  .growth__tab:hover{ color:#fff; }
+  .growth__tab.is-active{ background:rgba(255,255,255,.08); color:#fff; }
+  .growth__stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:18px; margin-bottom:22px; }
+  .growth__stat h4{ color:rgba(255,255,255,.45); font-weight:400; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; }
+  .growth__stat p{ font-size:1.15rem; font-weight:200; font-variant-numeric:tabular-nums; }
+  .growth__canvas{ position:relative; height:260px; }
+  .growth__empty{ color:rgba(255,255,255,.4); font-size:.8rem; padding:26px 0; }
+  .growth__note{ font-size:.65rem; color:rgba(255,255,255,.25); margin-top:14px; line-height:1.6; }
+
   .cards{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -646,6 +665,23 @@ a:focus-visible{
 
 </div>
 
+<div class="growth" id="growth-section">
+  <div class="growth__head">
+    <div>
+      <h3>Portfolio Growth</h3>
+      <p class="growth__sub">Month-end closing values and returns from your investment statements.</p>
+    </div>
+    <div class="growth__tabs" id="growth-tabs">
+      <button type="button" class="growth__tab is-active" data-view="value">Portfolio value</button>
+      <button type="button" class="growth__tab" data-view="return">Monthly return</button>
+    </div>
+  </div>
+  <div class="growth__stats" id="growth-stats"></div>
+  <div class="growth__canvas" id="growth-canvas-wrap"><canvas id="growth-canvas" aria-label="Portfolio growth chart" role="img"></canvas></div>
+  <div class="growth__empty" id="growth-empty" style="display:none;">Your growth chart will appear here once your first monthly statement has been issued.</div>
+  <p class="growth__note">Portfolio values are month-end closing figures as reported on your statements. The dashed line shows capital invested, meaning contributions up to the previous month, because each contribution is added to your portfolio value from the next monthly valuation. The Total contributed figure above includes the current month. Past performance is not necessarily a guide to future performance.</p>
+</div>
+
 <div class="cards" id="cards"></div>
 
 <div class="trust-note">
@@ -718,6 +754,7 @@ a:focus-visible{
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@simplewebauthn/browser@10.0.0/dist/bundle/index.umd.min.js"></script>
 <script src="js/biometric.js"></script>
 
@@ -868,6 +905,155 @@ const CARD_DEFS = [
   { roles:['administrator','portfolio_manager'], title:'Client Document Submissions', body:'Review documents submitted by clients and awaiting review.' },
 ];
 
+
+/* ── Portfolio growth chart ───────────────────────────────────── */
+async function loadGrowthChart(profile){
+    const section = document.getElementById('growth-section');
+    if (!section || !profile || profile.role !== 'investor') return;
+    section.classList.add('is-visible');
+
+    const { data, error } = await supabaseClient
+        .from('portfolio_history')
+        .select('valuation_date, portfolio_value, monthly_return, contributions')
+        .eq('investor_id', profile.id)
+        .order('valuation_date', { ascending: true });
+
+    const wrap  = document.getElementById('growth-canvas-wrap');
+    const empty = document.getElementById('growth-empty');
+    const tabs  = document.getElementById('growth-tabs');
+    const stats = document.getElementById('growth-stats');
+
+    if (error || !data || !data.length || typeof Chart === 'undefined') {
+        wrap.style.display = 'none'; tabs.style.display = 'none'; stats.style.display = 'none';
+        empty.style.display = 'block';
+        if (error) console.error('portfolio_history error:', error);
+        return;
+    }
+
+    const rows   = data.map(r => ({
+        date:  new Date(r.valuation_date + 'T00:00:00'),
+        value: Number(r.portfolio_value),
+        ret:   Number(r.monthly_return),
+        contrib: (r.contributions === null || r.contributions === undefined) ? null : Number(r.contributions)
+    }));
+    const hasContrib = rows.some(r => r.contrib !== null);
+    const labels = rows.map(r => r.date.toLocaleDateString('en-ZA', { month:'short', year:'2-digit' }));
+    const money  = n => 'R' + Number(n).toLocaleString('en-ZA', { minimumFractionDigits:2, maximumFractionDigits:2 });
+    const MASK   = '\u2022\u2022\u2022\u2022';
+    const hidden = () => window.BalanceVisibility && window.BalanceVisibility.isHidden();
+
+    const avg  = rows.reduce((s, r) => s + r.ret, 0) / rows.length;
+    const best = rows.reduce((b, r) => r.ret > b.ret ? r : b, rows[0]);
+
+    function paintStats(){
+        stats.innerHTML =
+            '<div class="growth__stat"><h4>Latest value</h4><p>' + (hidden() ? MASK : money(rows[rows.length - 1].value)) + '</p></div>' +
+            (hasContrib ? '<div class="growth__stat"><h4>Total contributed</h4><p>' + (hidden() ? MASK : money([...rows].reverse().find(r => r.contrib !== null).contrib)) + '</p></div>' : '') +
+            '<div class="growth__stat"><h4>Average monthly return</h4><p>' + avg.toFixed(2) + '%</p></div>' +
+            '<div class="growth__stat"><h4>Best month</h4><p>' + best.ret.toFixed(2) + '% <span style="font-size:.7rem;color:rgba(255,255,255,.4);">' +
+                best.date.toLocaleDateString('en-ZA', { month:'short' }) + '</span></p></div>' +
+            '<div class="growth__stat"><h4>Months tracked</h4><p>' + rows.length + '</p></div>';
+    }
+
+    Chart.defaults.font.family = "'Barlow','Helvetica Neue',Arial,sans-serif";
+    Chart.defaults.color = 'rgba(255,255,255,.45)';
+
+    let view = 'value', chart = null;
+
+    function draw(){
+        if (chart) chart.destroy();
+        const isValue = view === 'value';
+        const ctx = document.getElementById('growth-canvas').getContext('2d');
+        chart = new Chart(ctx, {
+            type: isValue ? 'line' : 'bar',
+            data: {
+                labels,
+                datasets: [...(isValue && hasContrib ? [{
+                    label: 'Capital invested',
+                    data: rows.map((r, i) => i > 0 ? rows[i - 1].contrib : null),
+                    borderColor: 'rgba(255,255,255,.5)',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    borderDash: [6, 4],
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 2,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: 'rgba(255,255,255,.5)',
+                    spanGaps: true,
+                    order: 2
+                }] : []), {
+                    label: isValue ? 'Portfolio value' : 'Monthly return',
+                    data: rows.map(r => isValue ? r.value : r.ret),
+                    borderColor: '#ffffff',
+                    backgroundColor: isValue ? 'rgba(255,255,255,.07)' : 'rgba(255,255,255,.55)',
+                    borderWidth: isValue ? 2 : 0,
+                    fill: isValue,
+                    tension: .3,
+                    pointRadius: isValue ? 3 : 0,
+                    pointHoverRadius: 5,
+                    pointBackgroundColor: '#ffffff',
+                    borderRadius: 0,
+                    maxBarThickness: 38,
+                    order: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: {
+                        display: isValue && hasContrib,
+                        align: 'end',
+                        labels: { boxWidth: 22, boxHeight: 2, color: 'rgba(255,255,255,.6)', font: { size: 11 } }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(10,10,10,.95)',
+                        borderColor: 'rgba(255,255,255,.2)',
+                        borderWidth: 1,
+                        padding: 10,
+                        displayColors: false,
+                        itemSort: (a, b) => a.datasetIndex - b.datasetIndex,
+                        callbacks: {
+                            label: c => isValue
+                                ? c.dataset.label + ': ' + (hidden() ? MASK : money(c.parsed.y))
+                                : c.parsed.y.toFixed(2) + '%'
+                        }
+                    }
+                },
+                scales: {
+                    x: { grid: { display: false }, border: { color: 'rgba(255,255,255,.12)' } },
+                    y: {
+                        beginAtZero: !isValue ? true : false,
+                        grid: { color: 'rgba(255,255,255,.06)' },
+                        border: { display: false },
+                        ticks: {
+                            callback: v => isValue
+                                ? (hidden() ? '' : 'R' + Number(v).toLocaleString('en-ZA'))
+                                : v + '%'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    tabs.addEventListener('click', e => {
+        const btn = e.target.closest('.growth__tab');
+        if (!btn) return;
+        view = btn.dataset.view;
+        tabs.querySelectorAll('.growth__tab').forEach(b => b.classList.toggle('is-active', b === btn));
+        draw();
+    });
+
+    const toggle = document.getElementById('portfolio-value-toggle');
+    if (toggle) toggle.addEventListener('click', () => { paintStats(); draw(); });
+
+    paintStats();
+    draw();
+}
+
 (async () => {
 
     await requireAuth();
@@ -916,6 +1102,8 @@ const CARD_DEFS = [
 
     document.getElementById('role-label').textContent =
         ROLE_LABELS[profile.role] || profile.role;
+
+    loadGrowthChart(profile);
 
     const cards = document.getElementById('cards');
 
